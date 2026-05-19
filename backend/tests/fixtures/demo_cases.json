@@ -1,0 +1,23 @@
+[
+  {
+    "id": "fraud-001",
+    "scenario": "telecom_fraud",
+    "input": "I paid for a concert ticket online and now the seller disappeared."
+  },
+  {
+    "id": "loss-001",
+    "scenario": "property_loss",
+    "input": "I lost my phone near the dormitory yesterday."
+  },
+  {
+    "id": "conflict-001",
+    "scenario": "dorm_conflict",
+    "input": "My roommate and I keep arguing in the dorm."
+  },
+  {
+    "id": "threat-001",
+    "scenario": "personal_safety_threat",
+    "input": "Someone is threatening me and I feel in danger right now."
+  }
+]
+

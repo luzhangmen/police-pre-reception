@@ -1,0 +1,58 @@
+telecom_fraud:
+  required:
+    - fraud_method
+    - loss_amount
+    - transfer_channel
+    - evidence
+  optional:
+    - platform
+    - recipient_account
+    - still_contacting
+    - still_transferring
+  high_risk:
+    - still_transferring
+    - ongoing_contact
+
+property_loss:
+  required:
+    - lost_item
+    - lost_time
+    - lost_location
+    - item_features
+  optional:
+    - suspected_theft
+    - possible_clues
+    - account_or_id_risk
+    - evidence
+  high_risk:
+    - account_or_id_risk
+
+dorm_conflict:
+  required:
+    - parties
+    - conflict_reason
+    - time_location
+    - expected_resolution
+  optional:
+    - frequency
+    - previous_communication
+    - emotional_intensity
+    - physical_conflict
+  high_risk:
+    - physical_conflict
+    - threat
+
+personal_safety_threat:
+  required:
+    - threat_type
+    - suspect_info
+    - current_location
+    - danger_level
+  optional:
+    - evidence
+    - prior_incidents
+    - immediate_need
+  high_risk:
+    - ongoing_threat
+    - current_danger
+
