@@ -115,8 +115,8 @@ def test_amap_geocode_parses_location(monkeypatch):
                 "status": "1",
                 "geocodes": [
                     {
-                        "formatted_address": "上海市某大学一食堂",
-                        "location": "121.473701,31.230416",
+                        "formatted_address": "广东省广州市华南理工大学大学城校区",
+                        "location": "113.413298,23.053981",
                     }
                 ],
             }
@@ -127,8 +127,8 @@ def test_amap_geocode_parses_location(monkeypatch):
 
     assert location is not None
     assert location.source == "amap"
-    assert location.lat == pytest.approx(31.230416)
-    assert location.lng == pytest.approx(121.473701)
+    assert location.lat == pytest.approx(23.053981)
+    assert location.lng == pytest.approx(113.413298)
     assert "uri.amap.com" in location.map_url
 
 

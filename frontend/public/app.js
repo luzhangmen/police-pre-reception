@@ -1,4 +1,5 @@
 const apiBase = window.location.origin;
+const SCUT_CENTER_WGS = window.CAMPUS_COORDS?.center?.wgs84 ?? { lat: 23.04862, lng: 113.40062 };
 
 const caseIdInput = document.getElementById("caseId");
 const userTextInput = document.getElementById("userText");
@@ -92,7 +93,10 @@ async function initMapEngine() {
 
   mapEngine = {
     type: "leaflet",
-    instance: L.map("map", { zoomControl: true }).setView([31.23, 121.47], 15),
+    instance: L.map("map", { zoomControl: true }).setView(
+      [SCUT_CENTER_WGS.lat, SCUT_CENTER_WGS.lng],
+      16
+    ),
     layer: L.layerGroup(),
   };
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
