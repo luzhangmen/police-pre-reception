@@ -62,13 +62,20 @@
   async function resolveImageUrl(poiKey) {
     const cfg = panoramaConfig(poiKey);
     const fallback = window.CAMPUS_COORDS.panorama?.fallbackImage;
-    if (cfg?.imageUrl) {
-      const ok = await imageExists(cfg.imageUrl);
-      if (ok) {
-        return { url: cfg.imageUrl, fromLocal: true };
+    const candidates = [cfg?.imageUrl, cfg?.sharedImageUrl, fallback].filter(Boolean);
+
+    for (const url of candidates) {
+      if (await imageExists(url)) {
+        const isPrimary = url === cfg?.imageUrl;
+        return {
+          url,
+          fromLocal: true,
+          shared: !isPrimary && url === cfg?.sharedImageUrl,
+        };
       }
     }
-    return { url: fallback, fromLocal: false };
+
+    return { url: "https://pannellum.org/images/alma.jpg", fromLocal: false, shared: false };
   }
 
   let interactionsBound = false;
@@ -129,15 +136,22 @@
 
   async function loadPanorama(poiKey) {
     const cfg = panoramaConfig(poiKey);
-    const { url, fromLocal } = await resolveImageUrl(poiKey);
+    const { url, fromLocal, shared } = await resolveImageUrl(poiKey);
 
     if (titleEl) {
       titleEl.textContent = cfg?.title || "全景概念";
     }
     if (noteEl) {
-      noteEl.textContent = fromLocal
-        ? "华工本地 360° 全景：在画面内拖动环视，或点「全屏沉浸浏览」。"
-        : "当前为示例全景图（演示交互）。放入 panoramas/*.jpg 后可换为广州大学城实拍。";
+      if (!fromLocal) {
+        noteEl.textContent =
+          "未加载到本地全景文件，正在使用备用示例图。请确认 panoramas/scut-north-teaching.jpg 已随仓库部署。";
+      } else if (shared) {
+        noteEl.textContent =
+          "当前展示已上传的华工北区实拍全景（该案例专属图尚未上传，视角已预置偏移）。拖动环视或点「全屏沉浸浏览」。";
+      } else {
+        noteEl.textContent =
+          "华南理工大学大学城校区 · 北区教学楼北侧实拍 360°。拖动环视或点「全屏沉浸浏览」。";
+      }
     }
 
     buildExternalLinks(poiKey);

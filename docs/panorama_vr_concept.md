@@ -35,12 +35,11 @@
 
 说明：这是 **360° 全景环视**（网页里常见），不是 VR 头显里的立体 3D；若要头显模式需额外做 WebXR，作业概念演示一般不需要。
 
-### 替换为华工本地实拍（推荐）
+### 华工本地实拍（已接入）
 
-1. 在 **北区教学楼北侧** 用手机拍摄 360° 全景（或借学校宣传素材，注意版权）。
-2. 导出为 **等距柱状投影** JPG（常见 2:1 比例，如 4096×2048）。
-3. 保存为 `frontend/public/panoramas/scut-north-teaching.jpg`。
-4. 修改 `campus-coords.js` 里对应 POI 的 `panorama.imageUrl` 为 `panoramas/scut-north-teaching.jpg`。
+仓库已包含 `frontend/public/panoramas/scut-north-teaching.jpg`，Demo 默认加载该文件。
+
+追加其他地点时，放入 `scut-dorm-parking.jpg`、`scut-xiaobei-street.jpg` 即可；未放入前，相关案例会共用北区实拍图。
 
 ### 环境变量（完整产品，可选）
 

@@ -43,25 +43,27 @@ window.CAMPUS_COORDS = {
    */
   panorama: {
     defaultPoiKey: "northTeachingBikeRack",
-    fallbackImage:
-      "https://pannellum.org/images/alma.jpg",
+    /** 本地实拍；各 POI 未单独配图时共用此文件 */
+    fallbackImage: "panoramas/scut-north-teaching.jpg",
     pois: {
       northTeachingBikeRack: {
-        title: "北区教学楼北侧 · 全景概念",
+        title: "北区教学楼北侧 · 华工大学城实拍全景",
         imageUrl: "panoramas/scut-north-teaching.jpg",
         yaw: 0,
         pitch: 0,
       },
       dormEbikeParking: {
-        title: "宿舍楼下停放区 · 全景概念",
+        title: "宿舍楼下停放区 · 全景（暂用北区实拍，可替换 scut-dorm-parking.jpg）",
         imageUrl: "panoramas/scut-dorm-parking.jpg",
-        yaw: 120,
+        sharedImageUrl: "panoramas/scut-north-teaching.jpg",
+        yaw: 95,
         pitch: 0,
       },
       xiaobeiStreet: {
-        title: "小贝大街 · 全景概念",
+        title: "小贝大街 · 全景（暂用北区实拍，可替换 scut-xiaobei-street.jpg）",
         imageUrl: "panoramas/scut-xiaobei-street.jpg",
-        yaw: 200,
+        sharedImageUrl: "panoramas/scut-north-teaching.jpg",
+        yaw: 210,
         pitch: 0,
       },
     },
