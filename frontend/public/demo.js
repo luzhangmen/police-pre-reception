@@ -250,6 +250,10 @@ async function showCase(caseData) {
   const ref = caseData.transcript_id ? `（笔录参考：${caseData.transcript_id}）` : "";
   mapIntro.textContent =
     `${CAMPUS.address}。标注为校区 POI 实测参考坐标，非门牌精确定位。${ref}`;
+
+  if (typeof window.updatePanoramaConcept === "function") {
+    window.updatePanoramaConcept(caseData.poiKey);
+  }
 }
 
 function buildCaseButtons() {

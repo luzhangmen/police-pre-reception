@@ -10,6 +10,11 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="demo.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <div class="page demo-page">
@@ -69,6 +74,29 @@
         </section>
       </main>
 
+      <section class="panel panorama-panel">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">全景概念 (VR)</h2>
+            <p class="panel-intro">
+              概念演示：360° 环视事发地。正式环境可换华工实拍全景，或对接高德/百度街景 API。
+            </p>
+          </div>
+        </div>
+        <p class="panorama-title" id="panoramaTitle">北区教学楼北侧 · 全景概念</p>
+        <p class="hint" id="panoramaNote"></p>
+        <div id="panoramaViewer" class="panorama-viewer" aria-label="360度全景查看器"></div>
+        <p class="demo-subtitle">众包街景（若该点有图则显示）</p>
+        <iframe
+          id="mapillaryEmbed"
+          class="mapillary-embed"
+          title="Mapillary 街景嵌入"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+        <div class="panorama-links" id="panoramaExternalLinks"></div>
+      </section>
+
       <footer class="footer-note">
         仓库内 <code>docs/github_pages_demo.md</code> 含 GitHub Pages 与高德 Key 配置说明。
       </footer>
@@ -78,6 +106,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script src="campus-coords.js"></script>
     <script src="demo-env.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js" crossorigin="anonymous"></script>
     <script src="demo.js"></script>
+    <script src="demo-panorama.js"></script>
   </body>
 </html>

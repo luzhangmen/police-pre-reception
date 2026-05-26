@@ -8,7 +8,7 @@
 https://luzhangmen.github.io/police-pre-reception/demo.html
 ```
 
-配置步骤见 [docs/github_pages_demo.md](docs/github_pages_demo.md)。`git push` 连不上 GitHub 时见 [docs/github_push_help.md](docs/github_push_help.md)。可选：在 Actions Secrets 中设置 `AMAP_WEB_KEY` 以使用高德底图。
+配置步骤见 [docs/github_pages_demo.md](docs/github_pages_demo.md)。360° 全景概念见 [docs/panorama_vr_concept.md](docs/panorama_vr_concept.md)。`git push` 连不上 GitHub 时见 [docs/github_push_help.md](docs/github_push_help.md)。可选：在 Actions Secrets 中设置 `AMAP_WEB_KEY` 以使用高德底图。
 
 Text-first MVP for campus police pre-reception. The backend accepts one messy user report and returns structured case information, risk level, missing fields, one follow-up question, local knowledge guidance, and a short police-side summary.
 

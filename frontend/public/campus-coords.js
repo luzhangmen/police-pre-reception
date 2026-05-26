@@ -36,6 +36,36 @@ window.CAMPUS_COORDS = {
       wgs84: { lat: 23.04148, lng: 113.40502 },
     },
   },
+
+  /**
+   * 全景概念（Pannellum 等距柱状图）。
+   * 将 imageUrl 换成本地实拍：panoramas/scut-north-teaching.jpg
+   */
+  panorama: {
+    defaultPoiKey: "northTeachingBikeRack",
+    fallbackImage:
+      "https://pannellum.org/images/alma.jpg",
+    pois: {
+      northTeachingBikeRack: {
+        title: "北区教学楼北侧 · 全景概念",
+        imageUrl: "panoramas/scut-north-teaching.jpg",
+        yaw: 0,
+        pitch: 0,
+      },
+      dormEbikeParking: {
+        title: "宿舍楼下停放区 · 全景概念",
+        imageUrl: "panoramas/scut-dorm-parking.jpg",
+        yaw: 120,
+        pitch: 0,
+      },
+      xiaobeiStreet: {
+        title: "小贝大街 · 全景概念",
+        imageUrl: "panoramas/scut-xiaobei-street.jpg",
+        yaw: 200,
+        pitch: 0,
+      },
+    },
+  },
 };
 
 window.campusMapLocation = function campusMapLocation(poiKey, source) {
