@@ -1,7 +1,5 @@
 # Police Pre-Reception
 
-Text-first MVP for campus police pre-reception.
-
 ## Live Demo（GitHub Pages · 地图）
 
 推送到 GitHub 并启用 Pages 后，队友可直接打开**在线地图演示**（无需安装后端）：

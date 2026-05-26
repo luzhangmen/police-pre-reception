@@ -1,57 +1,78 @@
 /**
  * Standalone map demo for GitHub Pages (no backend required).
- * Coordinates are illustrative; replace MAP_DEFAULT_REGION in production geocoding.
+ * Demo cases: SCUT Guangzhou University Town campus area (华南理工大学大学城校区).
  */
+
+const CAMPUS_REGION = "华南理工大学大学城校区";
+const CAMPUS_CENTER = { lat: 23.0542, lng: 113.3974 };
 
 const DEMO_CASES = [
   {
-    id: "theft-canteen",
-    title: "食堂手机被盗",
-    summary: "财物遗失 · 一食堂",
-    text: "今天下午在一食堂二楼吃饭时手机被偷了，对方往北区宿舍方向跑了，我现在很着急。",
-    extracted_addresses: ["一食堂二楼就餐区", "北区宿舍方向"],
+    id: "theft-bicycle",
+    title: "自行车失窃（未上锁）",
+    summary: "财物遗失 · 北区教学楼",
+    transcript_id: "transcript-theft-005（改编）",
+    text:
+      "我是华南理工大学大学城校区的学生。3月8日上午我把蓝色捷安特自行车停在北区教学楼北侧非机动车位，" +
+      "下课忘记上锁，下午四点回来发现车不见了，原地只剩一把未锁好的车锁挂在栏杆上。购买价大约1800元。",
+    extracted_addresses: [
+      "华南理工大学大学城校区北区教学楼北侧",
+      "北区教学楼北侧非机动车位",
+    ],
     map_locations: [
       {
-        query: "一食堂二楼",
-        display_name: "第一食堂（示例坐标）",
-        lat: 31.2308,
-        lng: 121.4742,
+        query: `${CAMPUS_REGION}北区教学楼北侧`,
+        display_name: "华南理工大学大学城校区 · 北区教学楼北侧",
+        lat: 23.0568,
+        lng: 113.3992,
         source: "demo",
-        map_url: "https://uri.amap.com/marker?position=121.4742,31.2308&name=第一食堂",
+        map_url:
+          "https://uri.amap.com/marker?position=113.3992,23.0568&name=华工大学城校区北区教学楼北侧",
       },
     ],
   },
   {
-    id: "loss-library",
-    title: "图书馆遗失物品",
-    summary: "财物遗失 · 图书馆",
-    text: "昨晚在图书馆三楼自习区落了一个黑色双肩包，里面有学生证，大概九点半离开的。",
-    extracted_addresses: ["图书馆三楼自习区"],
+    id: "theft-ebike-battery",
+    title: "电瓶车电瓶被偷",
+    summary: "财物遗失 · 宿舍楼下",
+    transcript_id: "transcript-theft-013",
+    text:
+      "今天早上6点多，我在华南理工大学大学城校区宿舍楼下非机动车停放区取电动车，发现电瓶仓被撬空了。" +
+      "电瓶是48V20Ah锂电池，买了大概8个月。监控里看到凌晨4点有个戴鸭舌帽的人靠近，我已经向保卫处登记申请调监控。",
+    extracted_addresses: [
+      "华南理工大学大学城校区宿舍楼下",
+      "宿舍楼下非机动车停放区",
+    ],
     map_locations: [
       {
-        query: "图书馆三楼自习区",
-        display_name: "图书馆（示例坐标）",
-        lat: 31.2316,
-        lng: 121.4728,
+        query: `${CAMPUS_REGION}宿舍楼下非机动车停放区`,
+        display_name: "华南理工大学大学城校区 · 宿舍楼下停放区",
+        lat: 23.0525,
+        lng: 113.3958,
         source: "demo",
-        map_url: "https://uri.amap.com/marker?position=121.4728,31.2316&name=图书馆",
+        map_url:
+          "https://uri.amap.com/marker?position=113.3958,23.0525&name=华工大学城校区宿舍停放区",
       },
     ],
   },
   {
-    id: "dorm-conflict",
-    title: "宿舍冲突",
-    summary: "宿舍矛盾 · 302",
-    text: "昨晚宿舍302因为卫生问题和室友吵起来，对方推了我一下，发生在宿舍楼区域。",
-    extracted_addresses: ["宿舍302", "宿舍楼"],
+    id: "fight-street",
+    title: "街道斗殴",
+    summary: "肢体冲突 · 小贝大街",
+    transcript_id: "transcript-fight-008（改编）",
+    text:
+      "3月9日凌晨，我和同学在南沙区小谷围岛大学城小贝大街吃大排档，喝酒后和邻桌发生口角，" +
+      "对方三个人围过来动手，我头部受伤已经去急诊包扎。对方不认识，像是附近社会人员，" +
+      "事发位置就在华南理工大学大学城校区西门往外那条商业街。",
+    extracted_addresses: ["大学城小贝大街", "华南理工大学大学城校区西门商业街"],
     map_locations: [
       {
-        query: "学生宿舍302",
-        display_name: "学生宿舍区（示例坐标）",
-        lat: 31.2295,
-        lng: 121.4755,
+        query: "广州大学城小贝大街",
+        display_name: "广州大学城 · 小贝大街（华工大学城校区附近）",
+        lat: 23.0508,
+        lng: 113.4045,
         source: "demo",
-        map_url: "https://uri.amap.com/marker?position=121.4755,31.2295&name=学生宿舍",
+        map_url: "https://uri.amap.com/marker?position=113.4045,23.0508&name=大学城小贝大街",
       },
     ],
   },
@@ -102,16 +123,19 @@ async function initMapEngine() {
       await loadAmapScript(amapKey);
       mapEngine = { type: "amap", instance: null };
       demoBanner.classList.add("hidden");
-      demoModeBadge.textContent = "高德地图演示";
+      demoModeBadge.textContent = "高德地图 · 广州大学城";
       return mapEngine;
     } catch {
-      demoModeBadge.textContent = "备用地图演示";
+      demoModeBadge.textContent = "备用地图 · 广州大学城";
     }
   }
 
   mapEngine = {
     type: "leaflet",
-    instance: L.map("map", { zoomControl: true }).setView([31.231, 121.474], 16),
+    instance: L.map("map", { zoomControl: true }).setView(
+      [CAMPUS_CENTER.lat, CAMPUS_CENTER.lng],
+      16
+    ),
     layer: L.layerGroup(),
   };
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -247,7 +271,9 @@ async function showCase(caseData) {
   renderLocationCards(locations);
 
   mapMeta.textContent = `已标出 ${locations.length} 处 · 附近约 ${NEARBY_RADIUS} 米`;
-  mapIntro.textContent = "演示数据为示例坐标；接入后端与高德 Key 后将按真实地址解析。";
+  const ref = caseData.transcript_id ? `（笔录参考：${caseData.transcript_id}）` : "";
+  mapIntro.textContent =
+    `示例坐标位于${CAMPUS_REGION}及周边（广东省广州市番禺区小谷围岛）${ref}。`;
 }
 
 function buildCaseButtons() {

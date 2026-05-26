@@ -8,18 +8,21 @@ from app.modules.geocoder import geocode_address, geocode_addresses
 
 
 def test_extract_addresses_from_slots_and_text():
-    text = "今天下午在一食堂二楼吃饭时手机被偷了，我现在还在图书馆三楼。"
+    text = (
+        "我把自行车停在华南理工大学大学城校区北区教学楼北侧，"
+        "晚上去宿舍楼下取车时电瓶不见了。"
+    )
     slots = {
-        "lost_item": "手机",
+        "lost_item": "自行车",
         "lost_time": "今天下午",
-        "lost_location": "一食堂二楼就餐区",
-        "item_features": "黑色手机壳",
+        "lost_location": "北区教学楼北侧非机动车位",
+        "item_features": "蓝色捷安特",
     }
 
     addresses = extract_addresses(text, slots)
 
-    assert "一食堂二楼就餐区" in addresses
-    assert any("一食堂" in item or "图书馆" in item for item in addresses)
+    assert "北区教学楼北侧非机动车位" in addresses
+    assert any("北区教学楼" in item or "宿舍" in item for item in addresses)
 
 
 def test_extract_skips_online_only_locations():
@@ -53,7 +56,7 @@ def test_pipeline_attaches_map_fields(monkeypatch):
         lambda **_: {
             "lost_item": "手机",
             "lost_time": "今天下午",
-            "lost_location": "一食堂二楼",
+            "lost_location": "北区教学楼北侧",
             "item_features": "黑色",
         },
     )
@@ -72,7 +75,7 @@ def test_pipeline_attaches_map_fields(monkeypatch):
         return [
             MapLocation(
                 query=queries[0],
-                display_name="一食堂",
+                display_name="北区教学楼北侧",
                 lat=31.1,
                 lng=121.4,
                 source="test",
@@ -83,7 +86,10 @@ def test_pipeline_attaches_map_fields(monkeypatch):
     monkeypatch.setattr("app.core.pipeline.geocode_addresses", fake_geocode_addresses)
 
     state = run_pipeline(
-        UserMessage(text="今天下午在一食堂二楼手机被偷了。", case_id="map-case")
+        UserMessage(
+            text="华南理工大学大学城校区北区教学楼北侧自行车被偷。",
+            case_id="map-case",
+        )
     )
 
     assert state.extracted_addresses

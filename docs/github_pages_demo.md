@@ -12,11 +12,13 @@
 https://<你的GitHub用户名>.github.io/<仓库名>/demo.html
 ```
 
-例如仓库 `zhangsan/police-pre-reception`：
+本仓库示例：
 
 ```text
-https://zhangsan.github.io/police-pre-reception/demo.html
+https://luzhangmen.github.io/police-pre-reception/demo.html
 ```
+
+（含华工大学城校区附近：自行车失窃、电瓶被盗、小贝大街斗殴等演示。）
 
 主页 `index.html` 依赖后端 API；**推荐给访客的是 `demo.html`**。
 
