@@ -1,4 +1,78 @@
-# Property Loss
+# 财物遗失（property_loss）
 
-Knowledge placeholder for lost property registration, suspected theft clues, item description, location timeline, and account or ID safety.
+> 含遗失、被盗、疑似盗窃；与宿舍矛盾、诈骗区分。
 
+## 1. 场景定义
+
+用户报告**物品丢失或被盗**，需登记物品、时间、地点、特征，并评估是否涉及证件/支付账户风险。
+
+**不属于本场景**
+
+| 用户说法 | 更可能场景 |
+|----------|------------|
+| 室友翻我抽屉并吵架 | `dorm_conflict` |
+| 转账被骗 | `telecom_fraud` |
+| 有人威胁要打我 | `personal_safety_threat` |
+
+## 2. 字段说明
+
+| 字段 | 必填 | 说明 |
+|------|------|------|
+| `lost_item` | 是 | 丢失物品 |
+| `lost_time` | 是 | 丢失时间 |
+| `lost_location` | 是 | 丢失地点 |
+| `item_features` | 是 | 颜色、品牌、内含物等 |
+| `suspected_theft` | 否 | 是否疑似被盗 |
+| `possible_clues` | 否 | 监控、目击者等 |
+| `account_or_id_risk` | 否 | 证件/账户风险，**高风险** |
+| `evidence` | 否 | 监控申请记录等 |
+
+## 3. 高风险判定
+
+- `account_or_id_risk == true`：包内有身份证、银行卡、手机且担心被盗刷等
+- 应立即建议：挂失银行卡、修改支付密码、设备查找/远程锁定
+
+## 4. 处置要点
+
+1. 登记四要素：物品、时间、地点、特征。
+2. 证件/银行卡：优先挂失与冻结，再查监控。
+3. 疑似盗窃：记录监控范围、座位区域、可疑人员。
+4. 纯遗失：完整度够时可给报案/登记指引。
+
+## 5. 校园高发地点
+
+宿舍楼道、食堂、图书馆、自习室、体育馆更衣室、教学楼车棚。
+
+## 6. 追问优先级
+
+1. 证件/账户风险（是否需挂失）
+2. 四要素是否齐全
+3. 监控与线索
+
+## 7. 子类型速查
+
+| 子类型 | 案例 ID |
+|--------|---------|
+| 纯遗失低价值 | loss-001、loss-009 |
+| 疑似盗窃 | loss-002、loss-005、loss-010 |
+| 证件/银行卡 | loss-003、loss-008 |
+| 极短输入 | loss-004 |
+| 完整登记 | loss-007 |
+| 快递被拆 | loss-011 |
+| 已挂失校园卡 | loss-012 |
+| 自行车 | loss-006 |
+
+## 8. 错误分类示例
+
+| 误分 | 应为 |
+|------|------|
+| 二手转账被骗 → loss | fraud |
+| 室友翻抽屉 → loss | dorm_conflict |
+
+## 9. 多轮参考
+
+`dlg-loss-001`、`dlg-loss-002`、`dlg-full-002`
+
+## 10. 推荐案例 ID
+
+`loss-001`–`loss-012`；★ `loss-003` `loss-007`；边界 `loss-008` `loss-011`

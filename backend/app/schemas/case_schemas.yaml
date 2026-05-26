@@ -1,58 +1,173 @@
 telecom_fraud:
+  label: 电信/网络诈骗
+  objective: 快速止损、固定证据、判断是否需立即人工介入
   required:
+    - reporter_name
+    - reporter_contact
+    - incident_time
+    - incident_location
     - fraud_method
     - loss_amount
+    - transfer_time
     - transfer_channel
+    - recipient_account
+    - recipient_name
+    - suspect_contact_info
     - evidence
   optional:
     - platform
-    - recipient_account
+    - payment_order_or_transaction_id
     - still_contacting
     - still_transferring
+    - bank_or_payment_platform
+    - fraud_link_or_qr_code
+    - contact_channel
+    - has_reported_to_platform
+    - has_called_96110
+    - remote_screen_control
   high_risk:
     - still_transferring
     - ongoing_contact
+    - impersonating_police_or_bank
+    - remote_screen_control
+  field_notes:
+    reporter_name: 报警人姓名或登记称呼
+    reporter_contact: 可回拨联系电话或其他联系方式
+    incident_time: 诈骗发生或首次接触的大致时间
+    incident_location: 发生平台、线上渠道或线下地点
+    fraud_method: 诈骗方式，如刷单、冒充客服、假中奖、票务交易、游戏交易等
+    loss_amount: 损失金额，尽量转为人民币数字
+    transfer_time: 最近一次转账或付款时间
+    transfer_channel: 转账渠道，如微信、支付宝、银行卡、平台担保交易
+    recipient_account: 对方账号、收款码、手机号、银行卡号或平台账号
+    recipient_name: 收款账户户名、昵称或实名认证信息
+    suspect_contact_info: 对方联系方式，如微信、QQ、手机号、平台主页
+    evidence: 是否保留聊天记录、转账截图、订单页面、联系方式等证据
 
 property_loss:
+  label: 财物遗失/疑似被盗
+  objective: 明确丢失事实、区分遗失与盗窃、指导证据与轨迹补齐
   required:
+    - reporter_name
+    - reporter_contact
     - lost_item
     - lost_time
     - lost_location
     - item_features
-  optional:
+    - item_value
+    - ownership_proof
     - suspected_theft
-    - possible_clues
     - account_or_id_risk
+  optional:
+    - possible_clues
+    - serial_number_or_unique_mark
+    - last_seen_person
     - evidence
+    - last_seen_trace
+    - surveillance_possible
+    - emergency_need
   high_risk:
     - account_or_id_risk
+    - suspected_theft
+    - violence_or_threat_present
+  field_notes:
+    reporter_name: 报警人姓名或登记称呼
+    reporter_contact: 可回拨联系电话或其他联系方式
+    lost_item: 丢失物品名称，如手机、电脑、钱包、证件
+    lost_time: 发现或推测丢失的时间段
+    lost_location: 最后出现地点与可能丢失地点
+    item_features: 品牌、颜色、外观、序列号、挂件等可识别特征
+    item_value: 物品估计价值
+    ownership_proof: 购买记录、照片、序列号、账号绑定等权属证明
+    suspected_theft: 是否有明显被盗迹象，如包被翻动、物品位置异常
+    account_or_id_risk: 丢失物是否含身份证、银行卡、校园卡、手机账号等高风险凭证
 
 dorm_conflict:
+  label: 宿舍冲突
+  objective: 快速梳理冲突事实与风险，判断调解、转人工或紧急介入
   required:
+    - reporter_name
+    - reporter_contact
     - parties
+    - dorm_location
+    - incident_time
     - conflict_reason
-    - time_location
+    - incident_description
+    - current_status
+    - safety_risk
+    - injuries_or_property_damage
+    - witnesses_or_evidence
     - expected_resolution
   optional:
     - frequency
     - previous_communication
     - emotional_intensity
     - physical_conflict
+    - threat
+    - current_unsafe
   high_risk:
     - physical_conflict
     - threat
+    - current_unsafe
+  field_notes:
+    reporter_name: 报警人姓名或登记称呼
+    reporter_contact: 可回拨联系电话或其他联系方式
+    parties: 冲突双方或多方身份关系，如室友、同学
+    dorm_location: 宿舍楼、房间号或冲突地点
+    incident_time: 近期冲突发生时间
+    conflict_reason: 主要矛盾点，如作息、卫生、借物、言语冲突
+    incident_description: 冲突经过和已发生行为
+    current_status: 当前是否仍在争吵、堵门、威胁或已经平息
+    safety_risk: 是否存在恐吓、威胁、推搡、打架等安全风险
+    injuries_or_property_damage: 是否有人员受伤或财物损坏
+    witnesses_or_evidence: 是否有证人、录音、聊天记录、照片或视频
+    expected_resolution: 当事人希望的处理方式，如调解、换宿舍、联系辅导员、报警
 
 personal_safety_threat:
+  label: 人身安全威胁
+  objective: 优先确认即时危险，第一时间触发人工或紧急处置
   required:
+    - reporter_name
+    - reporter_contact
     - threat_type
-    - suspect_info
     - current_location
-    - danger_level
-  optional:
+    - incident_time
+    - incident_location
+    - suspect_info
+    - relationship_to_suspect
+    - threat_content
+    - current_danger
+    - injury_status
     - evidence
-    - prior_incidents
+    - witnesses
     - immediate_need
+  optional:
+    - prior_incidents
+    - suspect_direction_or_destination
+    - protective_order_or_school_report
+    - ongoing_threat
+    - danger_level
+    - companion_status
+    - contact_phone
+    - weapon_involved
+    - doxxing_or_tracking
   high_risk:
     - ongoing_threat
     - current_danger
-
+    - weapon_involved
+    - doxxing_or_tracking
+  field_notes:
+    reporter_name: 报警人姓名或登记称呼
+    reporter_contact: 可回拨联系电话或其他联系方式
+    threat_type: 威胁类型，如跟踪、骚扰、勒索、暴力威胁、性骚扰
+    current_location: 当事人实时位置及是否可转移到安全区域
+    incident_time: 最近一次威胁发生时间
+    incident_location: 威胁发生地点
+    suspect_info: 对方身份线索，如姓名、关系、联系方式、外貌
+    relationship_to_suspect: 与对方关系，如同学、室友、前任、陌生人
+    threat_content: 对方具体威胁、骚扰或伤害内容
+    current_danger: 当前危险是否正在发生
+    injury_status: 是否有人受伤或需要医疗帮助
+    evidence: 是否保留通话、聊天、照片、录音、监控等证据
+    witnesses: 现场或线上目击者、可协助证明的人
+    immediate_need: 目前最紧急需要，如保护、陪同、报警、医疗、联系老师

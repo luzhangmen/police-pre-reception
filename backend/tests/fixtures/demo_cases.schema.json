@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://police-pre-reception.local/schemas/demo_cases.schema.json",
+  "title": "Week1DemoCase",
+  "description": "Ground-truth demo cases for scenario classification, slot extraction, completeness, risk, and follow-up.",
+  "type": "array",
+  "minItems": 20,
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "scenario",
+      "input",
+      "expected_risk",
+      "expected_slots",
+      "expected_missing_fields",
+      "expected_next_question"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^(fraud|loss|conflict|threat)-[0-9]{3}$"
+      },
+      "scenario": {
+        "enum": [
+          "telecom_fraud",
+          "property_loss",
+          "dorm_conflict",
+          "personal_safety_threat"
+        ]
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "enum": [
+            "demo_star",
+            "sparse_input",
+            "rich_slots",
+            "high_risk",
+            "boundary",
+            "emotion_heavy",
+            "handoff",
+            "regression"
+          ]
+        }
+      },
+      "difficulty": {
+        "enum": ["easy", "medium", "hard"]
+      },
+      "input": { "type": "string", "minLength": 4 },
+      "expected_risk": { "enum": ["low", "medium", "high"] },
+      "expected_next_action": {
+        "enum": ["ask_followup", "give_guidance", "handoff_human"]
+      },
+      "expected_emotion": {
+        "enum": ["neutral", "anxious", "angry", "fearful", "urgent"]
+      },
+      "expected_completeness": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "expected_slots": { "type": "object" },
+      "expected_missing_fields": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "expected_high_risk_flags": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "expected_next_question": { "type": "string", "minLength": 4 },
+      "expected_next_question_keywords": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "acceptable_alternate_scenarios": {
+        "type": "array",
+        "items": {
+          "enum": [
+            "telecom_fraud",
+            "property_loss",
+            "dorm_conflict",
+            "personal_safety_threat"
+          ]
+        }
+      },
+      "boundary_notes": { "type": "string" },
+      "evaluator_notes": { "type": "string" },
+      "follow_up_turn": {
+        "type": "object",
+        "properties": {
+          "user_reply": { "type": "string" },
+          "additional_slots": { "type": "object" },
+          "expected_completeness_after": { "type": "number" }
+        }
+      }
+    },
+    "additionalProperties": false
+  }
+}

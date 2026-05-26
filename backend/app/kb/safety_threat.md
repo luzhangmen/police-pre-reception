@@ -1,4 +1,71 @@
-# Personal Safety Threat
+# 人身安全威胁（personal_safety_threat）
 
-Knowledge placeholder for threats, stalking, harassment, emergency safety confirmation, evidence preservation, and human handoff.
+> 跟踪、纠缠、死亡威胁、校外滋扰、极端言论等；强调**当前是否安全**。
 
+## 1. 场景定义
+
+用户感到**人身安全受到威胁**，需评估威胁类型、对方、位置、现实危险程度。
+
+**与 dorm_conflict 区分**：加害关系不限于室友；或威胁严重、即时危险明显时优先本场景。
+
+## 2. 字段说明
+
+| 字段 | 必填 | 说明 |
+|------|------|------|
+| `threat_type` | 是 | 跟踪、纠缠、匿名威胁等 |
+| `suspect_info` | 是 | 对方身份 |
+| `current_location` | 是 | 当事人当前位置 |
+| `danger_level` | 是 | 主观/客观危险程度 |
+| `ongoing_threat` | 否 | 威胁是否持续，**高风险** |
+| `current_danger` | 否 | 即时危险，**高风险** |
+| `evidence` | 否 | 截图、录音等 |
+| `prior_incidents` | 否 | 既往发生 |
+| `immediate_need` | 否 | 即时需求（安全保障等） |
+
+## 3. 高风险判定
+
+- `ongoing_threat` 或 `current_danger` 为 true
+- 当事人表述：正在发生、堵人、不敢离开、再次遇到对方
+- 涉及自伤/他伤极端言论且可能上门
+
+## 4. 处置要点
+
+1. **立即安全**：到人多处、联系保安/110/校园报警。
+2. **固证**：聊天记录、录音、监控。
+3. **危机干预**：自伤/极端言论 → 转人工，勿仅机械追问字段。
+4. **历史威胁且当前安全**：仍记录，建议保存证据并报备辅导员/保卫处。
+
+## 5. 追问优先级
+
+1. 是否正在发生、当前是否安全（**最高**）
+2. 威胁类型与对方
+3. 位置与证据
+
+## 6. 子类型速查
+
+| 子类型 | 案例 ID |
+|--------|---------|
+| 即时堵人 | threat-001 |
+| 匿名/网络威胁 | threat-002、threat-003 |
+| 极短输入 | threat-004 |
+| 跟踪骚扰 | threat-005 |
+| 极端言论/自伤风险 | threat-006 |
+| 室友死亡威胁 | threat-007 |
+| 校外滋扰 | threat-008 |
+| 武器图片恐吓 | threat-009 |
+| 网约车跟踪 | threat-010 |
+| 亲属电话威胁 | threat-011 |
+| 谣言+扬言 | threat-012 |
+
+## 7. 危机话术注意
+
+- 涉及「不想活」「一了百了」：先确认当事人安全，再收集信息（threat-006）。
+- 不要仅追问字段而忽视情绪安抚。
+
+## 8. 多轮参考
+
+`dlg-threat-001`、`dlg-threat-002`
+
+## 9. 推荐案例 ID
+
+`threat-001`–`threat-012`；★ `threat-001` `threat-008`；边界 `threat-007` `threat-011`

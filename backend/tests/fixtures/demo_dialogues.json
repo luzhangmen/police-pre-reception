@@ -1,0 +1,508 @@
+[
+  {
+    "dialogue_id": "dlg-fraud-001",
+    "scenario": "telecom_fraud",
+    "tags": ["demo_star", "multiturn"],
+    "description": "网购诈骗两轮补全证据与账号",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "我在闲鱼买演唱会票被骗了，微信转了480，对方把我拉黑了",
+        "expected_scenario": "telecom_fraud",
+        "expected_completeness": 0.75,
+        "expected_missing_fields": ["evidence"],
+        "expected_risk": "medium",
+        "expected_next_action": "ask_followup"
+      },
+      {
+        "turn": 2,
+        "user": "有微信聊天记录和转账截图，对方收款昵称叫票务小王，微信号我不记得了",
+        "expected_slots_delta": {
+          "evidence": "微信聊天记录和转账截图",
+          "recipient_account": "收款昵称票务小王"
+        },
+        "expected_completeness": 1.0,
+        "expected_missing_fields": [],
+        "expected_risk": "medium",
+        "expected_next_action": "give_guidance"
+      }
+    ],
+    "final_expected_police_summary_points": [
+      "闲鱼购票诈骗",
+      "损失480元",
+      "微信支付",
+      "证据：聊天与转账截图",
+      "对方收款昵称：票务小王"
+    ]
+  },
+  {
+    "dialogue_id": "dlg-fraud-002",
+    "scenario": "telecom_fraud",
+    "tags": ["multiturn", "high_risk"],
+    "description": "刷单诈骗先止损再取证",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "刷单兼职还在催我打钱，已经转了3500",
+        "expected_scenario": "telecom_fraud",
+        "expected_risk": "high",
+        "expected_next_action": "handoff_human"
+      },
+      {
+        "turn": 2,
+        "user": "我停手了，是支付宝转的，有对方账号截图",
+        "expected_slots_delta": {
+          "still_transferring": false,
+          "transfer_channel": "支付宝",
+          "evidence": "对方账号截图"
+        },
+        "expected_risk": "medium",
+        "expected_next_action": "give_guidance"
+      }
+    ],
+    "final_expected_police_summary_points": [
+      "刷单诈骗",
+      "累计损失约3500元",
+      "已停止转账",
+      "支付宝转账",
+      "持有对方账号截图"
+    ]
+  },
+  {
+    "dialogue_id": "dlg-loss-001",
+    "scenario": "property_loss",
+    "tags": ["multiturn"],
+    "description": "证件遗失先追问再确认挂失",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "书包在图书馆丢了，里面有身份证和银行卡",
+        "expected_scenario": "property_loss",
+        "expected_risk": "high",
+        "expected_missing_fields": ["lost_time"]
+      },
+      {
+        "turn": 2,
+        "user": "昨晚丢的，银行卡已经电话挂失了，身份证还没补办",
+        "expected_slots_delta": {
+          "lost_time": "昨晚",
+          "account_or_id_risk": true
+        },
+        "expected_completeness": 1.0,
+        "expected_risk": "high",
+        "expected_next_action": "handoff_human"
+      }
+    ],
+    "final_expected_police_summary_points": [
+      "图书馆遗失书包",
+      "内含身份证、银行卡",
+      "昨晚发生",
+      "银行卡已挂失"
+    ]
+  },
+  {
+    "dialogue_id": "dlg-loss-002",
+    "scenario": "property_loss",
+    "tags": ["multiturn", "sparse_input"],
+    "description": "极短输入三轮补全四要素",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "东西丢了",
+        "expected_completeness": 0.0,
+        "expected_missing_fields": ["lost_item", "lost_time", "lost_location", "item_features"]
+      },
+      {
+        "turn": 2,
+        "user": "是笔记本电脑，在图书馆",
+        "expected_completeness": 0.5,
+        "expected_missing_fields": ["lost_time", "item_features"]
+      },
+      {
+        "turn": 3,
+        "user": "昨天下午丢的，联想银色14寸",
+        "expected_completeness": 1.0,
+        "expected_missing_fields": []
+      }
+    ],
+    "final_expected_police_summary_points": [
+      "图书馆遗失笔记本电脑",
+      "昨天下午",
+      "联想银色14寸"
+    ]
+  },
+  {
+    "dialogue_id": "dlg-conflict-001",
+    "scenario": "dorm_conflict",
+    "tags": ["multiturn"],
+    "description": "噪音冲突到明确诉求",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "室友半夜打游戏外放，我们吵起来了",
+        "expected_scenario": "dorm_conflict",
+        "expected_missing_fields": ["time_location", "expected_resolution"]
+      },
+      {
+        "turn": 2,
+        "user": "就昨晚在宿舍，我想让辅导员调解，不想换宿舍",
+        "expected_completeness": 1.0,
+        "expected_slots_delta": {
+          "time_location": "昨晚宿舍",
+          "expected_resolution": "辅导员调解"
+        }
+      }
+    ],
+    "final_expected_police_summary_points": [
+      "宿舍噪音纠纷",
+      "昨晚发生",
+      "诉求：辅导员调解"
+    ]
+  },
+  {
+    "dialogue_id": "dlg-conflict-002",
+    "scenario": "dorm_conflict",
+    "tags": ["multiturn", "high_risk"],
+    "description": "口头威胁升级确认是否动手",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "室友说要打我，我很怕",
+        "expected_risk": "high",
+        "expected_next_action": "handoff_human"
+      },
+      {
+        "turn": 2,
+        "user": "还没动手，我现在去同学宿舍了，他还在我们宿舍",
+        "expected_slots_delta": {
+          "physical_conflict": false,
+          "threat": true
+        }
+      }
+    ],
+    "final_expected_police_summary_points": [
+      "室友口头威胁",
+      "尚未发生肢体冲突",
+      "当事人已暂时离开宿舍"
+    ]
+  },
+  {
+    "dialogue_id": "dlg-threat-001",
+    "scenario": "personal_safety_threat",
+    "tags": ["demo_star", "multiturn", "high_risk"],
+    "description": "楼下堵人紧急处置",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "前男友在宿舍楼下堵我，不让我走",
+        "expected_risk": "high",
+        "expected_next_action": "handoff_human"
+      },
+      {
+        "turn": 2,
+        "user": "我躲进便利店了，保安过来了，他还在外面",
+        "expected_slots_delta": {
+          "current_location": "便利店",
+          "immediate_need": "需要保安/警方介入"
+        }
+      }
+    ],
+    "final_expected_police_summary_points": [
+      "前男友宿舍楼下纠缠",
+      "当事人暂避便利店",
+      "保安已到场",
+      "对方仍在外"
+    ]
+  },
+  {
+    "dialogue_id": "dlg-threat-002",
+    "scenario": "personal_safety_threat",
+    "tags": ["multiturn", "boundary"],
+    "description": "匿名威胁补证据与危险评估",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "表白墙匿名说要来宿舍找我算账",
+        "expected_risk": "medium"
+      },
+      {
+        "turn": 2,
+        "user": "是今天发的，我截图了，现在宿舍走廊没人",
+        "expected_slots_delta": {
+          "evidence": "表白墙截图",
+          "danger_level": "当前走廊无人但仍担心"
+        }
+      }
+    ],
+    "final_expected_police_summary_points": [
+      "表白墙匿名威胁",
+      "今日发生",
+      "已截图保全",
+      "当前位置：宿舍走廊"
+    ]
+  },
+  {
+    "dialogue_id": "dlg-misclass-001",
+    "scenario": "telecom_fraud",
+    "tags": ["boundary", "multiturn"],
+    "description": "看似丢东西实为二手转账被骗",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "我东西没了，钱也没了",
+        "acceptable_scenarios": ["property_loss", "telecom_fraud", "unknown"]
+      },
+      {
+        "turn": 2,
+        "user": "不是丢东西，是二手群买手机转账后对方拉黑",
+        "expected_scenario": "telecom_fraud",
+        "expected_slots_delta": {
+          "fraud_method": "二手交易诈骗",
+          "transfer_channel": "微信"
+        }
+      }
+    ],
+    "final_expected_police_summary_points": [
+      "二手群购机诈骗",
+      "转账后对方失联"
+    ]
+  },
+  {
+    "dialogue_id": "dlg-misclass-002",
+    "scenario": "dorm_conflict",
+    "tags": ["boundary", "multiturn"],
+    "description": "先像人身威胁，澄清为宿舍矛盾",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "有人要打我",
+        "acceptable_scenarios": ["personal_safety_threat", "dorm_conflict", "unknown"]
+      },
+      {
+        "turn": 2,
+        "user": "是我室友，因为用电问题吵架，他说要揍我但还没动手",
+        "expected_scenario": "dorm_conflict",
+        "expected_risk": "high"
+      }
+    ],
+    "final_expected_police_summary_points": [
+      "宿舍用电纠纷",
+      "室友口头威胁",
+      "尚未动手"
+    ]
+  },
+  {
+    "dialogue_id": "dlg-full-001",
+    "scenario": "telecom_fraud",
+    "tags": ["demo_star", "multiturn", "regression"],
+    "description": "完整三轮：分类→补金额→补证据",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "我可能被网上骗了",
+        "expected_completeness": 0.0
+      },
+      {
+        "turn": 2,
+        "user": "对方让我买游戏装备垫付，支付宝转了1200",
+        "expected_completeness": 0.5
+      },
+      {
+        "turn": 3,
+        "user": "有支付宝转账记录和聊天截图，对方支付宝账号还在",
+        "expected_completeness": 1.0,
+        "expected_risk": "medium"
+      }
+    ],
+    "final_expected_police_summary_points": [
+      "游戏装备垫付类诈骗",
+      "损失1200元",
+      "支付宝转账",
+      "证据齐全"
+    ]
+  },
+  {
+    "dialogue_id": "dlg-full-002",
+    "scenario": "property_loss",
+    "tags": ["multiturn", "demo_star"],
+    "description": "手机被盗刷风险两轮",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "手机在食堂丢了，支付宝还能登录",
+        "expected_risk": "high"
+      },
+      {
+        "turn": 2,
+        "user": "今天中午丢的，我已经改了支付密码并冻结了花呗",
+        "expected_completeness": 1.0,
+        "expected_risk": "medium"
+      }
+    ],
+    "final_expected_police_summary_points": [
+      "食堂遗失手机",
+      "今天中午",
+      "已改密码并冻结花呗"
+    ]
+  },
+  {
+    "dialogue_id": "dlg-fraud-003",
+    "scenario": "telecom_fraud",
+    "tags": ["multiturn", "slang"],
+    "description": "网络用语刷单两轮澄清",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "刷单的米没了，对方还催我补单",
+        "expected_scenario": "telecom_fraud",
+        "expected_risk": "high"
+      },
+      {
+        "turn": 2,
+        "user": "停了，支付宝转的，大概3500，有截图",
+        "expected_slots_delta": {
+          "still_transferring": false,
+          "transfer_channel": "支付宝",
+          "loss_amount": 3500,
+          "evidence": "转账截图"
+        },
+        "expected_risk": "medium"
+      }
+    ],
+    "final_expected_police_summary_points": ["刷单诈骗", "约3500元", "支付宝", "已止损"]
+  },
+  {
+    "dialogue_id": "dlg-loss-003",
+    "scenario": "property_loss",
+    "tags": ["multiturn", "noise_prefix"],
+    "description": "闲聊噪声后报遗失",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "对了今天食堂人好多啊，哦说正事，我U盘在机房丢了",
+        "expected_scenario": "property_loss"
+      },
+      {
+        "turn": 2,
+        "user": "32G黑色，下午实验课，机房电脑边",
+        "expected_completeness": 1.0
+      }
+    ],
+    "final_expected_police_summary_points": ["机房遗失U盘", "32G黑色", "下午实验课"]
+  },
+  {
+    "dialogue_id": "dlg-conflict-003",
+    "scenario": "dorm_conflict",
+    "tags": ["multiturn", "high_risk"],
+    "description": "混合转账+威胁澄清",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "室友偷用我手机转账，我们还吵起来了，他说要揍我",
+        "acceptable_scenarios": ["dorm_conflict", "telecom_fraud", "personal_safety_threat"]
+      },
+      {
+        "turn": 2,
+        "user": "转账200块，他还没动手，我躲到隔壁宿舍了",
+        "expected_scenario": "dorm_conflict",
+        "expected_risk": "high"
+      }
+    ],
+    "final_expected_police_summary_points": ["宿舍纠纷", "偷用手机转账约200元", "口头威胁", "未动手", "当事人已转移"]
+  },
+  {
+    "dialogue_id": "dlg-threat-003",
+    "scenario": "personal_safety_threat",
+    "tags": ["multiturn", "multi_topic"],
+    "description": "丢包+堵人优先人身",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "我本来想说书包丢了，但更急的是有人发消息说要堵我，我现在在食堂",
+        "expected_risk": "high"
+      },
+      {
+        "turn": 2,
+        "user": "截图有了，食堂人多，对方还没出现",
+        "expected_slots_delta": { "evidence": "威胁消息截图", "danger_level": "相对安全" }
+      }
+    ],
+    "final_expected_police_summary_points": ["扬言堵人", "食堂", "已截图", "丢包待后续登记"]
+  },
+  {
+    "dialogue_id": "dlg-threat-004",
+    "scenario": "personal_safety_threat",
+    "tags": ["multiturn", "sparse"],
+    "description": "极短威胁三轮补全",
+    "turns": [
+      { "turn": 1, "user": "有人威胁我", "expected_completeness": 0.0 },
+      { "turn": 2, "user": "同院的，在微信上", "expected_completeness": 0.5 },
+      {
+        "turn": 3,
+        "user": "我现在在图书馆，觉得暂时安全，有聊天截图",
+        "expected_completeness": 1.0,
+        "expected_risk": "low"
+      }
+    ],
+    "final_expected_police_summary_points": ["同院同学微信威胁", "当前图书馆", "感觉暂时安全", "有截图"]
+  },
+  {
+    "dialogue_id": "dlg-neg-001",
+    "scenario": "unknown",
+    "tags": ["negative", "multiturn"],
+    "description": "无关咨询后进入真实案件",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "选课什么时候开始",
+        "expected_scenario": "unknown"
+      },
+      {
+        "turn": 2,
+        "user": "不对，我是想报案，闲鱼买票被骗480",
+        "expected_scenario": "telecom_fraud"
+      }
+    ],
+    "final_expected_police_summary_points": ["闲鱼购票诈骗", "480元"]
+  },
+  {
+    "dialogue_id": "dlg-emotion-001",
+    "scenario": "telecom_fraud",
+    "tags": ["emotion_heavy", "multiturn"],
+    "description": "情绪宣泄后进入事实陈述",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "我真的要崩溃了怎么办啊啊啊",
+        "expected_scenario": "unknown"
+      },
+      {
+        "turn": 2,
+        "user": "刷单被骗了2000，还在催我打钱",
+        "expected_scenario": "telecom_fraud",
+        "expected_risk": "high"
+      }
+    ],
+    "final_expected_police_summary_points": ["刷单诈骗", "约2000元", "仍在催款"]
+  },
+  {
+    "dialogue_id": "dlg-handoff-001",
+    "scenario": "personal_safety_threat",
+    "tags": ["handoff", "multiturn", "demo_star"],
+    "description": "武器图片威胁全程高风险",
+    "turns": [
+      {
+        "turn": 1,
+        "user": "收到陌生号码发来的刀的照片，说知道我在哪个宿舍楼",
+        "expected_risk": "high",
+        "expected_next_action": "handoff_human"
+      },
+      {
+        "turn": 2,
+        "user": "我锁门了，截图保存了，还没报警",
+        "expected_next_action": "handoff_human"
+      }
+    ],
+    "final_expected_police_summary_points": ["刀照片恐吓", "知悉宿舍楼栋", "已截图", "建议立即报警"]
+  }
+]

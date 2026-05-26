@@ -1,12 +1,33 @@
-# Scenario Classification Prompt
+# 场景分类任务
 
-Classify the user message into exactly one scenario:
+将用户描述归类为以下四类场景之一：
 
-- telecom_fraud
-- property_loss
-- dorm_conflict
-- personal_safety_threat
-- unknown
+1. **telecom_fraud**（电信/网络诈骗）
+   - 涉及转账、汇款、刷单、冒充客服/公检法、虚假交易、中奖诈骗等。
+   - 关键词：骗、转账、汇款、刷单、客服、中奖、钓鱼链接、二维码、验证码、银行卡、支付宝、微信、闲鱼、二手平台等。
 
-Return JSON only.
+2. **property_loss**（财物遗失）
+   - 物品丢失、遗忘、被盗（但非人身威胁）。
+   - 关键词：丢了、不见了、找不到、被偷、钱包、手机、电脑、钥匙、书包、身份证、银行卡等。
 
+3. **dorm_conflict**（宿舍冲突）
+   - 室友矛盾、生活习惯冲突、噪音、卫生、物品占用等。
+   - 关键词：室友、宿舍、矛盾、吵架、冲突、噪音、卫生、空调、关灯、晚归、占地方等。
+
+4. **personal_safety_threat**（人身安全威胁）
+   - 被跟踪、骚扰、恐吓、肢体冲突、校外人员闯入等涉及人身安全的情况。
+   - 关键词：跟踪、骚扰、恐吓、威胁、打人、打架、尾随、陌生人、危险、害怕、不敢出门等。
+
+## 输出格式
+
+必须且仅返回一个 JSON 对象，不要包含任何解释或 markdown 代码块标记：
+
+```json
+{"scenario": "telecom_fraud"}
+```
+
+如果无法判断，返回：
+
+```json
+{"scenario": "unknown"}
+```

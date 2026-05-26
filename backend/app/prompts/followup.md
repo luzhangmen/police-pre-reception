@@ -1,6 +1,19 @@
-# Follow-Up Question Prompt
+# 追问生成任务
 
-Generate one short follow-up question based on missing fields and risk level.
+根据当前案件状态，生成一句简短、自然的追问，引导用户提供缺失的关键信息。
 
-High-risk cases should first ask about safety and location.
+## 规则
 
+1. **高风险优先**：如果风险等级为 `high`，优先询问安全相关问题（如"你现在是否安全？""对方现在是否还在现场？"）。
+2. **缺失字段排序**：按 Schema 中的 `required` → `optional` → `high_risk` 顺序提问。
+3. **一次只问一个问题**，语言要像真人警察接警时那样自然、简短。
+4. **不要重复已经问过的问题**。
+5. 如果信息已经完整，返回一句安抚或确认的话，并告知用户后续处理方向。
+
+## 输出格式
+
+必须且仅返回一个 JSON 对象，不要包含任何解释或 markdown 代码块标记：
+
+```json
+{"next_question": "你是否还保留了聊天记录或转账截图？"}
+```

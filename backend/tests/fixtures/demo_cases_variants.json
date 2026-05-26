@@ -1,0 +1,209 @@
+[
+  {
+    "variant_id": "fraud-001-v-typo",
+    "parent_id": "fraud-001",
+    "variant_type": "typo",
+    "scenario": "telecom_fraud",
+    "input": "我在咸鱼买演唱会票被骗拉，微信转了480，对方把我拉黑了",
+    "expected_scenario": "telecom_fraud",
+    "evaluator_notes": "咸鱼=闲鱼；被骗拉=被骗了"
+  },
+  {
+    "variant_id": "fraud-001-v-slang",
+    "parent_id": "fraud-001",
+    "variant_type": "slang",
+    "scenario": "telecom_fraud",
+    "input": "闲鱼买票翻车了，480米微信出去，人没了",
+    "expected_scenario": "telecom_fraud",
+    "evaluator_notes": "翻车/米=网络用语"
+  },
+  {
+    "variant_id": "fraud-002-v-urgent",
+    "parent_id": "fraud-002",
+    "variant_type": "emotion",
+    "scenario": "telecom_fraud",
+    "input": "啊啊啊刷单还在催我打钱！！已经3500了怎么办啊",
+    "expected_scenario": "telecom_fraud",
+    "expected_risk": "high"
+  },
+  {
+    "variant_id": "loss-003-v-typo",
+    "parent_id": "loss-003",
+    "variant_type": "typo",
+    "scenario": "property_loss",
+    "input": "书包落图书馆了，里面有身分证和银行卡，昨晚",
+    "expected_scenario": "property_loss",
+    "expected_risk": "high"
+  },
+  {
+    "variant_id": "loss-004-v-minimal",
+    "parent_id": "loss-004",
+    "variant_type": "sparse",
+    "scenario": "property_loss",
+    "input": "丢了",
+    "expected_scenario": "property_loss",
+    "expected_completeness": 0.0
+  },
+  {
+    "variant_id": "loss-002-v-dialect",
+    "parent_id": "loss-002",
+    "variant_type": "dialect",
+    "scenario": "property_loss",
+    "input": "食堂吃饭手機放桌上叫人顺走了，华为黑的",
+    "expected_scenario": "property_loss"
+  },
+  {
+    "variant_id": "conflict-001-v-noisy",
+    "parent_id": "conflict-001",
+    "variant_type": "noise_prefix",
+    "scenario": "dorm_conflict",
+    "input": "烦死了，室友半夜打游戏外放，我说了几次就吵起来，昨晚在宿舍",
+    "expected_scenario": "dorm_conflict"
+  },
+  {
+    "variant_id": "conflict-005-v-typo",
+    "parent_id": "conflict-005",
+    "variant_type": "typo",
+    "scenario": "dorm_conflict",
+    "input": "室友说再举报他打游戏就要揍我，我有点方，今晚还在宿舍",
+    "expected_scenario": "dorm_conflict",
+    "acceptable_alternate_scenarios": ["personal_safety_threat"]
+  },
+  {
+    "variant_id": "threat-001-v-oral",
+    "parent_id": "threat-001",
+    "variant_type": "oral",
+    "scenario": "personal_safety_threat",
+    "input": "我那个前男友在宿舍楼下堵着我不让走，吓死了真的",
+    "expected_scenario": "personal_safety_threat",
+    "expected_risk": "high"
+  },
+  {
+    "variant_id": "threat-004-v-punct",
+    "parent_id": "threat-004",
+    "variant_type": "punctuation",
+    "scenario": "personal_safety_threat",
+    "input": "有人威胁我？？？怎么办。。。",
+    "expected_scenario": "personal_safety_threat"
+  },
+  {
+    "variant_id": "fraud-007-v-mixed",
+    "parent_id": "fraud-007",
+    "variant_type": "boundary",
+    "scenario": "telecom_fraud",
+    "input": "二手群买平板面交，微信转了钱人跑了，算被骗吗",
+    "expected_scenario": "telecom_fraud",
+    "acceptable_alternate_scenarios": ["property_loss"]
+  },
+  {
+    "variant_id": "fraud-003-v-english-mix",
+    "parent_id": "fraud-003",
+    "variant_type": "code_mix",
+    "scenario": "telecom_fraud",
+    "input": "好像被scam了，money转出去了",
+    "expected_scenario": "telecom_fraud"
+  },
+  {
+    "variant_id": "loss-008-v-emoji",
+    "parent_id": "loss-008",
+    "variant_type": "emoji",
+    "scenario": "property_loss",
+    "input": "手机在宿舍丢了😭支付宝微信还能登，怕被盗刷",
+    "expected_scenario": "property_loss",
+    "expected_risk": "high"
+  },
+  {
+    "variant_id": "conflict-003-v-short",
+    "parent_id": "conflict-003",
+    "variant_type": "sparse",
+    "scenario": "dorm_conflict",
+    "input": "宿舍打架，他推我，胳膊破了",
+    "expected_scenario": "dorm_conflict",
+    "expected_risk": "high"
+  },
+  {
+    "variant_id": "threat-009-v-no-space",
+    "parent_id": "threat-009",
+    "variant_type": "typo",
+    "scenario": "personal_safety_threat",
+    "input": "收到陌生号发来的刀的照片说知道我在哪个宿舍楼我很害怕",
+    "expected_scenario": "personal_safety_threat",
+    "expected_risk": "high"
+  },
+  {
+    "variant_id": "fraud-008-v-num",
+    "parent_id": "fraud-008",
+    "variant_type": "number_format",
+    "scenario": "telecom_fraud",
+    "input": "虚拟货币投资银行卡转了五万多，平台打不开还让我借钱继续投",
+    "expected_scenario": "telecom_fraud",
+    "expected_risk": "high"
+  },
+  {
+    "variant_id": "loss-001-v-time-vague",
+    "parent_id": "loss-001",
+    "variant_type": "vague_time",
+    "scenario": "property_loss",
+    "input": "前几天宿舍楼道耳机盒不见了，粉色AirPods",
+    "expected_scenario": "property_loss"
+  },
+  {
+    "variant_id": "conflict-002-v-long",
+    "parent_id": "conflict-002",
+    "variant_type": "verbose",
+    "scenario": "dorm_conflict",
+    "input": "我跟你说我们宿舍空调温度真的吵了快一个月了，我说了好多次也没用，我现在只想换宿舍不想再住了",
+    "expected_scenario": "dorm_conflict"
+  },
+  {
+    "variant_id": "threat-005-v-repeat",
+    "parent_id": "threat-005",
+    "variant_type": "repetition",
+    "scenario": "personal_safety_threat",
+    "input": "同班同学同班同学连续几天跟着我回宿舍，楼下喊我名字，我有录音",
+    "expected_scenario": "personal_safety_threat"
+  },
+  {
+    "variant_id": "fraud-011-v-polite",
+    "parent_id": "fraud-011",
+    "variant_type": "tone",
+    "scenario": "telecom_fraud",
+    "input": "您好，之前被骗三千，刚有人自称客服说退款要先交两千保证金，请问是真的吗",
+    "expected_scenario": "telecom_fraud",
+    "expected_risk": "high"
+  },
+  {
+    "variant_id": "loss-011-v-caps",
+    "parent_id": "loss-011",
+    "variant_type": "emphasis",
+    "scenario": "property_loss",
+    "input": "快递放在宿舍楼下货架被人拆了！！耳机没了！！顺丰已签收",
+    "expected_scenario": "property_loss"
+  },
+  {
+    "variant_id": "conflict-011-v-wechat",
+    "parent_id": "conflict-011",
+    "variant_type": "channel",
+    "scenario": "dorm_conflict",
+    "input": "舍友在微信群骂我人品差，没说要打我，不想回宿舍",
+    "expected_scenario": "dorm_conflict"
+  },
+  {
+    "variant_id": "threat-007-v-casual",
+    "parent_id": "threat-007",
+    "variant_type": "oral",
+    "scenario": "personal_safety_threat",
+    "input": "室友昨晚放话要杀死我，我锁门了人不在宿舍但还是慌",
+    "expected_scenario": "personal_safety_threat",
+    "acceptable_alternate_scenarios": ["dorm_conflict"],
+    "expected_risk": "high"
+  },
+  {
+    "variant_id": "fraud-016-v-parent",
+    "parent_id": "fraud-016",
+    "variant_type": "slang",
+    "scenario": "telecom_fraud",
+    "input": "刷单子的米没了对方还催我补单",
+    "expected_scenario": "telecom_fraud"
+  }
+]

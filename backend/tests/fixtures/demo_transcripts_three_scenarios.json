@@ -1,0 +1,1678 @@
+{
+  "meta": {
+    "version": "1.1",
+    "description": "诈骗、盗窃、打架三类场景的模拟询问/讯问笔录（含 batch-2 扩充）",
+    "maintainer": "陆宣辰",
+    "total": 72,
+    "categories": {
+      "fraud": {
+        "label": "诈骗",
+        "scenario": "telecom_fraud",
+        "count": 24
+      },
+      "theft": {
+        "label": "盗窃",
+        "scenario": "property_loss",
+        "note": "系统场景为 property_loss，须 suspected_theft=true",
+        "count": 24
+      },
+      "fight": {
+        "label": "打架",
+        "scenario": "dorm_conflict",
+        "note": "系统场景为 dorm_conflict，须 physical_conflict=true",
+        "count": 24
+      }
+    }
+  },
+  "transcripts": [
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-001",
+      "title": "闲鱼购票诈骗受害人询问笔录",
+      "record_type": "victim_inquiry",
+      "subject": "李某，男，20岁，某高校大二学生",
+      "incident_time": "2025年3月12日19时许",
+      "incident_location": "校内宿舍（转账行为）/网络平台",
+      "body": "问：你今天来派出所（警务室）反映什么问题？\n答：我在闲鱼买演唱会门票被骗，对方让我微信转账后拉黑。\n问：何时、通过什么方式转账？转了多少？\n答：3月12日晚上7点多，用微信转账480元。\n问：对方账号、昵称能否提供？\n答：收款昵称“票务小王”，微信号记不清了。\n问：是否保留聊天记录、转账凭证？\n答：有聊天截图和转账记录，在手机里。\n问：目前是否仍与对方联系？\n答：没有，转完就拉黑我了。",
+      "plain_summary": "李某于3月12日19时许通过微信向闲鱼卖家转账480元购买演唱会票，对方收款后失联拉黑；持有聊天及转账截图。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "fraud_method": "网购购票诈骗",
+        "loss_amount": 480,
+        "transfer_channel": "微信",
+        "platform": "闲鱼",
+        "evidence": "聊天截图和转账记录",
+        "still_contacting": false
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-002",
+      "title": "刷单诈骗受害人询问笔录（仍在催款）",
+      "record_type": "victim_inquiry",
+      "subject": "王某，女，19岁，某高校大一学生",
+      "incident_time": "2025年3月10日至14日",
+      "body": "问：请陈述被骗经过。\n答：3月10日在QQ群看到刷单兼职，对方让我先垫付任务金。\n问：共转账多少？通过什么渠道？\n答：支付宝转了2000元，3月13日又转了1500元，合计3500元。\n问：对方是否仍要求继续转账？\n答：是，还在发消息催我“补单”，说否则无法返还。\n问：有无对方账号信息？\n答：有支付宝收款账号截图。\n问：是否已停止转账？\n答：今天来报案前已停止，但对方还在联系。",
+      "plain_summary": "王某遭刷单诈骗，支付宝累计转账3500元，对方仍催补单；已停止转账，仍有联系，持有账号截图。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "fraud_method": "刷单诈骗",
+        "loss_amount": 3500,
+        "transfer_channel": "支付宝",
+        "platform": "QQ群",
+        "still_transferring": true,
+        "still_contacting": true,
+        "evidence": "支付宝收款账号截图"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "still_transferring",
+        "still_contacting"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-003",
+      "title": "冒充快递客服诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "赵某，男，21岁",
+      "body": "问：如何接到“客服”？\n答：3月8日接到自称顺丰客服电话，说我快递丢失要双倍赔偿。\n问：如何诱导转账？\n答：让我点短信链接填信息，后在支付宝“理赔”界面转1200元。\n问：证据？\n答：有通话录音、短信链接截图、支付宝转账记录。\n问：对方电话？\n答：来电显示外地手机号，已查不到。",
+      "plain_summary": "赵某遭冒充快递客服诈骗，支付宝损失1200元；有通话录音、短信及转账凭证。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "fraud_method": "冒充快递客服理赔",
+        "loss_amount": 1200,
+        "transfer_channel": "支付宝",
+        "evidence": "通话录音、短信截图、转账记录"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-004",
+      "title": "冒充公检法诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "孙某，男，22岁",
+      "body": "问：对方如何自称？\n答：称是“市公安局民警”，说我银行卡涉嫌洗钱。\n问：转账情况？\n答：3月11日按对方指引向所谓“安全账户”银行卡转账8000元。\n问：是否继续联系？\n答：还在微信上与“警官”联系，让我保密。\n问：证据？\n答：有微信聊天记录和部分转账回单。",
+      "plain_summary": "孙某遭冒充公检法诈骗，银行卡转账8000元至所谓安全账户，对方仍微信联系。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "fraud_method": "冒充公检法",
+        "loss_amount": 8000,
+        "transfer_channel": "银行卡",
+        "still_contacting": true,
+        "evidence": "微信聊天记录、转账回单"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "still_contacting"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-005",
+      "title": "游戏装备交易诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "周某，男，18岁",
+      "body": "问：经过？\n答：游戏QQ群有人低价卖皮肤，我先QQ红包转300元，对方踢出群。\n问：能否提供对方QQ？\n答：昵称记得，QQ号未保存。\n问：证据？\n答：红包记录和群聊截图有。",
+      "plain_summary": "周某在游戏QQ群购皮肤被骗300元，对方收款后踢群；有红包及群聊截图。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "fraud_method": "游戏交易诈骗",
+        "loss_amount": 300,
+        "transfer_channel": "QQ红包",
+        "platform": "QQ群",
+        "evidence": "红包记录、群聊截图",
+        "still_contacting": false
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-006",
+      "title": "冒充学校教务诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "吴某，女，20岁",
+      "body": "问：如何相信对方？\n答：对方QQ头像和备注像学院老师，让交“教材费”。\n问：金额与渠道？\n答：3月9日银行卡转账860元。\n问：证据与联系状态？\n答：有转账记录；转账后QQ被删，联系不上。",
+      "plain_summary": "吴某遭冒充教务QQ诈骗，银行卡损失860元，对方收款后删除好友。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "fraud_method": "冒充学校人员",
+        "loss_amount": 860,
+        "transfer_channel": "银行卡",
+        "platform": "QQ",
+        "evidence": "转账记录",
+        "still_contacting": false
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-007",
+      "title": "二手交易诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "郑某，男，21岁",
+      "body": "问：交易经过？\n答：校内二手群约定面交买平板，我先微信转2200元，对方说去取货。\n问：结果？\n答：对方失联，平板未交付。\n问：证据？\n答：微信聊天、转账截图齐全。",
+      "plain_summary": "郑某二手群购平板，微信转账2200元后对方失联未交货；证据齐全。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "fraud_method": "二手交易未交货",
+        "loss_amount": 2200,
+        "transfer_channel": "微信",
+        "platform": "校内二手群",
+        "evidence": "微信聊天、转账截图",
+        "still_contacting": false
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-008",
+      "title": "虚假投资平台诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "钱某，男，23岁",
+      "body": "问：投资平台情况？\n答：网友推荐“虚拟货币投资”网站，3月1日至10日银行卡累计转账52000元。\n问：现状？\n答：平台无法登录，对方仍劝我借钱继续投。\n问：证据？\n答：有网址截图、转账流水、聊天记录。",
+      "plain_summary": "钱某遭虚假投资诈骗，银行卡累计损失约52000元，平台失联，对方仍诱导继续投入。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "fraud_method": "虚假投资诈骗",
+        "loss_amount": 52000,
+        "transfer_channel": "银行卡",
+        "platform": "虚拟货币投资网站",
+        "still_transferring": true,
+        "still_contacting": true,
+        "evidence": "网址截图、转账流水、聊天记录"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "still_transferring",
+        "still_contacting"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-009",
+      "title": "二次退款诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "冯某，女，22岁",
+      "body": "问：为何再次转账？\n答：此前被骗3000元，近日有人自称平台客服可退款，要先交2000元“保证金”。\n问：是否已转？\n答：今天上午又转了2000元，对方还在催。\n问：证据？\n答：有与“客服”的聊天记录。",
+      "plain_summary": "冯某遭二次退款诈骗，今日又转账2000元保证金，对方仍催款。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "fraud_method": "二次退款诈骗",
+        "loss_amount": 2000,
+        "still_transferring": true,
+        "still_contacting": true,
+        "evidence": "与客服聊天记录"
+      },
+      "expected_missing_fields": [
+        "transfer_channel"
+      ],
+      "expected_high_risk_flags": [
+        "still_transferring"
+      ],
+      "expected_completeness": 0.75
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-010",
+      "title": "网恋交友诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "陈某，男，20岁",
+      "body": "问：交往与转账情况？\n答：网恋两个月，对方以买游戏点卡为由让我代付。\n问：金额？\n答：微信、支付宝合计约6000元。\n问：现状？\n答：3月14日对方删除好友失联。\n问：证据？\n答：聊天记录和转账截图都在。",
+      "plain_summary": "陈某遭网恋诈骗，两月内代付点卡约6000元，对方删除好友失联，有聊天及转账证据。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "fraud_method": "网恋交友诈骗",
+        "loss_amount": 6000,
+        "transfer_channel": "微信、支付宝",
+        "evidence": "聊天记录、转账截图",
+        "still_contacting": false
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-011",
+      "title": "钓鱼短信充值诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "褚某，女，19岁",
+      "body": "问：如何受骗？\n答：收到“运营商欠费”短信，点链接充值50元。\n问：发现异常？\n答：话费未到账，银行卡被扣50元，已向运营商核实无欠费。\n问：证据？\n答：短信截图、支付记录均已保存。",
+      "plain_summary": "褚某遭钓鱼短信诈骗损失50元，有短信及支付记录。",
+      "expected_risk": "low",
+      "expected_slots": {
+        "fraud_method": "钓鱼短信充值",
+        "loss_amount": 50,
+        "transfer_channel": "银行卡扣款",
+        "platform": "钓鱼短信链接",
+        "evidence": "短信截图、支付记录"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-012",
+      "title": "校园贷恐吓催收诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "卫某，男，21岁",
+      "body": "问：对方身份？\n答：自称“校园贷平台催收”，说我逾期要上门。\n问：转账要求？\n答：让我再转3000元“平账”，否则联系辅导员。\n问：是否转账？\n答：尚未转，今天来咨询。\n问：证据？\n答：有电话录音和微信威胁消息。",
+      "plain_summary": "卫某遭冒充校园贷催收诈骗恐吓，被要求转账3000元平账，尚未转账，有录音及微信消息。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "fraud_method": "校园贷恐吓催收",
+        "loss_amount": 3000,
+        "still_transferring": false,
+        "still_contacting": true,
+        "evidence": "电话录音、微信威胁消息"
+      },
+      "expected_missing_fields": [
+        "transfer_channel"
+      ],
+      "expected_completeness": 0.75
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-013",
+      "title": "冒充辅导员收取“活动保证金”诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "韩某，男，20岁，某高校大二学生",
+      "incident_time": "2025年3月15日14时许",
+      "incident_location": "校内宿舍/微信",
+      "body": "问：你今天反映什么问题？\n答：有人微信冒充辅导员，让我交社团活动保证金。\n问：何时、通过什么方式转账？转了多少？\n答：3月15日下午2点多，用微信转账1500元。\n问：对方账号、昵称能否提供？\n答：昵称“李辅导员-学院”，微信号记不清了。\n问：是否保留聊天记录、转账凭证？\n答：有聊天截图和转账记录，在手机里。\n问：目前是否仍与对方联系？\n答：没有，转完就拉黑我了。",
+      "plain_summary": "韩某于3月15日14时许遭冒充辅导员微信诈骗，微信转账1500元活动保证金，对方收款后拉黑；持有聊天及转账截图。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "fraud_method": "冒充学校人员",
+        "loss_amount": 1500,
+        "transfer_channel": "微信",
+        "platform": "微信",
+        "evidence": "聊天截图和转账记录",
+        "still_contacting": false
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-014",
+      "title": "虚假招聘培训费诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "蒋某，女，22岁，某高校大四学生",
+      "incident_time": "2025年3月6日至9日",
+      "body": "问：请陈述被骗经过。\n答：在招聘网站看到“名企实习内推”，对方要求先交3980元培训费。\n问：共转账多少？通过什么渠道？\n答：银行卡分两次转了3980元，3月8日又让对方催交2000元“押金”。\n问：对方是否仍要求继续转账？\n答：是，还在微信催我交押金，说否则名额作废。\n问：有无对方账号信息？\n答：有银行卡收款账号和招聘合同PDF（假的）。\n问：是否已停止转账？\n答：今天来报案前已停止，但对方还在联系。",
+      "plain_summary": "蒋某遭虚假招聘诈骗，银行卡累计损失3980元培训费，对方仍微信催交2000元押金；已停止转账，仍有联系，持有收款账号及假合同。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "fraud_method": "虚假招聘培训费",
+        "loss_amount": 3980,
+        "transfer_channel": "银行卡",
+        "platform": "招聘网站",
+        "still_transferring": true,
+        "still_contacting": true,
+        "evidence": "银行卡收款账号、假招聘合同PDF"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "still_transferring",
+        "still_contacting"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-015",
+      "title": "游戏代练押金诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "沈某，男，19岁",
+      "body": "问：如何受骗？\n答：游戏贴吧找代练，对方要先交500元押金和200元“保证金”。\n问：如何诱导转账？\n答：先后用QQ钱包转了700元，对方说账号异常要再转300元解冻。\n问：证据？\n答：有QQ聊天记录、QQ钱包转账截图。\n问：对方是否仍联系？\n答：还在催我转300元，我没再转。",
+      "plain_summary": "沈某遭游戏代练诈骗，QQ钱包损失700元，对方仍催转300元解冻；有聊天及转账截图，已停止追加转账。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "fraud_method": "游戏代练押金诈骗",
+        "loss_amount": 700,
+        "transfer_channel": "QQ钱包",
+        "platform": "游戏贴吧",
+        "still_transferring": true,
+        "still_contacting": true,
+        "evidence": "QQ聊天记录、QQ钱包转账截图"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "still_transferring",
+        "still_contacting"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-016",
+      "title": "中奖缴纳税费诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "姚某，女，21岁",
+      "body": "问：如何接到“中奖”信息？\n答：3月7日收到短信称抽中笔记本电脑，要领奖先交680元个人所得税。\n问：转账情况？\n答：按短信链接用支付宝转了680元。\n问：是否继续联系？\n答：转完后对方说还要交1200元“手续费”，我拒绝了，对方不再回复。\n问：证据？\n答：有短信截图、支付宝转账记录。",
+      "plain_summary": "姚某遭中奖诈骗，支付宝损失680元个人所得税，拒交手续费后对方失联；有短信及转账凭证。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "fraud_method": "中奖缴纳税费",
+        "loss_amount": 680,
+        "transfer_channel": "支付宝",
+        "platform": "钓鱼短信链接",
+        "evidence": "短信截图、支付宝转账记录",
+        "still_contacting": false
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-017",
+      "title": "兼职模特押金诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "谭某，女，20岁",
+      "body": "问：经过？\n答：小红书私信称招平面模特，要先交1888元押金和化妆费。\n问：金额与渠道？\n答：3月10日、11日微信分两次共转1888元。\n问：能否提供对方账号？\n答：只有微信昵称“星探Lily”，号已搜不到。\n问：证据与联系状态？\n答：有聊天和转账截图；转完后被拉黑。",
+      "plain_summary": "谭某遭兼职模特诈骗，微信累计损失1888元押金化妆费，对方收款后拉黑；有聊天及转账截图。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "fraud_method": "兼职模特押金",
+        "loss_amount": 1888,
+        "transfer_channel": "微信",
+        "platform": "小红书",
+        "evidence": "聊天和转账截图",
+        "still_contacting": false
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-018",
+      "title": "冒充外卖站长收取“入职费”诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "陆某，男，21岁",
+      "body": "问：对方如何自称？\n答：微信群有人自称“美团站长”，招兼职骑手要先交600元装备押金。\n问：转账情况？\n答：3月13日用支付宝转了600元，对方发假工作证图片。\n问：是否继续联系？\n答：还在微信催我交300元“保险”，我没转。\n问：证据？\n答：有微信群聊、支付宝转账记录、假工作证截图。",
+      "plain_summary": "陆某遭冒充外卖站长诈骗，支付宝损失600元入职押金，对方仍催交300元保险；有群聊、转账及假工作证截图。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "fraud_method": "冒充招聘收取入职费",
+        "loss_amount": 600,
+        "transfer_channel": "支付宝",
+        "platform": "微信群",
+        "still_transferring": true,
+        "still_contacting": true,
+        "evidence": "微信群聊、支付宝转账记录、假工作证截图"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "still_transferring",
+        "still_contacting"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-019",
+      "title": "虚假退款链接诈骗笔录（网购订单）",
+      "record_type": "victim_inquiry",
+      "subject": "任某，女，19岁",
+      "body": "问：如何受骗？\n答：3月5日接到自称淘宝客服电话，说我订单异常要“原路退款”，让我点链接操作。\n问：转账情况？\n答：在链接页面输入验证码后，银行卡被扣4200元。\n问：证据？\n答：有通话记录、短信链接截图、银行扣款通知。\n问：对方电话？\n答：外地手机号，现已打不通。",
+      "plain_summary": "任某遭冒充电商客服退款链接诈骗，银行卡损失4200元；有通话、链接截图及扣款通知。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "fraud_method": "虚假退款链接",
+        "loss_amount": 4200,
+        "transfer_channel": "银行卡",
+        "platform": "淘宝",
+        "evidence": "通话记录、短信链接截图、银行扣款通知",
+        "still_contacting": false
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-020",
+      "title": "数码产品租借押金诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "姜某，男，22岁",
+      "body": "问：交易经过？\n答：校内论坛租相机拍毕业照，对方要求微信先交2000元押金。\n问：结果？\n答：转完对方说快递发错地址要再交500元“改址费”，相机一直没收到。\n问：证据？\n答：微信聊天、转账截图齐全。\n问：是否仍在转账？\n答：已停止，但对方还在微信联系。",
+      "plain_summary": "姜某校内论坛租相机被骗，微信损失2000元押金，对方仍联系催改址费；证据齐全，已停止追加转账。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "fraud_method": "租借押金未交货",
+        "loss_amount": 2000,
+        "transfer_channel": "微信",
+        "platform": "校内论坛",
+        "evidence": "微信聊天、转账截图",
+        "still_contacting": true
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "still_contacting"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-021",
+      "title": "贩卖考试答案诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "范某，男，20岁",
+      "body": "问：如何接触对方？\n答：考试QQ群有人兜售“英语四级原题答案”。\n问：金额与渠道？\n答：3月2日QQ红包转980元，对方发压缩包打不开。\n问：证据与联系状态？\n答：有群聊和红包记录；对方踢我出群。",
+      "plain_summary": "范某在QQ群购四级答案被骗980元，压缩包无效，对方踢群失联；有群聊及红包记录。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "fraud_method": "贩卖考试答案",
+        "loss_amount": 980,
+        "transfer_channel": "QQ红包",
+        "platform": "QQ群",
+        "evidence": "群聊和红包记录",
+        "still_contacting": false
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-022",
+      "title": "冒充亲友紧急借钱诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "方某，女，21岁",
+      "body": "问：对方如何取得信任？\n答：3月14日微信收到“表姐”消息，头像昵称一样，说出车祸急用钱。\n问：转账情况？\n答：微信转了3000元，后打电话发现表姐微信被盗。\n问：是否继续联系？\n答：假表姐还在发消息催再转2000元，我已拉黑。\n问：证据？\n答：有聊天记录、转账截图，已向真表姐核实。",
+      "plain_summary": "方某遭冒充亲友微信诈骗损失3000元，假账号仍催款已被拉黑；有聊天及转账截图，已向当事人核实盗号。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "fraud_method": "冒充亲友紧急借钱",
+        "loss_amount": 3000,
+        "transfer_channel": "微信",
+        "platform": "微信",
+        "still_contacting": false,
+        "evidence": "聊天记录、转账截图"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-023",
+      "title": "虚假慈善募捐诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "石某，男，19岁",
+      "body": "问：如何捐款？\n答：3月1日在微博看到“山区儿童助学”募捐链接。\n问：金额？\n答：支付宝扫码捐了200元，后发现链接域名可疑。\n问：证据？\n答：有微博页面截图、支付记录，已向平台举报链接。",
+      "plain_summary": "石某遭虚假慈善链接诈骗损失200元；有微博截图及支付记录，已举报链接。",
+      "expected_risk": "low",
+      "expected_slots": {
+        "fraud_method": "虚假慈善募捐",
+        "loss_amount": 200,
+        "transfer_channel": "支付宝",
+        "platform": "微博",
+        "evidence": "微博页面截图、支付记录"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fraud",
+      "scenario": "telecom_fraud",
+      "id": "transcript-fraud-024",
+      "title": "AI换脸视频敲诈诈骗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "崔某，男，23岁",
+      "body": "问：对方如何要挟？\n答：3月12日网友诱导视频聊天后，发来AI合成的裸聊视频威胁传播。\n问：转账要求？\n答：要求支付宝转5000元“保密费”，我已转2000元。\n问：是否仍被要求转账？\n答：是，还在催剩余3000元。\n问：证据？\n答：有威胁聊天记录、部分转账记录，未保存原始视频。",
+      "plain_summary": "崔某遭AI换脸裸聊敲诈，已支付宝转账2000元保密费，对方仍催剩余3000元；有威胁聊天及转账记录。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "fraud_method": "AI换脸裸聊敲诈",
+        "loss_amount": 2000,
+        "transfer_channel": "支付宝",
+        "still_transferring": true,
+        "still_contacting": true,
+        "evidence": "威胁聊天记录、部分转账记录"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "still_transferring",
+        "still_contacting"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-001",
+      "title": "食堂手机被盗受害人询问笔录",
+      "record_type": "victim_inquiry",
+      "subject": "张某，男，20岁",
+      "incident_time": "2025年3月13日12时30分许",
+      "incident_location": "学校一食堂二楼就餐区",
+      "body": "问：报什么案？\n答：手机被盗。\n问：何时何地？\n答：今天中午在一食堂吃饭，手机放桌上，起身打饭回来发现不见。\n问：手机特征？\n答：华为Mate黑色，带黑色硅胶壳。\n问：是否见可疑人员？\n答：旁边桌有人离开很快，没看清脸。\n问：监控？\n答：食堂有监控，已告知食堂经理。\n问：是否挂失？\n答：手机卡已补办，支付宝已改密码。",
+      "plain_summary": "张某3月13日12时30分许在一食堂就餐时放在桌上的华为黑色手机被盗；已改支付密码，食堂有监控。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "手机",
+        "lost_time": "3月13日中午",
+        "lost_location": "一食堂二楼就餐区",
+        "item_features": "华为Mate黑色，黑色硅胶壳",
+        "suspected_theft": true,
+        "possible_clues": "旁桌人员快速离开；食堂有监控",
+        "evidence": "已向食堂经理报备"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-002",
+      "title": "图书馆书包被盗（含证件）笔录",
+      "record_type": "victim_inquiry",
+      "subject": "李某，女，21岁",
+      "incident_time": "2025年3月11日晚",
+      "incident_location": "图书馆三楼自习区",
+      "body": "问：丢失物品？\n答：双肩书包。\n问：内有何物？\n答：身份证、银行卡、几本教材。\n问：何时发现？\n答：昨晚22点离开时发现书包不在座位。\n问：是否挂失？\n答：银行卡已电话挂失，身份证准备补办。\n问：怀疑盗窃？\n答：是，邻座曾离开，书包原在椅背。",
+      "plain_summary": "李某3月11日晚图书馆自习区双肩包被盗，内有身份证、银行卡；已挂失银行卡，怀疑盗窃。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "lost_item": "双肩书包",
+        "lost_time": "3月11日晚22时许",
+        "lost_location": "图书馆三楼自习区",
+        "item_features": "内有身份证、银行卡、教材",
+        "suspected_theft": true,
+        "account_or_id_risk": true
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "account_or_id_risk"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-003",
+      "title": "体育馆更衣室钱包被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "王某，男，19岁",
+      "body": "问：经过？\n答：3月10日下午在体育馆更衣室换衣，柜子未锁，运动结束发现钱包不见。\n问：钱包内物品？\n答：现金约200元、校园卡。\n问：监控？\n答：更衣室门口有监控，已向场馆中心登记。\n问：时间？\n答：大约15:30至17:00之间。",
+      "plain_summary": "王某3月10日下午体育馆更衣室钱包被盗，内有现金及校园卡；门口有监控，已向场馆登记。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "钱包",
+        "lost_time": "3月10日15:30至17:00",
+        "lost_location": "体育馆更衣室",
+        "item_features": "现金约200元、校园卡",
+        "suspected_theft": true,
+        "possible_clues": "更衣室门口监控",
+        "evidence": "已向场馆中心登记"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-004",
+      "title": "宿舍楼道耳机被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "赵某，女，20岁",
+      "body": "问：何物被盗？\n答：AirPods耳机盒。\n问：时间地点？\n答：3月9日下午在宿舍楼道充电，回宿舍发现不见。\n问：特征？\n答：粉色盒，二代。\n问：线索？\n答：楼道无监控，有同学称见陌生男生晃过。",
+      "plain_summary": "赵某3月9日下午宿舍楼道粉色AirPods耳机盒被盗；楼道无监控，有陌生男性线索。",
+      "expected_risk": "low",
+      "expected_slots": {
+        "lost_item": "AirPods耳机盒",
+        "lost_time": "3月9日下午",
+        "lost_location": "宿舍楼道",
+        "item_features": "粉色，二代",
+        "suspected_theft": true,
+        "possible_clues": "同学见陌生男生"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-005",
+      "title": "教学楼自行车被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "孙某，男，22岁",
+      "body": "问：被盗物品？\n答：自行车。\n问：停放信息？\n答：3月8日上午停教三楼北侧，下午下课发现不见。\n问：特征？\n答：蓝色捷安特，有车锁残骸在原地。\n问：价值？\n答：购买价约1800元。",
+      "plain_summary": "孙某蓝色捷安特自行车3月8日在教三楼北侧被盗，车锁被破坏，价值约1800元。",
+      "expected_risk": "low",
+      "expected_slots": {
+        "lost_item": "自行车",
+        "lost_time": "3月8日下午",
+        "lost_location": "教三楼北侧",
+        "item_features": "蓝色捷安特，车锁被破坏",
+        "suspected_theft": true,
+        "possible_clues": "车锁残骸"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-006",
+      "title": "实验室显示器被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "周某，男，23岁",
+      "body": "问：何物失窃？\n答：实验室戴尔24寸显示器。\n问：时间？\n答：3月7日晚实验室关门时还在，3月8早到实验室发现不见。\n问：门禁？\n答：实验室需刷卡，登记记录可查。\n问：是否报警前告知导师？\n答：已告知导师并查看门禁记录。",
+      "plain_summary": "周某实验室戴尔24寸显示器3月7日晚至8日晨被盗；实验室有刷卡门禁记录。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "电脑显示器",
+        "lost_time": "3月7日晚至3月8日早晨",
+        "lost_location": "实验室",
+        "item_features": "戴尔24寸",
+        "suspected_theft": true,
+        "possible_clues": "门禁刷卡记录",
+        "evidence": "已告知导师并查门禁"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-007",
+      "title": "快递点拆包盗窃笔录",
+      "record_type": "victim_inquiry",
+      "subject": "吴某，女，20岁",
+      "body": "问：案情？\n答：宿舍楼下快递货架上包裹被拆，内耳机不见。\n问：快递信息？\n答：顺丰，显示3月12日签收，下午取件时发现。\n问：价值？\n答：耳机约600元。\n问：证据？\n答：有快递面单照片、破损包装照片。",
+      "plain_summary": "吴某3月12日宿舍楼下快递货架包裹被拆盗走耳机，约600元；有面单及破损包装照片。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "快递内耳机",
+        "lost_time": "3月12日下午",
+        "lost_location": "宿舍楼下快递货架",
+        "item_features": "顺丰包裹内耳机，约600元",
+        "suspected_theft": true,
+        "evidence": "快递面单照片、破损包装照片"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-008",
+      "title": "自习室笔记本电脑被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "郑某，男，21岁",
+      "body": "问：失窃物品？\n答：联想笔记本电脑。\n问：时间地点？\n答：3月6日晚10点南区自习室，去洗手间返回发现不见。\n问：特征？\n答：银色14寸，贴有课程表贴纸。\n问：监控？\n答：自习室有监控，已向管理员申请调取。",
+      "plain_summary": "郑某3月6日晚南区自习室联想银色14寸笔记本被盗；已申请调取监控。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "笔记本电脑",
+        "lost_time": "3月6日晚10时许",
+        "lost_location": "南区自习室",
+        "item_features": "联想银色14寸，贴课程表贴纸",
+        "suspected_theft": true,
+        "possible_clues": "自习室监控",
+        "evidence": "已向管理员申请调取监控"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-009",
+      "title": "洗澡间眼镜被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "冯某，男，19岁",
+      "body": "问：经过？\n答：3月5日在男生洗澡间洗澡，眼镜放更衣篮，出来发现不见。\n问：特征？\n答：黑框近视镜，约300元。\n问：可疑情况？\n答：洗澡间无监控，有人反映近期有外来人员混入。",
+      "plain_summary": "冯某3月5日洗澡间黑框近视眼镜被盗，约300元；无监控，有外来人员混入反映。",
+      "expected_risk": "low",
+      "expected_slots": {
+        "lost_item": "眼镜",
+        "lost_time": "3月5日",
+        "lost_location": "男生洗澡间",
+        "item_features": "黑框近视镜，约300元",
+        "suspected_theft": true,
+        "possible_clues": "反映有外来人员混入"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-010",
+      "title": "机房U盘被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "陈某，女，20岁",
+      "body": "问：何物被盗？\n答：32G黑色U盘。\n问：时间地点？\n答：3月4日下午机房上实验课，下课后发现不在电脑边。\n问：资料重要性？\n答：内有课程设计，已部分备份。\n问：监控？\n答：机房后排有监控。",
+      "plain_summary": "陈某3月4日下午机房32G黑色U盘被盗；机房有监控，资料部分有备份。",
+      "expected_risk": "low",
+      "expected_slots": {
+        "lost_item": "U盘",
+        "lost_time": "3月4日下午",
+        "lost_location": "机房",
+        "item_features": "32G黑色",
+        "suspected_theft": true,
+        "possible_clues": "机房后排监控"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-011",
+      "title": "手机被盗（支付账户风险）笔录",
+      "record_type": "victim_inquiry",
+      "subject": "褚某，男，20岁",
+      "body": "问：手机如何丢失？\n答：3月3日晚在宿舍发现手机不见，疑为白天在校区丢失。\n问：账户风险？\n答：支付宝、微信仍能登录，担心被盗刷，已改密码、冻结花呗。\n问：是否补卡？\n答：已向运营商挂失手机号。",
+      "plain_summary": "褚某手机遗失疑盗，支付软件仍可登录，已改密冻结花呗并挂失手机号。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "lost_item": "手机",
+        "lost_time": "3月3日",
+        "lost_location": "校区/宿舍",
+        "item_features": "智能手机，支付账号仍在线",
+        "suspected_theft": true,
+        "account_or_id_risk": true,
+        "evidence": "已改密码、冻结花呗、挂失手机号"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "account_or_id_risk"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-012",
+      "title": "教室讲台钱包被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "卫某，女，21岁",
+      "body": "问：案情经过？\n答：3月2日上午第二节课在教201教室，钱包放讲台边书包侧袋，下课发现钱包不见。\n问：钱包内容？\n答：现金约150元、学生证、饭卡。\n问：嫌疑人线索？\n答：后排有同学看见后排男生提前离开。\n问：是否登记？\n答：已向教务处保卫处登记。",
+      "plain_summary": "卫某3月2日教201教室讲台边钱包被盗，内有现金及证件；有后排男生离开线索，已向保卫处登记。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "钱包",
+        "lost_time": "3月2日上午第二节课",
+        "lost_location": "教201教室",
+        "item_features": "现金约150元、学生证、饭卡",
+        "suspected_theft": true,
+        "possible_clues": "后排男生提前离开",
+        "evidence": "已向保卫处登记"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-013",
+      "title": "电动车电瓶被盗受害人询问笔录",
+      "record_type": "victim_inquiry",
+      "subject": "何某，男，21岁",
+      "incident_time": "2025年3月14日6时许",
+      "incident_location": "宿舍楼下非机动车停放区",
+      "body": "问：报什么案？\n答：电动车电瓶被盗。\n问：何时何地？\n答：今天早上6点多在宿舍楼下取车，发现电瓶仓被撬空。\n问：电瓶特征？\n答：48V20Ah锂电池，购买约8个月。\n问：是否见可疑人员？\n答：监控显示凌晨4点有一人戴鸭舌帽靠近。\n问：是否报案前告知保卫处？\n答：已向保卫处登记并申请调监控。",
+      "plain_summary": "何某3月14日6时许宿舍楼下电动车48V电瓶被盗，监控见凌晨可疑人员；已向保卫处登记调监控。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "电动车电瓶",
+        "lost_time": "3月14日早晨6时许",
+        "lost_location": "宿舍楼下非机动车停放区",
+        "item_features": "48V20Ah锂电池",
+        "suspected_theft": true,
+        "possible_clues": "凌晨4点戴鸭舌帽人员；有监控",
+        "evidence": "已向保卫处登记"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-014",
+      "title": "宿舍共享充电宝被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "吕某，女，20岁",
+      "incident_time": "2025年3月13日晚",
+      "incident_location": "宿舍公共区域充电架",
+      "body": "问：丢失物品？\n答：宿舍公共充电架上的共享充电宝。\n问：何时发现？\n答：昨晚22点回宿舍发现不在，架子旁有陌生脚印。\n问：特征？\n答：白色20000mAh，贴有寝室编号贴纸。\n问：线索？\n答：楼道无监控，室友说下午有外来维修工经过。",
+      "plain_summary": "吕某3月13日晚宿舍充电架白色20000mAh充电宝被盗；楼道无监控，有外来维修工线索。",
+      "expected_risk": "low",
+      "expected_slots": {
+        "lost_item": "充电宝",
+        "lost_time": "3月13日晚22时许",
+        "lost_location": "宿舍公共区域充电架",
+        "item_features": "白色20000mAh，贴寝室编号",
+        "suspected_theft": true,
+        "possible_clues": "外来维修工经过"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-015",
+      "title": "操场看台外套被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "施某，男，19岁",
+      "body": "问：经过？\n答：3月12日下午在东区操场跑步，外套放看台，跑完发现不见。\n问：外套内物品？\n答：内有宿舍钥匙、饭卡，无现金。\n问：监控？\n答：操场入口有监控，已向体育部登记。\n问：时间？\n答：大约16:00至17:30之间。",
+      "plain_summary": "施某3月12日下午东区操场看台外套被盗，内有宿舍钥匙及饭卡；入口有监控，已向体育部登记。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "外套",
+        "lost_time": "3月12日16:00至17:30",
+        "lost_location": "东区操场看台",
+        "item_features": "内有宿舍钥匙、饭卡",
+        "suspected_theft": true,
+        "possible_clues": "操场入口监控",
+        "evidence": "已向体育部登记"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-016",
+      "title": "琴房小提琴被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "孔某，女，21岁",
+      "body": "问：何物失窃？\n答：艺术楼琴房存放的入门小提琴。\n问：时间？\n答：3月11日晚练琴后上锁，3月12早到琴房发现不见。\n问：特征与价值？\n答：红棕色，琴盒有姓名贴，购买价约2800元。\n问：门禁？\n答：艺术楼需刷卡，可查进出记录。",
+      "plain_summary": "孔某3月11日晚至12日晨艺术楼琴房红棕色小提琴被盗，价值约2800元；艺术楼有刷卡记录。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "小提琴",
+        "lost_time": "3月11日晚至3月12日早晨",
+        "lost_location": "艺术楼琴房",
+        "item_features": "红棕色，琴盒有姓名贴，约2800元",
+        "suspected_theft": true,
+        "possible_clues": "艺术楼刷卡进出记录"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-017",
+      "title": "打印店暂存钱包被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "曹某，男，20岁",
+      "body": "问：案情？\n答：3月10日下午在图文打印店打印论文，钱包放柜台边，取文件时发现不见。\n问：钱包内容？\n答：现金约80元、身份证、银行卡。\n问：是否挂失？\n答：银行卡已挂失，身份证准备补办。\n问：线索？\n答：店主说有一名穿黑衣男子在旁等候后离开。",
+      "plain_summary": "曹某3月10日打印店柜台边钱包被盗，内有现金及证件；已挂失银行卡，店主提供黑衣男子线索。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "lost_item": "钱包",
+        "lost_time": "3月10日下午",
+        "lost_location": "图文打印店",
+        "item_features": "现金约80元、身份证、银行卡",
+        "suspected_theft": true,
+        "account_or_id_risk": true,
+        "possible_clues": "黑衣男子在旁等候后离开"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "account_or_id_risk"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-018",
+      "title": "超市自助结账手机被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "严某，女，20岁",
+      "body": "问：经过？\n答：3月9日晚在校园超市自助结账，手机放扫描台边，结账后发现不见。\n问：手机特征？\n答：iPhone13粉色，有卡通壳。\n问：监控？\n答：超市有监控，已向超市办公室登记。\n问：账户？\n答：已远程锁定手机并改支付密码。",
+      "plain_summary": "严某3月9日晚校园超市自助结账时粉色iPhone13被盗；超市有监控，已远程锁定并改支付密码。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "手机",
+        "lost_time": "3月9日晚",
+        "lost_location": "校园超市自助结账区",
+        "item_features": "iPhone13粉色，卡通壳",
+        "suspected_theft": true,
+        "possible_clues": "超市监控",
+        "evidence": "已远程锁定、改支付密码"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-019",
+      "title": "校车行李架双肩包被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "华某，男，22岁",
+      "body": "问：丢失物品？\n答：校车行李架上的双肩包。\n问：何时发现？\n答：3月8日从机场返校乘校车，下车时发现包不在架上。\n问：内有何物？\n答：笔记本电脑、充电器、护照复印件。\n问：是否登记？\n答：已向校车运营公司报备，司机称中途有人上下车。",
+      "plain_summary": "华某3月8日校车行李架双肩包被盗，内有笔记本及护照复印件；已向运营公司报备。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "lost_item": "双肩包",
+        "lost_time": "3月8日",
+        "lost_location": "校车行李架",
+        "item_features": "内有笔记本电脑、充电器、护照复印件",
+        "suspected_theft": true,
+        "account_or_id_risk": true,
+        "evidence": "已向校车运营公司报备"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "account_or_id_risk"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-020",
+      "title": "摄影社活动相机被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "金某，女，21岁",
+      "body": "问：何物被盗？\n答：摄影社借用的佳能单反相机。\n问：时间地点？\n答：3月7日下午在校门口拍活动，转身装车时相机不见。\n问：特征？\n答：黑色佳能80D，有社团编号贴纸。\n问：价值与线索？\n答：社团资产约6000元；有同学见穿连帽衫男子快步离开。",
+      "plain_summary": "金某3月7日校门口活动拍摄时社团佳能80D相机被盗，约6000元；有连帽衫男子离开线索。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "单反相机",
+        "lost_time": "3月7日下午",
+        "lost_location": "校门口",
+        "item_features": "黑色佳能80D，社团编号贴纸，约6000元",
+        "suspected_theft": true,
+        "possible_clues": "穿连帽衫男子快步离开"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-021",
+      "title": "外卖柜取餐被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "魏某，男，19岁",
+      "body": "问：案情经过？\n答：3月6日中午订外卖放智能柜，下午取餐时发现柜门被撬，餐盒内手机配件不见。\n问：丢失物？\n答：餐盒里夹带的无线耳机，约400元。\n问：证据？\n答：有订单截图、柜门破损照片，已向外卖平台投诉。",
+      "plain_summary": "魏某3月6日智能外卖柜被撬，餐盒内无线耳机被盗约400元；有订单截图及破损照片。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "无线耳机",
+        "lost_time": "3月6日下午",
+        "lost_location": "智能外卖柜",
+        "item_features": "餐盒内夹带，约400元",
+        "suspected_theft": true,
+        "evidence": "订单截图、柜门破损照片"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-022",
+      "title": "校园招聘会展位样品被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "陶某，女，22岁",
+      "body": "问：失窃物品？\n答：招聘会企业展位上的产品样品平板电脑。\n问：时间地点？\n答：3月5日下午体育馆双选会，展位无人看守10分钟，平板不见。\n问：特征？\n答：银色演示机，贴有“样品非卖”标签。\n问：登记？\n答：已向就业指导中心与参展企业报备。",
+      "plain_summary": "陶某3月5日体育馆双选会展位无人看守10分钟，银色演示平板电脑样品被盗；已向就业中心报备。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "平板电脑样品",
+        "lost_time": "3月5日下午",
+        "lost_location": "体育馆双选会展位",
+        "item_features": "银色演示机，样品非卖标签",
+        "suspected_theft": true,
+        "evidence": "已向就业指导中心报备"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-023",
+      "title": "游泳馆更衣柜财物被盗笔录",
+      "record_type": "victim_inquiry",
+      "subject": "姜某，男，20岁",
+      "body": "问：经过？\n答：3月4日在游泳馆游泳，手表和现金放更衣柜，出来发现柜门被撬。\n问：损失？\n答：机械手表一块约1500元、现金200元。\n问：监控？\n答：更衣室走廊有监控，已向场馆前台登记。",
+      "plain_summary": "姜某3月4日游泳馆更衣柜被撬，机械手表及现金共约1700元被盗；走廊有监控，已向场馆登记。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "手表和现金",
+        "lost_time": "3月4日",
+        "lost_location": "游泳馆更衣柜",
+        "item_features": "机械手表约1500元、现金200元",
+        "suspected_theft": true,
+        "possible_clues": "更衣室走廊监控",
+        "evidence": "已向场馆前台登记"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "theft",
+      "scenario": "property_loss",
+      "id": "transcript-theft-024",
+      "title": "校园卡被盗刷（拾得后盗用）笔录",
+      "record_type": "victim_inquiry",
+      "subject": "戚某，女，19岁",
+      "body": "问：如何发现？\n答：3月3日中午一食堂丢饭卡，当晚收到消费提醒连续刷超市。\n问：是否挂失？\n答：已在一卡通中心挂失，查询有3笔超市消费共87元。\n问：是否认为被盗？\n答：是，怀疑被人拾得后盗刷。\n问：线索？\n答：超市有监控，已申请调取。",
+      "plain_summary": "戚某3月3日一食堂遗失饭卡后被盗刷超市消费87元；已挂失，申请调取超市监控。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "lost_item": "校园饭卡",
+        "lost_time": "3月3日中午",
+        "lost_location": "一食堂",
+        "item_features": "被盗刷超市消费87元",
+        "suspected_theft": true,
+        "possible_clues": "超市监控",
+        "evidence": "已在一卡通中心挂失"
+      },
+      "expected_missing_fields": [],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-001",
+      "title": "宿舍卫生纠纷引发打架笔录（受害人）",
+      "record_type": "victim_inquiry",
+      "subject": "张某，男，20岁，宿舍302",
+      "incident_time": "2025年3月14日21时30分许",
+      "incident_location": "学生宿舍302室",
+      "body": "问：为何报警？\n答：与室友因卫生分工打架，他推我导致胳膊擦伤。\n问：起因？\n答：值日表未执行，我说了他几句，双方争吵后他先推我。\n问：伤情？\n答：右前臂擦伤，已校医院简单处理。\n问：对方现状？\n答：仍在宿舍，未再动手。\n问：诉求？\n答：希望学校处理并调宿。",
+      "plain_summary": "张某3月14日21时30分在宿舍302因卫生分工与室友争吵被打，右前臂擦伤，对方仍在宿舍，诉求调宿。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "张某与室友",
+        "conflict_reason": "卫生分工争执",
+        "time_location": "3月14日21时30分，宿舍302",
+        "physical_conflict": true,
+        "expected_resolution": "学校处理并调宿"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-002",
+      "title": "宿舍打架笔录（行为人陈述）",
+      "record_type": "subject_inquiry",
+      "subject": "李某，男，21岁，宿舍302",
+      "body": "问：是否动手？\n答：3月14日晚与室友争吵，我推了他一下。\n问：原因？\n答：他认为我故意不扫地，言语冲突升级。\n问：是否受伤？\n答：他胳膊擦伤，我无外伤。\n问：是否愿意调解？\n答：愿意向辅导员说明情况。",
+      "plain_summary": "李某承认3月14日晚因扫地纠纷推搡室友致对方前臂擦伤，愿意配合调解。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "李某与室友",
+        "conflict_reason": "扫地分工纠纷",
+        "time_location": "3月14日晚，宿舍302",
+        "physical_conflict": true,
+        "expected_resolution": "配合辅导员调解"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-003",
+      "title": "篮球场肢体冲突笔录",
+      "record_type": "victim_inquiry",
+      "subject": "王某，男，19岁",
+      "incident_time": "2025年3月12日17时许",
+      "incident_location": "东区篮球场",
+      "body": "问：经过？\n答：打球时与对方抢球发生争执，对方挥拳打我面部。\n问：伤情？\n答：鼻部出血，已就医拍片，医生说鼻骨疑似骨裂需复查。\n问：认识对方？\n答：同校学生，不认识，在场有同学姓名。\n问：监控？\n答：球场边有监控。",
+      "plain_summary": "王某3月12日东区篮球场打球冲突遭拳击面部，鼻部出血疑似鼻骨骨裂，有在场证人及监控。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "王某与同校陌生男子",
+        "conflict_reason": "打球抢球争执",
+        "time_location": "3月12日17时许，东区篮球场",
+        "physical_conflict": true,
+        "expected_resolution": "追究责任并就医复查",
+        "possible_clues": "在场同学、球场监控"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-004",
+      "title": "食堂排队打架笔录",
+      "record_type": "victim_inquiry",
+      "subject": "赵某，男，20岁",
+      "body": "问：何时何地发生冲突？\n答：3月11日中午一食堂排队，对方插队我提醒后发生推搡。\n问：结果？\n答：我嘴角破裂，对方离开现场。\n问：是否认识？\n答：不认识，穿灰色卫衣。\n问：诉求？\n答：希望调取监控找人。",
+      "plain_summary": "赵某3月11日一食堂排队因插队纠纷遭推搡嘴角破裂，对方穿灰色卫衣离场，要求查监控。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "赵某与未知男子",
+        "conflict_reason": "插队引发纠纷",
+        "time_location": "3月11日中午，一食堂",
+        "physical_conflict": true,
+        "expected_resolution": "调取监控查找对方"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-005",
+      "title": "社团活动室冲突笔录",
+      "record_type": "victim_inquiry",
+      "subject": "孙某，女，21岁",
+      "body": "问：冲突经过？\n答：3月10日晚社团活动室讨论活动，与同学意见不合互骂，对方摔水杯并推我。\n问：伤情？\n答：手腕淤青，无骨折。\n问：此前矛盾？\n答：此前有过几次口角。\n问：希望如何处理？\n答：请辅导员介入调解。",
+      "plain_summary": "孙某3月10日晚社团活动室因意见不合遭推搡手腕淤青，此前有口角，希望辅导员调解。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "孙某与社团同学",
+        "conflict_reason": "活动意见不合",
+        "time_location": "3月10日晚，社团活动室",
+        "physical_conflict": true,
+        "frequency": "此前数次口角",
+        "expected_resolution": "辅导员调解"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-006",
+      "title": "酒后宿舍打架笔录",
+      "record_type": "victim_inquiry",
+      "subject": "周某，男，22岁",
+      "body": "问：是否饮酒？\n答：室友当晚饮酒回宿舍，凌晨砸门骂人。\n问：冲突？\n答：我开门理论，他摔杯子并推我，我跌倒膝盖擦伤。\n问：是否报警前联系宿管？\n答：已叫宿管到场，对方被劝至走廊。\n问：诉求？\n答：要求处分并换宿。",
+      "plain_summary": "周某室友凌晨酒后砸门引发冲突，周某被推跌倒膝盖擦伤，宿管已到场，诉求处分并换宿。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "周某与室友",
+        "conflict_reason": "室友酒后砸门骂人、摔杯推人",
+        "time_location": "凌晨，宿舍",
+        "physical_conflict": true,
+        "expected_resolution": "处分并换宿",
+        "previous_communication": "已叫宿管"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-007",
+      "title": "口头威胁后打架笔录",
+      "record_type": "victim_inquiry",
+      "subject": "吴某，男，20岁",
+      "body": "问：是否先发生威胁？\n答：室友曾称“再举报打游戏就揍我”，今晚发生肢体冲突。\n问：经过？\n答：我敲门说噪音，他开门揪我衣领推墙，我反击抓伤他手臂。\n问：伤情？\n答：我颈部红痕，他手臂抓伤。\n问：是否愿调解？\n答：不敢同住，要求调宿。",
+      "plain_summary": "吴某室友先有口头威胁，3月13日晚因噪音纠纷发生揪推，双方均有伤，吴某要求调宿。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "吴某与室友",
+        "conflict_reason": "噪音纠纷，此前口头威胁",
+        "time_location": "3月13日晚，宿舍",
+        "physical_conflict": true,
+        "threat": true,
+        "expected_resolution": "调宿"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict",
+        "threat"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-008",
+      "title": "校外聚餐后打架笔录",
+      "record_type": "victim_inquiry",
+      "subject": "郑某，男，21岁",
+      "body": "问：地点？\n答：校外大排档，3月9日凌晨。\n问：原因？\n答：喝酒后与邻桌发生口角，对方三人围过来打我。\n问：伤情？\n答：头部包绷带，已急诊处理。\n问：认识对方？\n答：不认识，疑似附近社会人员。",
+      "plain_summary": "郑某3月9日凌晨校外大排档酒后与邻桌冲突遭三人殴打，头部受伤已急诊，对方不明身份。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "郑某与邻桌三名男子",
+        "conflict_reason": "酒后口角",
+        "time_location": "3月9日凌晨，校外大排档",
+        "physical_conflict": true,
+        "expected_resolution": "报警追查"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-009",
+      "title": "图书馆自习区冲突笔录",
+      "record_type": "victim_inquiry",
+      "subject": "冯某，女，20岁",
+      "body": "问：经过？\n答：图书馆占座纠纷，对方将我的书扔地上并扇我耳光。\n问：时间？\n答：3月8日下午。\n问：认识对方？\n答：同校女生，姓不详，有照片。\n问：证据？\n答：有监控申请单、脸部红肿照片。",
+      "plain_summary": "冯某3月8日下午图书馆占座纠纷遭同校女生殴打耳光，有红肿照片及监控申请。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "冯某与同校女生",
+        "conflict_reason": "图书馆占座纠纷",
+        "time_location": "3月8日下午，图书馆",
+        "physical_conflict": true,
+        "evidence": "脸部红肿照片、监控申请单",
+        "expected_resolution": "学校处理"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-010",
+      "title": "实习车间纠纷打架笔录",
+      "record_type": "victim_inquiry",
+      "subject": "陈某，男，22岁",
+      "body": "问：工作单位？\n答：校企合作实习车间。\n问：冲突？\n答：3月7日工作中工具借用发生争执，同事用扳手砸我肩部，我还手一拳。\n问：伤情？\n答：肩部软组织挫伤，已验伤。\n问：车间处理？\n答：车间主任已制止，双方停职配合调查。",
+      "plain_summary": "陈某3月7日实习车间因工具纠纷遭同事用扳手击肩，还手一拳，肩部挫伤已验伤，双方停职调查。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "陈某与同事",
+        "conflict_reason": "工具借用争执",
+        "time_location": "3月7日，实习车间",
+        "physical_conflict": true,
+        "expected_resolution": "配合调查",
+        "evidence": "验伤记录"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-011",
+      "title": "宿舍群骂升级打架笔录",
+      "record_type": "victim_inquiry",
+      "subject": "褚某，男，19岁",
+      "body": "问：线上矛盾？\n答：舍友在微信群辱骂我，回宿舍后继续对骂。\n问：肢体冲突？\n答：对方先扇我耳光，我还手，双方被同学拉开。\n问：伤情？\n答：我左脸红肿，对方无明显伤。\n问：诉求？\n答：请辅导员处理并保留群聊记录。",
+      "plain_summary": "褚某与舍友微信群辱骂后回宿舍发生扇耳光冲突，被同学拉开，左脸红肿，保留群聊记录。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "褚某与舍友",
+        "conflict_reason": "微信群辱骂升级",
+        "time_location": "回宿舍后，宿舍",
+        "physical_conflict": true,
+        "evidence": "微信群聊记录",
+        "expected_resolution": "辅导员处理"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-012",
+      "title": "球场打架证人询问笔录",
+      "record_type": "witness_inquiry",
+      "subject": "证人刘某，男，20岁",
+      "body": "问：你看见什么？\n答：3月12日17时在东区篮球场，看见两名男生抢球争吵，穿白T恤男生挥拳击中另一人面部。\n问：是否认识？\n答：都不认识。\n问：事后？\n答：受伤者捂脸蹲下，打人者跑出球场，我留下联系方式。",
+      "plain_summary": "证人刘某见3月12日东区篮球场白T恤男生拳击另一人面部后逃离，愿配合调查。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "parties": "两名男生（白T恤与受害人）",
+        "conflict_reason": "抢球争吵",
+        "time_location": "3月12日17时，东区篮球场",
+        "physical_conflict": true
+      },
+      "expected_missing_fields": [
+        "expected_resolution"
+      ],
+      "evaluator_notes": "证人笔录，expected_resolution 可能由受害人笔录补齐。",
+      "expected_completeness": 0.75
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-013",
+      "title": "选修课小组作业冲突打架笔录",
+      "record_type": "victim_inquiry",
+      "subject": "谢某，男，21岁",
+      "incident_time": "2025年3月15日20时许",
+      "incident_location": "教学楼讨论室",
+      "body": "问：为何报警？\n答：小组作业分工争执，同组同学推我撞桌角。\n问：起因？\n答：我认为对方未交部分，言语冲突后他先推我。\n问：伤情？\n答：腰部挫伤，已校医院处理。\n问：对方现状？\n答：仍在学校，愿意接受辅导员调解。\n问：诉求？\n答：希望学院介入并调整分组。",
+      "plain_summary": "谢某3月15日20时讨论室因小组作业分工与同学冲突被推撞桌角腰部挫伤，愿辅导员调解并调整分组。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "谢某与同组同学",
+        "conflict_reason": "小组作业分工争执",
+        "time_location": "3月15日20时许，教学楼讨论室",
+        "physical_conflict": true,
+        "expected_resolution": "学院介入并调整分组"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-014",
+      "title": "体检排队推搡冲突笔录",
+      "record_type": "victim_inquiry",
+      "subject": "邹某，女，20岁",
+      "body": "问：何时何地发生冲突？\n答：3月14日早晨校医院体检排队，对方插队我提醒后推我。\n问：结果？\n答：我手臂淤青，对方道歉后离开。\n问：是否认识？\n答：同校女生，不认识。\n问：诉求？\n答：希望医院保安调取监控备案。",
+      "plain_summary": "邹某3月14日校医院体检排队因插队纠纷遭推搡手臂淤青，对方道歉离场，要求保安调监控备案。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "邹某与同校陌生女生",
+        "conflict_reason": "体检排队插队",
+        "time_location": "3月14日早晨，校医院",
+        "physical_conflict": true,
+        "expected_resolution": "调取监控备案"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-015",
+      "title": "停车位纠纷打架笔录",
+      "record_type": "victim_inquiry",
+      "subject": "熊某，男，22岁",
+      "body": "问：经过？\n答：3月13日晚宿舍区非机动车位，对方占用我的充电桩位置，理论时推我。\n问：伤情？\n答：手掌擦伤，无骨折。\n问：认识对方？\n答：同楼室友认识的校外人员，车牌记不清。\n问：监控？\n答：宿舍区入口有监控。",
+      "plain_summary": "熊某3月13日晚宿舍区充电桩车位纠纷遭推搡手掌擦伤，对方为室友认识的校外人员，入口有监控。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "熊某与校外人员",
+        "conflict_reason": "充电桩车位占用",
+        "time_location": "3月13日晚，宿舍区非机动车位",
+        "physical_conflict": true,
+        "expected_resolution": "调取监控处理",
+        "possible_clues": "宿舍区入口监控"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-016",
+      "title": "支教实践基地冲突笔录",
+      "record_type": "victim_inquiry",
+      "subject": "白某，女，21岁",
+      "body": "问：冲突经过？\n答：3月12日在县支教点，与同伴因教案分工争吵，对方摔教案并扇我耳光。\n问：伤情？\n答：左脸红肿，已当地卫生院处理。\n问：此前矛盾？\n答：此前有过几次意见不合。\n问：希望如何处理？\n答：请学校项目组介入调解。",
+      "plain_summary": "白某3月12日支教点因教案分工与同伴冲突遭扇耳光左脸红肿，此前有口角，希望项目组调解。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "白某与支教同伴",
+        "conflict_reason": "教案分工争执",
+        "time_location": "3月12日，县支教点",
+        "physical_conflict": true,
+        "frequency": "此前数次意见不合",
+        "expected_resolution": "学校项目组调解"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-017",
+      "title": "考研自习室占座冲突笔录",
+      "record_type": "victim_inquiry",
+      "subject": "孟某，男，23岁",
+      "body": "问：经过？\n答：考研自习室占座纠纷，对方将我书本扔地上并揪衣领。\n问：时间？\n答：3月11日晚上。\n问：认识对方？\n答：同校男生，常占同一区域，有姓名。\n问：证据？\n答：有监控申请单、衣领撕裂照片。",
+      "plain_summary": "孟某3月11日晚考研自习室占座纠纷遭揪衣领，有撕裂照片及监控申请。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "孟某与同校男生",
+        "conflict_reason": "考研自习室占座纠纷",
+        "time_location": "3月11日晚上，考研自习室",
+        "physical_conflict": true,
+        "evidence": "监控申请单、衣领撕裂照片",
+        "expected_resolution": "学校处理"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-018",
+      "title": "羽毛球馆场地冲突笔录",
+      "record_type": "victim_inquiry",
+      "subject": "龙某，男，20岁",
+      "body": "问：为何报警？\n答：羽毛球馆抢场地发生争执，对方用球拍击打我背部。\n问：伤情？\n答：背部红肿，已冷敷。\n问：对方现状？\n答：仍在馆内，被管理员制止。\n问：诉求？\n答：赔偿医药费并道歉。",
+      "plain_summary": "龙某羽毛球馆抢场地冲突遭球拍击打背部红肿，对方被管理员制止，诉求赔偿并道歉。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "龙某与对方球友",
+        "conflict_reason": "羽毛球馆抢场地",
+        "time_location": "3月10日，羽毛球馆",
+        "physical_conflict": true,
+        "expected_resolution": "赔偿医药费并道歉"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-019",
+      "title": "校园音乐节入场冲突笔录",
+      "record_type": "victim_inquiry",
+      "subject": "段某，女，19岁",
+      "body": "问：何时何地？\n答：3月9日晚操场音乐节入口，因插队纠纷被推搡摔倒。\n问：伤情？\n答：膝盖擦伤，手环摔坏。\n问：是否认识？\n答：不认识，穿黑色卫衣。\n问：诉求？\n答：调取入口监控。",
+      "plain_summary": "段某3月9日晚音乐节入口插队纠纷被推搡摔倒膝盖擦伤，对方穿黑色卫衣，要求调监控。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "段某与未知人员",
+        "conflict_reason": "音乐节入口插队",
+        "time_location": "3月9日晚，操场音乐节入口",
+        "physical_conflict": true,
+        "expected_resolution": "调取入口监控"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-020",
+      "title": "兼职工资纠纷动手笔录",
+      "record_type": "victim_inquiry",
+      "subject": "郝某，男，21岁",
+      "body": "问：工作单位？\n答：校外餐饮店兼职。\n问：冲突？\n答：3月8日因工资结算与店长争吵，店长推我并砸碎水杯。\n问：伤情？\n答：手腕被碎片划伤，已包扎。\n问：是否报警前联系劳动监察？\n答：尚未，今天先来报案。",
+      "plain_summary": "郝某3月8日餐饮店兼职工资纠纷遭店长推搡、水杯碎裂划伤手腕，今日先行报案。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "郝某与店长",
+        "conflict_reason": "兼职工资结算纠纷",
+        "time_location": "3月8日，校外餐饮店",
+        "physical_conflict": true,
+        "expected_resolution": "报警并追究责任"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-021",
+      "title": "实验室学分绩争议冲突笔录",
+      "record_type": "victim_inquiry",
+      "subject": "邬某，男，22岁",
+      "body": "问：冲突经过？\n答：实验室因论文署名顺序争执，师兄推我撞实验台。\n问：伤情？\n答：肘部淤青，试剂洒落无人员中毒。\n问：此前矛盾？\n答：此前在组会上有过言语冲突。\n问：希望如何处理？\n答：请导师与学院介入。",
+      "plain_summary": "邬某实验室论文署名争执遭师兄推撞实验台肘部淤青，此前组会有口角，希望导师学院介入。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "邬某与师兄",
+        "conflict_reason": "论文署名顺序争执",
+        "time_location": "3月7日，实验室",
+        "physical_conflict": true,
+        "frequency": "此前组会言语冲突",
+        "expected_resolution": "导师与学院介入"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-022",
+      "title": "外卖员与门卫冲突笔录（受害人）",
+      "record_type": "victim_inquiry",
+      "subject": "安某，男，20岁",
+      "body": "问：你的身份？\n答：我是校门口取餐的学生，看见外卖员与门卫争吵。\n问：你受伤情况？\n答：劝架时被误推摔倒，脚踝扭伤。\n问：起因？\n答：外卖员要骑车进校，门卫不让，双方推搡。\n问：诉求？\n答：希望调取门口监控，医疗费由责任方承担。",
+      "plain_summary": "安某校门口劝架外卖员与门卫冲突时误被推搡摔倒脚踝扭伤，诉求调监控并由责任方承担医疗费。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "外卖员与门卫（安某为劝架受伤学生）",
+        "conflict_reason": "外卖员进校纠纷",
+        "time_location": "3月6日，校门口",
+        "physical_conflict": true,
+        "expected_resolution": "调取监控、责任方承担医疗费"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-023",
+      "title": "拉拉队选拔冲突笔录（行为人陈述）",
+      "record_type": "subject_inquiry",
+      "subject": "常某，女，20岁",
+      "body": "问：是否动手？\n答：3月5日选拔现场与另一名选手因站位争吵，我推了她一下。\n问：原因？\n答：她认为我故意挡她动作。\n问：是否受伤？\n答：对方手腕淤青，我无外伤。\n问：是否愿意调解？\n答：愿意向体育老师说明并道歉。",
+      "plain_summary": "常某承认3月5日拉拉队选拔因站位争吵推搡对方致手腕淤青，愿意向体育老师说明并道歉。",
+      "expected_risk": "high",
+      "expected_slots": {
+        "parties": "常某与另一名选手",
+        "conflict_reason": "拉拉队选拔站位争执",
+        "time_location": "3月5日，选拔现场",
+        "physical_conflict": true,
+        "expected_resolution": "向体育老师说明并道歉"
+      },
+      "expected_missing_fields": [],
+      "expected_high_risk_flags": [
+        "physical_conflict"
+      ],
+      "expected_completeness": 1.0
+    },
+    {
+      "category": "fight",
+      "scenario": "dorm_conflict",
+      "id": "transcript-fight-024",
+      "title": "篮球场冲突证人询问笔录（第二批）",
+      "record_type": "witness_inquiry",
+      "subject": "证人林某，女，19岁",
+      "body": "问：你看见什么？\n答：3月10日17时在西区篮球场，两名男生因抢场发生争吵，穿黑背心男生推了另一人。\n问：是否认识？\n答：都不认识。\n问：事后？\n答：被推者坐地上，推人者离开，我留下联系方式。",
+      "plain_summary": "证人林某见3月10日西区篮球场抢场争吵，黑背心男生推人后离开，愿配合调查。",
+      "expected_risk": "medium",
+      "expected_slots": {
+        "parties": "两名男生（黑背心与受害人）",
+        "conflict_reason": "抢场地争吵",
+        "time_location": "3月10日17时，西区篮球场",
+        "physical_conflict": true
+      },
+      "expected_missing_fields": [
+        "expected_resolution"
+      ],
+      "evaluator_notes": "证人笔录，expected_resolution 可能由受害人笔录补齐。",
+      "expected_completeness": 0.75
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>校园警务预接待</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="demo-banner hidden" id="pagesNotice" role="status">
+        您正在 GitHub Pages 上浏览静态页面；完整 AI 推理需本地运行后端。
+        <a href="demo.html"><strong>点此查看地图在线 Demo →</strong></a>
+      </div>
+
+      <header class="hero">
+        <div class="hero-text">
+          <p class="eyebrow">校园安全 · 预接待助手</p>
+          <h1>说说发生了什么，我们来帮您理清</h1>
+          <p class="subtitle">
+            您可以用语音或文字描述情况。若提到食堂、宿舍、图书馆等地点，系统会尽量在
+            <strong>高德地图</strong>上标出事发位置，方便接警员快速了解现场。
+          </p>
+          <ol class="steps" aria-label="使用步骤">
+            <li><span>1</span> 描述经过（语音或打字均可）</li>
+            <li><span>2</span> 自动整理场景、风险与追问</li>
+            <li><span>3</span> 线下地点显示在地图与摘要里</li>
+          </ol>
+        </div>
+        <div class="hero-badges">
+          <div class="status-pill" id="speechSupport">正在检测语音…</div>
+          <div class="status-pill map-pill" id="mapProviderBadge">地图服务检测中…</div>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel input-panel">
+          <h2 class="panel-title">您的陈述</h2>
+          <p class="panel-intro">请尽量包含：<em>什么时候、在哪里、发生了什么</em>。不必刻意组织格式。</p>
+
+          <label for="caseId">案件编号 <span class="optional">选填</span></label>
+          <input id="caseId" type="text" placeholder="例如 case-001，便于后续查询" />
+
+          <label for="userText">案情描述</label>
+          <textarea
+            id="userText"
+            rows="8"
+            placeholder="例如：今天下午在一食堂二楼吃饭时手机被偷了，我现在在图书馆三楼，很着急。"
+          ></textarea>
+
+          <div class="toolbar">
+            <button type="button" class="btn secondary" id="voiceBtn" aria-pressed="false">
+              🎙 语音输入
+            </button>
+            <button type="button" class="btn primary" id="submitBtn">提交，帮我整理</button>
+          </div>
+          <p class="hint" id="voiceHint">
+            语音会转成文字显示在上方，您可继续修改后再提交。推荐使用 Chrome 或 Edge 浏览器。
+          </p>
+          <p class="error" id="errorBox" hidden role="alert"></p>
+        </section>
+
+        <section class="panel map-panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title">事发地点</h2>
+              <p class="panel-intro" id="mapIntro">提交后，若识别到线下地址，将在此展示地图。</p>
+            </div>
+            <span class="muted" id="mapMeta">等待您描述</span>
+          </div>
+
+          <div class="map-wrap">
+            <div id="map" class="map" role="application" aria-label="事发地点地图"></div>
+            <div id="mapEmpty" class="map-empty">
+              <p class="map-empty-title">地图会出现在这里</p>
+              <p class="map-empty-body">
+                当您提到<strong>一食堂、图书馆、宿舍、校门口</strong>等具体地点时，我们会尝试标出位置，并用浅色圆圈标出附近范围，供接警参考。
+              </p>
+              <p class="map-empty-note" id="mapSetupNote"></p>
+            </div>
+          </div>
+
+          <ul id="locationList" class="location-list" aria-label="识别到的地点列表"></ul>
+        </section>
+
+        <section class="panel result-panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title">整理结果</h2>
+              <p class="panel-intro">以下为系统初步整理，正式处置以接警人员为准。</p>
+            </div>
+            <span class="muted" id="resultMeta">尚未提交</span>
+          </div>
+          <div id="resultBody" class="result-body">
+            <div class="welcome-card">
+              <p>提交后，这里会显示：</p>
+              <ul>
+                <li>案件类型与风险程度</li>
+                <li>建议补充的一个问题</li>
+                <li>给接警员的简要摘要</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer-note">
+        国内地图推荐使用高德：定位准、中文地址友好。请在服务端配置
+        <code>AMAP_API_KEY</code> 与 <code>MAP_DEFAULT_REGION</code>（学校名称）。
+      </footer>
+    </div>
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin=""
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

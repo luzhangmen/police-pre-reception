@@ -1,0 +1,100 @@
+[
+  {
+    "id": "neg-001",
+    "tags": ["negative", "unknown"],
+    "input": "下学期选课什么时候开始啊",
+    "expected_scenario": "unknown",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "evaluator_notes": "学业咨询，非警务预接待场景；应识别 unknown 或通用引导。"
+  },
+  {
+    "id": "neg-002",
+    "tags": ["negative", "unknown"],
+    "input": "食堂今天的红烧肉不好吃",
+    "expected_scenario": "unknown",
+    "expected_risk": "low",
+    "evaluator_notes": "日常吐槽，无关。"
+  },
+  {
+    "id": "neg-003",
+    "tags": ["negative", "unknown"],
+    "input": "帮我写一份英语作文",
+    "expected_scenario": "unknown",
+    "expected_risk": "low",
+    "evaluator_notes": "错误入口，应礼貌拒识。"
+  },
+  {
+    "id": "neg-004",
+    "tags": ["negative", "chitchat"],
+    "input": "在吗在吗",
+    "expected_scenario": "unknown",
+    "expected_risk": "low",
+    "expected_next_question_keywords": ["情况", "遇到", "什么"],
+    "evaluator_notes": "无内容开场白，应引导描述问题。"
+  },
+  {
+    "id": "neg-005",
+    "tags": ["negative", "ambiguous"],
+    "input": "我出事了",
+    "expected_scenario": "unknown",
+    "expected_risk": "medium",
+    "evaluator_notes": "极模糊；可追问，勿武断分类。"
+  },
+  {
+    "id": "neg-006",
+    "tags": ["negative", "multi_intent_weak"],
+    "input": "最近运气不好，啥都倒霉",
+    "expected_scenario": "unknown",
+    "expected_risk": "low",
+    "evaluator_notes": "情绪宣泄，无具体事件。"
+  },
+  {
+    "id": "neg-007",
+    "tags": ["negative", "wrong_channel"],
+    "input": "宿舍热水器坏了找谁修",
+    "expected_scenario": "unknown",
+    "expected_risk": "low",
+    "evaluator_notes": "后勤报修，非四类案件。"
+  },
+  {
+    "id": "neg-008",
+    "tags": ["negative", "test_spam"],
+    "input": "asdfghjkl123456",
+    "expected_scenario": "unknown",
+    "expected_risk": "low",
+    "evaluator_notes": "乱码/测试输入。"
+  },
+  {
+    "id": "neg-009",
+    "tags": ["negative", "policy_question"],
+    "input": "派出所周末上班吗",
+    "expected_scenario": "unknown",
+    "expected_risk": "low",
+    "evaluator_notes": "政务咨询，非案件陈述。"
+  },
+  {
+    "id": "neg-010",
+    "tags": ["negative", "boundary_soft"],
+    "input": "同学欠我两百块不还",
+    "expected_scenario": "unknown",
+    "acceptable_alternate_scenarios": ["dorm_conflict", "telecom_fraud"],
+    "evaluator_notes": "民事借贷纠纷，金额小；可不归入四类或给通用指引。"
+  },
+  {
+    "id": "neg-011",
+    "tags": ["negative", "noise_only"],
+    "input": "？？？。。。emmm",
+    "expected_scenario": "unknown",
+    "expected_risk": "low",
+    "evaluator_notes": "无有效语义。"
+  },
+  {
+    "id": "neg-012",
+    "tags": ["negative", "mental_health_soft"],
+    "input": "最近压力大睡不着，想找人聊聊",
+    "expected_scenario": "unknown",
+    "expected_risk": "low",
+    "evaluator_notes": "心理健康倾诉；非紧急威胁，宜转心理资源而非报警模板。"
+  }
+]

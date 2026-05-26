@@ -1,4 +1,95 @@
-# Telecom Or Online Fraud
+# 电信 / 网络诈骗（telecom_fraud）
 
-Knowledge placeholder for fraud reporting, evidence preservation, transfer records, chat screenshots, and urgent stop-loss guidance.
+> 知识库供 `knowledge_retriever` 与 Prompt 参考。与 `case_schemas.yaml` 字段一致。
 
+## 1. 场景定义
+
+用户因**非面对面、基于网络或通信手段**被骗转账或泄露资金，包括：假交易、刷单、假客服、假投资、冒充熟人/学校人员等。
+
+**不属于本场景（易混淆）**
+
+| 用户说法 | 更可能场景 |
+|----------|------------|
+| 面交没收到货但像买卖纠纷 | 仍可能 `telecom_fraud`（已转账失联）或需人工区分 |
+| 东西丢了 | `property_loss` |
+| 室友吵架 | `dorm_conflict` |
+
+## 2. 字段说明
+
+| 字段 | 必填 | 说明 | 示例 |
+|------|------|------|------|
+| `fraud_method` | 是 | 被骗方式 | 刷单、冒充客服、购票诈骗 |
+| `loss_amount` | 是 | 损失金额（元） | 480、50000 |
+| `transfer_channel` | 是 | 转账渠道 | 微信、支付宝、银行卡 |
+| `evidence` | 是 | 证据材料 | 聊天记录、转账截图、录音 |
+| `platform` | 否 | 平台/场景 | 闲鱼、QQ群 |
+| `recipient_account` | 否 | 对方账号 | 微信号、银行卡号 |
+| `still_contacting` | 否 | 是否仍在联系 | true/false |
+| `still_transferring` | 否 | 是否仍在转账 | **高风险** |
+
+## 3. 高风险判定
+
+满足任一即倾向 `high` + `handoff_human`：
+
+- `still_transferring == true`（还在打钱）
+- `still_contacting == true` 且对方持续催款
+- 单笔或累计损失极大且仍在诱导投入
+
+## 4. 处置要点（短）
+
+1. **止损第一**：仍在转账 → 明确告知停止一切转账/借贷。
+2. **固证**：聊天、转账、网址、对方账号、通话录音。
+3. **报案与止付**：引导保存材料，建议联系银行/支付平台并报警。
+4. **勿二次受骗**：警惕“退款代办”“黑客追回”等二次诈骗。
+
+## 5. 常见学生表述 → 抽取提示
+
+| 原话片段 | 可抽字段 |
+|----------|----------|
+| 闲鱼/淘宝/拼多多 | `platform` |
+| 微信/支付宝/银行卡转了 X 元 | `transfer_channel`, `loss_amount` |
+| 刷单/垫付/做任务 | `fraud_method` |
+| 还在催我打钱/继续投 | `still_transferring`, `still_contacting` |
+| 拉黑了/踢出群了 | `still_contacting: false` |
+| 有截图/录音 | `evidence` |
+
+## 6. 追问优先级
+
+1. 是否仍在转账或联系（**最高**）
+2. 损失金额与转账方式
+3. 对方账号、平台与证据
+
+## 7. 子类型速查（12 条案例覆盖）
+
+| 子类型 | 案例 ID | 关键信号 |
+|--------|---------|----------|
+| 网购/票务 | fraud-001 | 平台+转账+拉黑 |
+| 刷单垫付 | fraud-002 | 仍在催款 |
+| 极短输入 | fraud-003 | 无金额渠道 |
+| 冒充客服 | fraud-004 | 理赔话术 |
+| 游戏交易 | fraud-005 | QQ群/皮肤 |
+| 冒充学校 | fraud-006 | 教务/教材费 |
+| 二手面交 | fraud-007 | 转账未交货 |
+| 虚假投资 | fraud-008 | 大额+平台打不开 |
+| 冒充公检法 | fraud-009 | 安全账户 |
+| 网恋交友 | fraud-010 | 长期交往+删好友 |
+| 二次退款诈骗 | fraud-011 | 保证金 |
+| 小额钓鱼 | fraud-012 | 话费链接 |
+
+## 8. 错误分类示例
+
+| 用户说法 | 误分为 | 应为 |
+|----------|--------|------|
+| 闲鱼转账被骗 | property_loss | telecom_fraud |
+| 快递被拆 | telecom_fraud | property_loss（loss-011） |
+| 室友骗我转账 | dorm_conflict | telecom_fraud（若核心是转账） |
+
+## 9. 多轮对话参考
+
+- `dlg-fraud-001`：补证据与收款账号
+- `dlg-fraud-002`：止损后降风险
+- `dlg-full-001`：三轮补全
+
+## 10. 推荐测试案例 ID（全量）
+
+`fraud-001`–`fraud-012`；演示 ★：`fraud-001` `fraud-002`；边界：`fraud-007` `fraud-011`

@@ -2,22 +2,1993 @@
   {
     "id": "fraud-001",
     "scenario": "telecom_fraud",
-    "input": "I paid for a concert ticket online and now the seller disappeared."
+    "tags": [
+      "demo_star",
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "我在闲鱼买演唱会票被骗了，微信转了480，对方把我拉黑了",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "platform": "闲鱼",
+      "fraud_method": "购票诈骗",
+      "loss_amount": 480,
+      "transfer_channel": "微信",
+      "still_contacting": false
+    },
+    "expected_missing_fields": [
+      "evidence"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "你是否还保留了聊天记录、转账截图或对方收款账号？",
+    "expected_next_question_keywords": [
+      "聊天记录",
+      "转账",
+      "账号"
+    ],
+    "evaluator_notes": "经典网购诈骗；已明确金额与渠道，优先补证据与对方账号。"
+  },
+  {
+    "id": "fraud-002",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "demo_star",
+      "high_risk",
+      "handoff"
+    ],
+    "difficulty": "medium",
+    "input": "刷单兼职对方让我先垫付2000，我又转了1500过去，现在还在催我继续打钱",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "urgent",
+    "expected_completeness": 0.5,
+    "expected_slots": {
+      "fraud_method": "刷单诈骗",
+      "loss_amount": 3500,
+      "still_transferring": true,
+      "still_contacting": true
+    },
+    "expected_missing_fields": [
+      "transfer_channel",
+      "evidence"
+    ],
+    "expected_high_risk_flags": [
+      "still_transferring",
+      "still_contacting"
+    ],
+    "expected_next_question": "请先停止一切转账。对方是通过什么方式收款的？有没有转账记录或对方账号？",
+    "expected_next_question_keywords": [
+      "停止",
+      "转账",
+      "账号"
+    ],
+    "evaluator_notes": "仍在转账+仍在联系，必须高风险并建议转人工/止付。"
+  },
+  {
+    "id": "fraud-003",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "sparse_input"
+    ],
+    "difficulty": "hard",
+    "input": "好像被网络诈骗了，钱转出去了",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 0.0,
+    "expected_slots": {},
+    "expected_missing_fields": [
+      "fraud_method",
+      "loss_amount",
+      "transfer_channel",
+      "evidence"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "能说一下大概被骗了多少钱、是通过微信/支付宝还是银行卡转出去的吗？",
+    "expected_next_question_keywords": [
+      "多少钱",
+      "微信",
+      "支付宝"
+    ],
+    "evaluator_notes": "极短输入，测试完整度为 0 时的追问策略。"
+  },
+  {
+    "id": "fraud-004",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "有人冒充快递客服打电话，说我包裹丢了要理赔，支付宝转了1200，有通话录音",
+    "expected_risk": "medium",
+    "expected_next_action": "give_guidance",
+    "expected_emotion": "anxious",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "fraud_method": "冒充客服理赔",
+      "loss_amount": 1200,
+      "transfer_channel": "支付宝",
+      "evidence": "通话录音"
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "对方有没有留下收款账号、微信号或电话号码？你现在还和对方有联系吗？",
+    "expected_next_question_keywords": [
+      "账号",
+      "联系"
+    ],
+    "evaluator_notes": "冒充客服类；已有录音证据，仍缺收款账号信息。"
+  },
+  {
+    "id": "fraud-005",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "游戏群里有人说低价卖皮肤，QQ红包发了300，发完就被踢了",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "angry",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "platform": "QQ群",
+      "fraud_method": "游戏交易诈骗",
+      "loss_amount": 300,
+      "transfer_channel": "QQ红包",
+      "still_contacting": false
+    },
+    "expected_missing_fields": [
+      "evidence"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "你还记得对方QQ号或昵称吗？有没有聊天或红包截图可以保存？",
+    "expected_next_question_keywords": [
+      "QQ",
+      "截图"
+    ],
+    "evaluator_notes": "游戏交易诈骗，金额不大但流程完整。"
+  },
+  {
+    "id": "fraud-006",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "rich_slots",
+      "regression"
+    ],
+    "difficulty": "medium",
+    "input": "有人冒充学院教务在QQ上让我交教材费，银行卡转了860，有转账记录",
+    "expected_risk": "medium",
+    "expected_next_action": "give_guidance",
+    "expected_emotion": "anxious",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "fraud_method": "冒充学校人员",
+      "loss_amount": 860,
+      "transfer_channel": "银行卡",
+      "platform": "QQ",
+      "evidence": "转账记录"
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "对方QQ号或银行卡号你还记得吗？转账后还和对方有联系吗？",
+    "expected_next_question_keywords": [
+      "QQ",
+      "银行卡",
+      "联系"
+    ],
+    "evaluator_notes": "校园高发冒充老师/教务类诈骗。"
+  },
+  {
+    "id": "fraud-007",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "boundary"
+    ],
+    "difficulty": "hard",
+    "input": "校内二手群面交买平板，钱微信转过去了对方没把货给我，现在联系不上",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "angry",
+    "expected_slots": {
+      "fraud_method": "二手交易未交货",
+      "transfer_channel": "微信",
+      "platform": "校内二手群",
+      "still_contacting": false
+    },
+    "expected_missing_fields": [
+      "loss_amount",
+      "evidence"
+    ],
+    "expected_completeness": 0.5,
+    "expected_high_risk_flags": [],
+    "expected_next_question": "一共转了多少钱？有没有聊天记录、转账截图或对方微信号？",
+    "expected_next_question_keywords": [
+      "多少钱",
+      "聊天记录",
+      "微信"
+    ],
+    "acceptable_alternate_scenarios": [
+      "property_loss"
+    ],
+    "boundary_notes": "可能被误判为普通纠纷；已转账且失联应倾向诈骗/交易欺诈。",
+    "evaluator_notes": "边界案例：面交未交货。若模型分到 property_loss 可人工复核。"
+  },
+  {
+    "id": "fraud-008",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "high_risk",
+      "rich_slots"
+    ],
+    "difficulty": "medium",
+    "input": "网友带我投资虚拟货币，银行卡累计转了5万多，平台现在打不开，对方还让我借钱继续投",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "fraud_method": "虚假投资诈骗",
+      "loss_amount": 50000,
+      "transfer_channel": "银行卡",
+      "platform": "虚拟货币投资平台",
+      "still_contacting": true,
+      "still_transferring": true
+    },
+    "expected_missing_fields": [
+      "evidence"
+    ],
+    "expected_high_risk_flags": [
+      "still_transferring",
+      "still_contacting"
+    ],
+    "expected_next_question": "请立即停止转账和借贷。是否还有对方账号、网址链接或聊天记录？",
+    "expected_next_question_keywords": [
+      "停止",
+      "账号",
+      "聊天记录"
+    ],
+    "evaluator_notes": "大额+仍在诱导转账，高风险。"
   },
   {
     "id": "loss-001",
     "scenario": "property_loss",
-    "input": "I lost my phone near the dormitory yesterday."
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "昨天下午在宿舍楼道充电，回来看见耳机盒不见了，粉色AirPods",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "lost_item": "耳机盒",
+      "lost_time": "昨天下午",
+      "lost_location": "宿舍楼道",
+      "item_features": "粉色AirPods",
+      "suspected_theft": false
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "当时楼道有没有监控，或者有没有同学看到可疑的人？",
+    "expected_next_question_keywords": [
+      "监控"
+    ],
+    "evaluator_notes": "必填四项齐全，可选追问监控线索。"
+  },
+  {
+    "id": "loss-002",
+    "scenario": "property_loss",
+    "tags": [
+      "demo_star",
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "中午在一食堂吃饭，手机放桌上被人拿走了，华为黑色，有壳",
+    "expected_risk": "medium",
+    "expected_next_action": "give_guidance",
+    "expected_emotion": "anxious",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "lost_item": "手机",
+      "lost_time": "今天中午",
+      "lost_location": "一食堂",
+      "item_features": "华为黑色，有壳",
+      "suspected_theft": true
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "食堂附近有没有监控？是否已向食堂管理方或保卫处报备？",
+    "expected_next_question_keywords": [
+      "监控"
+    ],
+    "evaluator_notes": "疑似盗窃，必填齐全后可给指引而非仅追问必填项。"
+  },
+  {
+    "id": "loss-003",
+    "scenario": "property_loss",
+    "tags": [
+      "demo_star",
+      "high_risk",
+      "handoff"
+    ],
+    "difficulty": "medium",
+    "input": "书包在图书馆丢了，里面有身份证和银行卡，昨晚丢的",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "urgent",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "lost_item": "书包",
+      "lost_time": "昨晚",
+      "lost_location": "图书馆",
+      "item_features": "内含身份证和银行卡",
+      "account_or_id_risk": true
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [
+      "account_or_id_risk"
+    ],
+    "expected_next_question": "请尽快挂失银行卡、冻结第三方支付，并确认身份证是否需要补办。是否怀疑被盗？",
+    "expected_next_question_keywords": [
+      "挂失",
+      "冻结",
+      "身份证"
+    ],
+    "evaluator_notes": "证件/银行卡风险，必须高风险。"
+  },
+  {
+    "id": "loss-004",
+    "scenario": "property_loss",
+    "tags": [
+      "sparse_input"
+    ],
+    "difficulty": "hard",
+    "input": "东西丢了，挺急的",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "urgent",
+    "expected_completeness": 0.0,
+    "expected_slots": {},
+    "expected_missing_fields": [
+      "lost_item",
+      "lost_time",
+      "lost_location",
+      "item_features"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "能说一下丢的是什么、大概什么时候、在哪里丢的吗？",
+    "expected_next_question_keywords": [
+      "什么",
+      "什么时候",
+      "哪里"
+    ],
+    "evaluator_notes": "极短输入，完整度 0。"
+  },
+  {
+    "id": "loss-005",
+    "scenario": "property_loss",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "medium",
+    "input": "体育馆更衣室柜子没锁，运动完发现钱包没了，里面有现金和校园卡",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "lost_item": "钱包",
+      "lost_location": "体育馆更衣室",
+      "item_features": "内有现金和校园卡",
+      "suspected_theft": true
+    },
+    "expected_missing_fields": [
+      "lost_time"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "大概几点发生的？更衣室或场馆有没有监控可以调取？",
+    "expected_next_question_keywords": [
+      "几点",
+      "监控"
+    ],
+    "evaluator_notes": "缺 lost_time 一项必填。"
+  },
+  {
+    "id": "loss-006",
+    "scenario": "property_loss",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "我的自行车停在教学楼北侧，今天早上还在，下午下课就不见了，蓝色捷安特",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "neutral",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "lost_item": "自行车",
+      "lost_time": "今天下午",
+      "lost_location": "教学楼北侧",
+      "item_features": "蓝色捷安特",
+      "suspected_theft": true
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "附近有监控或保安亭吗？车子有没有上牌或登记特征？",
+    "expected_next_question_keywords": [
+      "监控"
+    ],
+    "evaluator_notes": "校园自行车丢失常见场景。"
+  },
+  {
+    "id": "loss-007",
+    "scenario": "property_loss",
+    "tags": [
+      "demo_star",
+      "rich_slots",
+      "regression"
+    ],
+    "difficulty": "easy",
+    "input": "昨晚10点在南区自习室丢了一台iPad，灰色带壳，桌上有监控，已问管理员",
+    "expected_risk": "low",
+    "expected_next_action": "give_guidance",
+    "expected_emotion": "neutral",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "lost_item": "iPad",
+      "lost_time": "昨晚10点",
+      "lost_location": "南区自习室",
+      "item_features": "灰色带壳",
+      "suspected_theft": true,
+      "possible_clues": "桌上有监控，已问管理员",
+      "evidence": "可向管理员申请调取监控"
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "是否已在保卫处或辅导员处登记？需要我帮你整理给警方的遗失经过摘要吗？",
+    "expected_next_question_keywords": [
+      "登记",
+      "摘要"
+    ],
+    "evaluator_notes": "信息极完整，适合演示完整度高、给指引分支。"
+  },
+  {
+    "id": "loss-008",
+    "scenario": "property_loss",
+    "tags": [
+      "boundary",
+      "high_risk"
+    ],
+    "difficulty": "hard",
+    "input": "手机在宿舍丢了，但我支付宝和微信还能登录，就是找不到手机，怕被人拿去转账",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "lost_item": "手机",
+      "lost_location": "宿舍",
+      "item_features": "手机丢失但账号仍可登录",
+      "account_or_id_risk": true,
+      "suspected_theft": true
+    },
+    "expected_missing_fields": [
+      "lost_time"
+    ],
+    "expected_high_risk_flags": [
+      "account_or_id_risk"
+    ],
+    "expected_next_question": "大概什么时候发现丢的？是否已修改支付密码、开启设备查找或远程锁定？",
+    "expected_next_question_keywords": [
+      "什么时候",
+      "密码",
+      "锁定"
+    ],
+    "acceptable_alternate_scenarios": [
+      "dorm_conflict"
+    ],
+    "boundary_notes": "发生在宿舍，但核心是财物+支付风险，主场景应为 property_loss。",
+    "evaluator_notes": "支付账号风险优先于宿舍纠纷分类。"
   },
   {
     "id": "conflict-001",
     "scenario": "dorm_conflict",
-    "input": "My roommate and I keep arguing in the dorm."
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "室友半夜打游戏外放，我说了几次就吵起来，昨晚在宿舍",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "angry",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "parties": "我与室友",
+      "conflict_reason": "半夜打游戏外放",
+      "time_location": "昨晚宿舍",
+      "physical_conflict": false
+    },
+    "expected_missing_fields": [
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "你希望怎么处理？是沟通解决、换宿舍还是请辅导员介入？",
+    "expected_next_question_keywords": [
+      "怎么处理",
+      "辅导员"
+    ],
+    "evaluator_notes": "典型生活习惯冲突，无肢体冲突。"
+  },
+  {
+    "id": "conflict-002",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "medium",
+    "input": "跟室友因为空调温度吵了快一个月了，说过也没用，想换宿舍",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "angry",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "parties": "我与室友",
+      "conflict_reason": "空调温度分歧",
+      "frequency": "近一个月反复",
+      "expected_resolution": "换宿舍"
+    },
+    "expected_missing_fields": [
+      "time_location"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "最近一次冲突大概是什么时候、在宿舍吗？有没有发生过推搡或威胁？",
+    "expected_next_question_keywords": [
+      "什么时候",
+      "推搡",
+      "威胁"
+    ],
+    "evaluator_notes": "长期矛盾，需补时间地点与升级风险。"
+  },
+  {
+    "id": "conflict-003",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "demo_star",
+      "high_risk",
+      "handoff"
+    ],
+    "difficulty": "medium",
+    "input": "宿舍因为卫生分工打起来了，他推了我，我胳膊擦破了，就在刚才我们宿舍",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "parties": "我与室友",
+      "conflict_reason": "卫生分工",
+      "time_location": "刚才宿舍",
+      "physical_conflict": true,
+      "expected_resolution": "需要处理纠纷和受伤"
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [
+      "physical_conflict"
+    ],
+    "expected_next_question": "你现在的伤势严重吗？对方还在宿舍吗，有没有继续威胁你？",
+    "expected_next_question_keywords": [
+      "伤势",
+      "威胁"
+    ],
+    "evaluator_notes": "肢体冲突，高风险转人工。"
+  },
+  {
+    "id": "conflict-004",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "sparse_input"
+    ],
+    "difficulty": "hard",
+    "input": "跟舍友合不来，天天闹矛盾",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "neutral",
+    "expected_completeness": 0.0,
+    "expected_slots": {},
+    "expected_missing_fields": [
+      "parties",
+      "conflict_reason",
+      "time_location",
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "主要是因为什么事情闹矛盾？最近一次大概什么时候、在哪里发生的？",
+    "expected_next_question_keywords": [
+      "什么事情",
+      "什么时候"
+    ],
+    "evaluator_notes": "极短描述，四项必填全缺。"
+  },
+  {
+    "id": "conflict-005",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "high_risk",
+      "handoff"
+    ],
+    "difficulty": "medium",
+    "input": "室友说我再举报他打游戏就要打我，我有点怕，今晚还在宿舍",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "parties": "我与室友",
+      "conflict_reason": "举报打游戏引发矛盾",
+      "time_location": "今晚宿舍",
+      "threat": true
+    },
+    "expected_missing_fields": [
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [
+      "threat"
+    ],
+    "expected_next_question": "对方有没有真的动手？你现在一个人吗，是否需要先离开宿舍？",
+    "expected_next_question_keywords": [
+      "动手",
+      "离开宿舍"
+    ],
+    "acceptable_alternate_scenarios": [
+      "personal_safety_threat"
+    ],
+    "boundary_notes": "含人身威胁用语；在宿舍语境下优先 dorm_conflict，若分到 personal_safety_threat 可接受。",
+    "evaluator_notes": "宿舍内威胁，与 threat-007 形成对照。"
+  },
+  {
+    "id": "conflict-006",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "rich_slots",
+      "emotion_heavy"
+    ],
+    "difficulty": "medium",
+    "input": "宿舍几个人拉小团体排挤我，回宿舍就阴阳怪气，持续两周了，我不想回宿舍",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "parties": "我与多名室友",
+      "conflict_reason": "拉小团体排挤、语言嘲讽",
+      "frequency": "持续两周",
+      "time_location": "宿舍",
+      "emotional_intensity": "高"
+    },
+    "expected_missing_fields": [
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "你希望学校怎么处理？是否需要辅导员调换宿舍或先行调解？",
+    "expected_next_question_keywords": [
+      "怎么处理",
+      "辅导员",
+      "宿舍"
+    ],
+    "evaluator_notes": "校园冷暴力/排挤，无直接肢体威胁。"
+  },
+  {
+    "id": "conflict-007",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "boundary"
+    ],
+    "difficulty": "hard",
+    "input": "室友没经过我同意翻我抽屉还用了我的充电宝，我说了他就跟我吵",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "angry",
+    "expected_completeness": 0.5,
+    "expected_slots": {
+      "parties": "我与室友",
+      "conflict_reason": "私自翻抽屉并使用物品",
+      "physical_conflict": false
+    },
+    "expected_missing_fields": [
+      "time_location",
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "这件事大概什么时候发生的？你希望怎么处理，沟通道歉还是请宿管介入？",
+    "expected_next_question_keywords": [
+      "什么时候",
+      "怎么处理"
+    ],
+    "acceptable_alternate_scenarios": [
+      "property_loss"
+    ],
+    "boundary_notes": "涉及他人物品，但核心是宿舍矛盾而非报失。",
+    "evaluator_notes": "与 loss 场景区分：焦点是侵权/冲突而非寻找丢失物。"
+  },
+  {
+    "id": "conflict-008",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "emotion_heavy",
+      "demo_star"
+    ],
+    "difficulty": "medium",
+    "input": "凌晨两点室友喝酒回来砸门还骂人，我开门理论他就摔杯子，我吓得不敢说话",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "fearful",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "parties": "我与室友",
+      "conflict_reason": "凌晨喝酒砸门骂人、摔杯子",
+      "time_location": "凌晨宿舍",
+      "physical_conflict": false,
+      "emotional_intensity": "高"
+    },
+    "expected_missing_fields": [
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "对方现在还在宿舍吗？你有没有受伤，是否需要联系宿管或保卫处？",
+    "expected_next_question_keywords": [
+      "宿管",
+      "保卫"
+    ],
+    "evaluator_notes": "高情绪+可能升级，尚未明确肢体伤害。"
   },
   {
     "id": "threat-001",
     "scenario": "personal_safety_threat",
-    "input": "Someone is threatening me and I feel in danger right now."
+    "tags": [
+      "demo_star",
+      "high_risk",
+      "handoff"
+    ],
+    "difficulty": "medium",
+    "input": "前男友现在在宿舍楼下堵我，不让我走，我很害怕",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "前男友纠缠",
+      "suspect_info": "前男友",
+      "current_location": "宿舍楼下",
+      "danger_level": "正在发生",
+      "ongoing_threat": true,
+      "current_danger": true
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [
+      "ongoing_threat",
+      "current_danger"
+    ],
+    "expected_next_question": "你现在身边有没有同学或保安？能否先进入有人的地方并拨打110或校园报警电话？",
+    "expected_next_question_keywords": [
+      "保安",
+      "110",
+      "报警"
+    ],
+    "evaluator_notes": "即时危险，必须 handoff。"
+  },
+  {
+    "id": "threat-002",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "medium",
+    "input": "有人在表白墙匿名说要来宿舍找我算账，我不知道是谁",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "threat_type": "匿名威胁",
+      "suspect_info": "身份不明",
+      "current_location": "宿舍"
+    },
+    "expected_missing_fields": [
+      "danger_level"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "威胁是今天发的吗？你有没有截图或链接？现在是否觉得有人就在附近？",
+    "expected_next_question_keywords": [
+      "截图",
+      "附近"
+    ],
+    "evaluator_notes": "匿名威胁，需评估现实危险程度。"
+  },
+  {
+    "id": "threat-003",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "上周被人网上骂说要打我，这周没见人了，我现在在教室感觉安全",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "neutral",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "网络言语威胁",
+      "prior_incidents": "上周",
+      "current_location": "教室",
+      "danger_level": "当前感觉安全",
+      "ongoing_threat": false,
+      "current_danger": false,
+      "suspect_info": "身份不明"
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "你知道对方是谁吗？有没有保存聊天记录或截图以备报案？",
+    "expected_next_question_keywords": [
+      "聊天记录",
+      "截图"
+    ],
+    "evaluator_notes": "历史威胁、当前安全，低风险。"
+  },
+  {
+    "id": "threat-004",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "sparse_input"
+    ],
+    "difficulty": "hard",
+    "input": "有人威胁我，怎么办",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "fearful",
+    "expected_completeness": 0.0,
+    "expected_slots": {},
+    "expected_missing_fields": [
+      "threat_type",
+      "suspect_info",
+      "current_location",
+      "danger_level"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "威胁是通过什么方式发生的？对方是谁，你现在在哪里、是否觉得正在发生危险？",
+    "expected_next_question_keywords": [
+      "什么方式",
+      "在哪里",
+      "危险"
+    ],
+    "evaluator_notes": "极短威胁表述，四项必填全缺。"
+  },
+  {
+    "id": "threat-005",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "rich_slots",
+      "regression"
+    ],
+    "difficulty": "medium",
+    "input": "同班同学连续几天跟着我回宿舍，还在楼下喊我名字，我有录音",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "跟踪骚扰",
+      "suspect_info": "同班同学",
+      "current_location": "宿舍附近",
+      "danger_level": "感到不安但未发生肢体冲突",
+      "evidence": "录音",
+      "prior_incidents": "连续几天"
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "对方现在是否就在附近？你是否需要立即联系辅导员或保卫处？",
+    "expected_next_question_keywords": [
+      "附近",
+      "辅导员",
+      "保卫"
+    ],
+    "evaluator_notes": "跟踪骚扰，有证据，危险程度中等。"
+  },
+  {
+    "id": "threat-006",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "high_risk",
+      "handoff",
+      "emotion_heavy"
+    ],
+    "difficulty": "hard",
+    "input": "前男友发消息说不想活了，还说要来找我一了百了，我现在在宿舍很害怕",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "情感纠纷伴随自伤/极端言论",
+      "suspect_info": "前男友",
+      "current_location": "宿舍",
+      "danger_level": "感到害怕，对方可能前来",
+      "ongoing_threat": true,
+      "immediate_need": "人身安全保障"
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [
+      "ongoing_threat"
+    ],
+    "expected_next_question": "请先确保自身安全，能否联系室友、宿管或保卫处陪你？是否已保存对方的威胁消息截图？",
+    "expected_next_question_keywords": [
+      "安全",
+      "宿管",
+      "截图"
+    ],
+    "evaluator_notes": "涉及自伤/极端言论与可能上门，按高风险转人工；处置时关注当事人安全与危机干预。"
+  },
+  {
+    "id": "threat-007",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "boundary",
+      "high_risk"
+    ],
+    "difficulty": "hard",
+    "input": "室友昨晚说要杀死我，我锁门了，他现在不在宿舍但我还怕",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "死亡威胁",
+      "suspect_info": "室友",
+      "current_location": "宿舍（已锁门）",
+      "danger_level": "仍感到害怕",
+      "prior_incidents": "昨晚",
+      "ongoing_threat": false
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [
+      "ongoing_threat"
+    ],
+    "expected_next_question": "你是否已联系宿管、辅导员或保卫处？有没有录音、聊天记录等证据？",
+    "expected_next_question_keywords": [
+      "宿管",
+      "辅导员",
+      "证据"
+    ],
+    "acceptable_alternate_scenarios": [
+      "dorm_conflict"
+    ],
+    "boundary_notes": "发生在宿舍但为明确死亡威胁；主场景 personal_safety_threat，alternate dorm_conflict。",
+    "evaluator_notes": "与 conflict-005 对照：后者为“要打你”，本条为“杀死”且恐惧感更强。"
+  },
+  {
+    "id": "threat-008",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "demo_star",
+      "high_risk",
+      "handoff"
+    ],
+    "difficulty": "medium",
+    "input": "校外有人连续两晚翻进学校围墙区域冲我喊叫，我今晚去图书馆路上又看到了他",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "校外人员滋扰/跟踪",
+      "suspect_info": "校外不明男子",
+      "current_location": "图书馆路上",
+      "danger_level": "再次遇到对方，感到危险",
+      "prior_incidents": "连续两晚",
+      "ongoing_threat": true,
+      "current_danger": true
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [
+      "ongoing_threat",
+      "current_danger"
+    ],
+    "expected_next_question": "你现在是否安全？能否立即到人多处并联系保卫处或报警？",
+    "expected_next_question_keywords": [
+      "安全",
+      "保卫",
+      "报警"
+    ],
+    "evaluator_notes": "校外人员+反复出现+再次遭遇，高风险。"
+  },
+  {
+    "id": "fraud-009",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "high_risk",
+      "rich_slots"
+    ],
+    "difficulty": "medium",
+    "input": "有人自称公安局说我涉嫌洗钱，让我把生活费转到安全账户，银行卡刚转了8000",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "fraud_method": "冒充公检法",
+      "loss_amount": 8000,
+      "transfer_channel": "银行卡",
+      "still_contacting": true
+    },
+    "expected_missing_fields": [
+      "evidence"
+    ],
+    "expected_high_risk_flags": [
+      "still_contacting"
+    ],
+    "expected_next_question": "请不要再转账。是否还有对方电话、网址或聊天记录？",
+    "expected_next_question_keywords": [
+      "不要",
+      "转账",
+      "记录"
+    ],
+    "evaluator_notes": "冒充公检法经典话术；金额大，宜转人工。"
+  },
+  {
+    "id": "fraud-010",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "rich_slots",
+      "emotion_heavy"
+    ],
+    "difficulty": "medium",
+    "input": "网恋对象让我帮她买游戏点卡，两个月累计转了6000多，现在她把我删了",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 0.5,
+    "expected_slots": {
+      "fraud_method": "网恋交友诈骗",
+      "loss_amount": 6000,
+      "still_contacting": false
+    },
+    "expected_missing_fields": [
+      "transfer_channel",
+      "evidence"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "主要是通过什么方式转账的？有没有聊天和转账截图？",
+    "expected_next_question_keywords": [
+      "转账",
+      "截图"
+    ],
+    "evaluator_notes": "杀猪盘/交友诈骗变体。"
+  },
+  {
+    "id": "fraud-011",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "boundary",
+      "high_risk"
+    ],
+    "difficulty": "hard",
+    "input": "之前被骗3000，刚有人自称平台客服说能退款，让我先交2000保证金",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "urgent",
+    "expected_completeness": 0.5,
+    "expected_slots": {
+      "fraud_method": "二次退款诈骗",
+      "loss_amount": 2000,
+      "still_transferring": true
+    },
+    "expected_missing_fields": [
+      "transfer_channel",
+      "evidence"
+    ],
+    "expected_high_risk_flags": [
+      "still_transferring"
+    ],
+    "expected_next_question": "请立即停止向所谓客服转账。对方如何联系你的？",
+    "expected_next_question_keywords": [
+      "停止",
+      "客服"
+    ],
+    "acceptable_alternate_scenarios": [
+      "telecom_fraud"
+    ],
+    "boundary_notes": "二次诈骗；仍属 telecom_fraud。",
+    "evaluator_notes": "退款代办类二次诈骗。"
+  },
+  {
+    "id": "fraud-012",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "收到短信说欠费要点击链接充值，充了50块话费才发现不对",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "neutral",
+    "expected_completeness": 0.5,
+    "expected_slots": {
+      "fraud_method": "钓鱼短信充值",
+      "loss_amount": 50,
+      "platform": "短信链接"
+    },
+    "expected_missing_fields": [
+      "transfer_channel",
+      "evidence"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "充值是通过什么渠道完成的？短信和支付截图还在吗？",
+    "expected_next_question_keywords": [
+      "渠道",
+      "截图"
+    ],
+    "evaluator_notes": "小额诈骗，测试低金额路径。"
+  },
+  {
+    "id": "loss-009",
+    "scenario": "property_loss",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "今天上午第三节课在教三楼教室丢了雨伞，黑色折叠伞",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "neutral",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "lost_item": "雨伞",
+      "lost_time": "今天上午第三节课",
+      "lost_location": "教三楼教室",
+      "item_features": "黑色折叠伞",
+      "suspected_theft": false
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "下课后是否问过同学或查看教室监控？",
+    "expected_next_question_keywords": [
+      "监控",
+      "同学"
+    ],
+    "evaluator_notes": "低价值纯遗失。"
+  },
+  {
+    "id": "loss-010",
+    "scenario": "property_loss",
+    "tags": [
+      "rich_slots",
+      "regression"
+    ],
+    "difficulty": "medium",
+    "input": "实验室电脑显示器不见了，昨晚关门时还在，型号戴尔24寸",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "lost_item": "电脑显示器",
+      "lost_time": "昨晚至今早",
+      "lost_location": "实验室",
+      "item_features": "戴尔24寸",
+      "suspected_theft": true
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "实验室是否有门禁记录或监控？是否已报告导师？",
+    "expected_next_question_keywords": [
+      "监控",
+      "导师"
+    ],
+    "evaluator_notes": "实验室资产遗失。"
+  },
+  {
+    "id": "loss-011",
+    "scenario": "property_loss",
+    "tags": [
+      "boundary"
+    ],
+    "difficulty": "hard",
+    "input": "快递放在宿舍楼下货架被人拆了，里面的耳机没了，顺丰显示已签收",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "angry",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "lost_item": "快递内耳机",
+      "lost_location": "宿舍楼下快递货架",
+      "item_features": "顺丰快递内耳机",
+      "suspected_theft": true
+    },
+    "expected_missing_fields": [
+      "lost_time"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "大概什么时候发现被拆的？有没有向快递员或驿站投诉并拍照？",
+    "expected_next_question_keywords": [
+      "什么时候",
+      "拍照"
+    ],
+    "acceptable_alternate_scenarios": [
+      "telecom_fraud"
+    ],
+    "boundary_notes": "快递被盗属财物遗失，非典型网络诈骗。",
+    "evaluator_notes": "快递盗窃/遗失边界。"
+  },
+  {
+    "id": "loss-012",
+    "scenario": "property_loss",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "校园卡丢了，已挂失，昨天在体育馆洗澡间丢的",
+    "expected_risk": "low",
+    "expected_next_action": "give_guidance",
+    "expected_emotion": "neutral",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "lost_item": "校园卡",
+      "lost_time": "昨天",
+      "lost_location": "体育馆洗澡间",
+      "item_features": "已挂失",
+      "account_or_id_risk": false
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "是否需要整理一份遗失经过给保卫处备案？",
+    "expected_next_question_keywords": [
+      "保卫处",
+      "备案"
+    ],
+    "evaluator_notes": "已挂失，风险低，偏指引。"
+  },
+  {
+    "id": "conflict-009",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "室友总在阳台抽烟，味道飘进我床位，说了几次还抽",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "angry",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "parties": "我与室友",
+      "conflict_reason": "阳台抽烟影响他人",
+      "time_location": "宿舍阳台/床位"
+    },
+    "expected_missing_fields": [
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "你希望怎么处理？是否需要宿管或辅导员协调？",
+    "expected_next_question_keywords": [
+      "怎么处理",
+      "辅导员"
+    ],
+    "evaluator_notes": "生活习惯类冲突。"
+  },
+  {
+    "id": "conflict-010",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "medium",
+    "input": "室友经常带校外朋友回宿舍过夜，吵到两三点，我睡眠很差",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "parties": "我与室友及校外人员",
+      "conflict_reason": "带人过夜噪音大",
+      "time_location": "宿舍夜间",
+      "frequency": "经常"
+    },
+    "expected_missing_fields": [
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "你是否已向宿管反映？希望换宿还是限时管理访客？",
+    "expected_next_question_keywords": [
+      "宿管",
+      "换宿"
+    ],
+    "evaluator_notes": "访客管理类宿舍矛盾。"
+  },
+  {
+    "id": "conflict-011",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "boundary"
+    ],
+    "difficulty": "medium",
+    "input": "舍友在群里骂我人品差，但没说要打我，我现在不想回宿舍",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "parties": "我与舍友",
+      "conflict_reason": "群内辱骂",
+      "time_location": "宿舍/微信群",
+      "threat": false
+    },
+    "expected_missing_fields": [
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "你希望学校怎么处理？是否需要辅导员调解或暂时调换宿舍？",
+    "expected_next_question_keywords": [
+      "辅导员",
+      "宿舍"
+    ],
+    "acceptable_alternate_scenarios": [
+      "personal_safety_threat"
+    ],
+    "boundary_notes": "网络辱骂但未明确威胁，优先宿舍冲突。",
+    "evaluator_notes": "与 threat 场景区分：无明确威胁人身。"
+  },
+  {
+    "id": "conflict-012",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "emotion_heavy",
+      "regression"
+    ],
+    "difficulty": "medium",
+    "input": "找过辅导员调解两次了，室友还是故意摔门针对我，我不知道还能怎么办",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 0.5,
+    "expected_slots": {
+      "parties": "我与室友",
+      "conflict_reason": "故意摔门针对",
+      "previous_communication": "辅导员调解两次",
+      "frequency": "反复",
+      "emotional_intensity": "高"
+    },
+    "expected_missing_fields": [
+      "time_location",
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "最近一次大概什么时候发生的？是否考虑正式申请换宿？",
+    "expected_next_question_keywords": [
+      "什么时候",
+      "换宿"
+    ],
+    "evaluator_notes": "已介入调解仍无效，需记录既往处置。"
+  },
+  {
+    "id": "threat-009",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "high_risk",
+      "handoff",
+      "rich_slots"
+    ],
+    "difficulty": "medium",
+    "input": "收到陌生号码发来的刀的照片，说知道我在哪个宿舍楼，我很害怕",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "恐吓信息/武器图片",
+      "suspect_info": "陌生号码",
+      "current_location": "宿舍区域",
+      "danger_level": "高度恐惧",
+      "evidence": "刀的照片短信",
+      "ongoing_threat": true
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [
+      "ongoing_threat"
+    ],
+    "expected_next_question": "请先保存截图并不要回复对方。你现在是否在安全房间？是否已联系保卫处或报警？",
+    "expected_next_question_keywords": [
+      "截图",
+      "报警",
+      "安全"
+    ],
+    "evaluator_notes": "武器图片+掌握位置，高风险。"
+  },
+  {
+    "id": "threat-010",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "high_risk",
+      "rich_slots"
+    ],
+    "difficulty": "medium",
+    "input": "昨晚网约车司机知道我宿舍楼栋，今天又在校门口晃，我不敢一个人走",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "跟踪/尾随",
+      "suspect_info": "网约车司机",
+      "current_location": "校门口",
+      "danger_level": "不敢独自行走",
+      "prior_incidents": "昨晚及今日",
+      "ongoing_threat": true,
+      "current_danger": true
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [
+      "ongoing_threat",
+      "current_danger"
+    ],
+    "expected_next_question": "你现在是否在校门口？能否立即到保卫处或人多的地方并报警？",
+    "expected_next_question_keywords": [
+      "保卫",
+      "报警"
+    ],
+    "evaluator_notes": "校外人员跟踪，反复出现。"
+  },
+  {
+    "id": "threat-011",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "boundary",
+      "emotion_heavy"
+    ],
+    "difficulty": "hard",
+    "input": "家里亲戚打电话骂我并说要来学校打我，我现在在宿舍，他还没到",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "fearful",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "亲属言语威胁",
+      "suspect_info": "家里亲戚",
+      "current_location": "宿舍",
+      "danger_level": "对方尚未到达但担心",
+      "ongoing_threat": false
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "是否有具体到达时间或路线？建议告知辅导员/保卫处并保存通话记录，你现在身边有人吗？",
+    "expected_next_question_keywords": [
+      "辅导员",
+      "记录",
+      "身边"
+    ],
+    "acceptable_alternate_scenarios": [
+      "dorm_conflict"
+    ],
+    "boundary_notes": "亲属冲突；若强调即将到达可升 high。",
+    "evaluator_notes": "非室友威胁，仍属人身安全。"
+  },
+  {
+    "id": "threat-012",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "boundary",
+      "rich_slots"
+    ],
+    "difficulty": "medium",
+    "input": "实验室同学散布谣言说我作弊，还扬言要在楼下堵我，我今天没去实验室",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "谣言+扬言堵人",
+      "suspect_info": "实验室同学",
+      "current_location": "宿舍（未去实验室）",
+      "danger_level": "担心但今日未遭遇",
+      "prior_incidents": "散布谣言",
+      "ongoing_threat": false
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "对方今天是否真的出现在楼下？有没有聊天记录或证人？",
+    "expected_next_question_keywords": [
+      "今天",
+      "聊天记录"
+    ],
+    "acceptable_alternate_scenarios": [
+      "dorm_conflict"
+    ],
+    "boundary_notes": "校园人际关系冲突含威胁用语；主场景人身威胁。",
+    "evaluator_notes": "扬言但未发生，风险 medium。"
+  },
+  {
+    "id": "fraud-013",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "rich_slots",
+      "regression"
+    ],
+    "difficulty": "easy",
+    "input": "QQ群里领红包链接点进去，让我输银行卡验证码，结果扣了1500",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "anxious",
+    "expected_completeness": 0.5,
+    "expected_slots": {
+      "fraud_method": "钓鱼链接盗刷",
+      "loss_amount": 1500,
+      "platform": "QQ群"
+    },
+    "expected_missing_fields": [
+      "transfer_channel",
+      "evidence"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "银行卡是否已挂失？有没有链接截图和扣款短信？",
+    "expected_next_question_keywords": [
+      "挂失",
+      "截图"
+    ],
+    "evaluator_notes": "钓鱼链接/验证码类诈骗。"
+  },
+  {
+    "id": "fraud-014",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "emotion_heavy"
+    ],
+    "difficulty": "medium",
+    "input": "校园贷平台说我逾期要上门，让我再转3000平账，我慌了",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 0.5,
+    "expected_slots": {
+      "fraud_method": "校园贷恐吓催收",
+      "loss_amount": 3000,
+      "still_transferring": true
+    },
+    "expected_missing_fields": [
+      "transfer_channel",
+      "evidence"
+    ],
+    "expected_high_risk_flags": [
+      "still_transferring"
+    ],
+    "expected_next_question": "请先不要继续转账。对方如何联系你？是否已向学校资助中心或警方咨询？",
+    "expected_next_question_keywords": [
+      "不要",
+      "转账"
+    ],
+    "evaluator_notes": "校园贷+恐吓，易诱发继续转账。"
+  },
+  {
+    "id": "fraud-015",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "boundary",
+      "sparse_input"
+    ],
+    "difficulty": "hard",
+    "input": "免费领游戏皮肤要登录还要短信验证码，我给了",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "neutral",
+    "expected_completeness": 0.25,
+    "expected_slots": {
+      "fraud_method": "免费福利钓鱼"
+    },
+    "expected_missing_fields": [
+      "loss_amount",
+      "transfer_channel",
+      "evidence"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "有没有发生扣款或账号被盗？大概损失多少钱或通过什么渠道支付？",
+    "expected_next_question_keywords": [
+      "扣款",
+      "多少钱"
+    ],
+    "evaluator_notes": "可能尚未转账，先判诈骗类钓鱼。"
+  },
+  {
+    "id": "fraud-016",
+    "scenario": "telecom_fraud",
+    "tags": [
+      "sparse_input",
+      "slang"
+    ],
+    "difficulty": "medium",
+    "input": "刷单的米没了，对方还催我补单",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "urgent",
+    "expected_completeness": 0.25,
+    "expected_slots": {
+      "fraud_method": "刷单诈骗",
+      "still_contacting": true
+    },
+    "expected_missing_fields": [
+      "loss_amount",
+      "transfer_channel",
+      "evidence"
+    ],
+    "expected_high_risk_flags": [
+      "still_contacting"
+    ],
+    "expected_next_question": "先别继续转账。一共转了多少钱？通过什么方式转的？",
+    "expected_next_question_keywords": [
+      "别",
+      "多少钱"
+    ],
+    "evaluator_notes": "网络用语「米」=钱； slang 测试。"
+  },
+  {
+    "id": "loss-013",
+    "scenario": "property_loss",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "钥匙串丢了，三把钥匙加一个小熊挂件，昨晚在操场跑步",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "neutral",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "lost_item": "钥匙串",
+      "lost_time": "昨晚",
+      "lost_location": "操场",
+      "item_features": "三把钥匙加小熊挂件"
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "操场周边有没有监控或拾物处可以问？",
+    "expected_next_question_keywords": [
+      "监控"
+    ],
+    "evaluator_notes": "低价值遗失。"
+  },
+  {
+    "id": "loss-014",
+    "scenario": "property_loss",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "洗澡间眼镜不见了，黑框近视镜，大概半小时前",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "neutral",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "lost_item": "眼镜",
+      "lost_time": "大概半小时前",
+      "lost_location": "洗澡间",
+      "item_features": "黑框近视镜"
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "是否问过洗澡间管理员或查看附近监控？",
+    "expected_next_question_keywords": [
+      "监控"
+    ],
+    "evaluator_notes": "浴室遗失常见。"
+  },
+  {
+    "id": "loss-015",
+    "scenario": "property_loss",
+    "tags": [
+      "noise_prefix",
+      "rich_slots"
+    ],
+    "difficulty": "hard",
+    "input": "对了今天食堂人好多啊，哦说正事，我U盘在机房电脑边丢了，32G黑色，下午实验课",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "neutral",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "lost_item": "U盘",
+      "lost_time": "下午实验课",
+      "lost_location": "机房",
+      "item_features": "32G黑色"
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "机房有没有监控或同学坐在旁边？",
+    "expected_next_question_keywords": [
+      "监控"
+    ],
+    "evaluator_notes": "前置闲聊噪声，测试抽取抗干扰。"
+  },
+  {
+    "id": "loss-016",
+    "scenario": "property_loss",
+    "tags": [
+      "typo",
+      "slang"
+    ],
+    "difficulty": "medium",
+    "input": "俺书包落图书馆了，里面笔记本夹身份证，急死",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "urgent",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "lost_item": "书包",
+      "lost_location": "图书馆",
+      "item_features": "内有笔记本和身份证",
+      "account_or_id_risk": true
+    },
+    "expected_missing_fields": [
+      "lost_time"
+    ],
+    "expected_high_risk_flags": [
+      "account_or_id_risk"
+    ],
+    "expected_next_question": "大概什么时候发现落的？身份证有没有去挂失或补办？",
+    "expected_next_question_keywords": [
+      "什么时候",
+      "身份证"
+    ],
+    "evaluator_notes": "方言/错别字；落=丢。"
+  },
+  {
+    "id": "conflict-013",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "easy",
+    "input": "室友偷用我插排还给弄坏了，也不赔，在宿舍吵了一架",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "angry",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "parties": "我与室友",
+      "conflict_reason": "偷用插排并损坏",
+      "time_location": "宿舍",
+      "physical_conflict": false
+    },
+    "expected_missing_fields": [
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "你希望赔偿还是请宿管调解？",
+    "expected_next_question_keywords": [
+      "赔偿",
+      "宿管"
+    ],
+    "evaluator_notes": "财物+冲突，主场景宿舍。"
+  },
+  {
+    "id": "conflict-014",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "medium",
+    "input": "室友养仓鼠味道很大，说了也不理，我想举报",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "angry",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "parties": "我与室友",
+      "conflict_reason": "宿舍养宠物异味",
+      "expected_resolution": "举报"
+    },
+    "expected_missing_fields": [
+      "time_location"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "这种情况持续多久了？学校是否禁止宿舍养宠物？",
+    "expected_next_question_keywords": [
+      "多久"
+    ],
+    "evaluator_notes": "宠物引发矛盾。"
+  },
+  {
+    "id": "conflict-015",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "slang",
+      "emotion_heavy"
+    ],
+    "difficulty": "medium",
+    "input": "舍友老针对我，无语死了，天天翻白眼",
+    "expected_risk": "low",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "angry",
+    "expected_completeness": 0.5,
+    "expected_slots": {
+      "parties": "我与舍友",
+      "conflict_reason": "针对、冷暴力"
+    },
+    "expected_missing_fields": [
+      "time_location",
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "最近一次什么时候发生的？你想换宿舍还是调解？",
+    "expected_next_question_keywords": [
+      "什么时候",
+      "换宿舍"
+    ],
+    "evaluator_notes": "口语/网络用语。"
+  },
+  {
+    "id": "conflict-016",
+    "scenario": "dorm_conflict",
+    "tags": [
+      "boundary",
+      "multi_topic"
+    ],
+    "difficulty": "hard",
+    "input": "室友偷用我手机转账，我们还吵起来了，他说要揍我",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 0.5,
+    "expected_slots": {
+      "parties": "我与室友",
+      "conflict_reason": "偷用手机转账并争吵",
+      "threat": true
+    },
+    "expected_missing_fields": [
+      "time_location",
+      "expected_resolution"
+    ],
+    "expected_high_risk_flags": [
+      "threat"
+    ],
+    "expected_next_question": "手机转账损失多少？对方有没有动手？你现在是否安全？",
+    "expected_next_question_keywords": [
+      "转账",
+      "安全"
+    ],
+    "acceptable_alternate_scenarios": [
+      "telecom_fraud",
+      "personal_safety_threat"
+    ],
+    "boundary_notes": "含诈骗+威胁；宿舍冲突为主，转账损失需同步记录。",
+    "evaluator_notes": "多主题混合案例。"
+  },
+  {
+    "id": "threat-013",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "rich_slots"
+    ],
+    "difficulty": "medium",
+    "input": "晚上回宿舍路上总觉得有人在后面跟着，同一外套连三天了",
+    "expected_risk": "medium",
+    "expected_next_action": "ask_followup",
+    "expected_emotion": "fearful",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "疑似跟踪",
+      "suspect_info": "不明身份，同外套",
+      "current_location": "宿舍路上",
+      "danger_level": "持续不安",
+      "prior_incidents": "连续三天"
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [],
+    "expected_next_question": "对方今天是否还在？能否描述身高外貌并联系保卫处？",
+    "expected_next_question_keywords": [
+      "保卫"
+    ],
+    "evaluator_notes": "跟踪未确认，中等风险。"
+  },
+  {
+    "id": "threat-014",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "high_risk",
+      "rich_slots"
+    ],
+    "difficulty": "medium",
+    "input": "收到邮件说要杀了我，还知道我课表，我在教学楼很害怕",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "死亡威胁邮件",
+      "suspect_info": "发件人不明",
+      "current_location": "教学楼",
+      "danger_level": "高度恐惧",
+      "evidence": "威胁邮件",
+      "ongoing_threat": true
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [
+      "ongoing_threat"
+    ],
+    "expected_next_question": "请先保存邮件原件并到有人处。是否已联系保卫处或报警？",
+    "expected_next_question_keywords": [
+      "保卫",
+      "报警"
+    ],
+    "evaluator_notes": "死亡威胁+掌握行程。"
+  },
+  {
+    "id": "threat-015",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "multi_topic",
+      "boundary"
+    ],
+    "difficulty": "hard",
+    "input": "我本来想说书包丢了，但更急的是有人发消息说要堵我，我现在在食堂",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "urgent",
+    "expected_completeness": 1.0,
+    "expected_slots": {
+      "threat_type": "扬言堵人",
+      "suspect_info": "不明",
+      "current_location": "食堂",
+      "danger_level": "更急迫",
+      "ongoing_threat": true
+    },
+    "expected_missing_fields": [],
+    "expected_high_risk_flags": [
+      "ongoing_threat"
+    ],
+    "expected_next_question": "威胁消息能截图吗？食堂是否有人陪你？丢包的事我们随后登记。",
+    "expected_next_question_keywords": [
+      "截图",
+      "食堂"
+    ],
+    "acceptable_alternate_scenarios": [
+      "property_loss"
+    ],
+    "boundary_notes": "多意图；优先人身安全。",
+    "evaluator_notes": "声东击西+优先级测试。"
+  },
+  {
+    "id": "threat-016",
+    "scenario": "personal_safety_threat",
+    "tags": [
+      "slang",
+      "typo"
+    ],
+    "difficulty": "medium",
+    "input": "我害怕的一批，那人还在楼下喊我名字",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_emotion": "fearful",
+    "expected_completeness": 0.75,
+    "expected_slots": {
+      "threat_type": "楼下滋扰",
+      "current_location": "宿舍楼下附近",
+      "danger_level": "非常害怕",
+      "ongoing_threat": true,
+      "current_danger": true
+    },
+    "expected_missing_fields": [
+      "suspect_info"
+    ],
+    "expected_high_risk_flags": [
+      "ongoing_threat",
+      "current_danger"
+    ],
+    "expected_next_question": "对方是谁？你现在在屋里还是外面？能否联系保安？",
+    "expected_next_question_keywords": [
+      "谁",
+      "保安"
+    ],
+    "evaluator_notes": "网络用语；缺 suspect 需追问。"
   }
 ]
-

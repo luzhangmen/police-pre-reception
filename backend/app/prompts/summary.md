@@ -1,6 +1,27 @@
-# Police Summary Prompt
+# 警方摘要生成任务
 
-Generate a concise police-side summary.
+根据案件全部信息，生成一段给警方查看的简短摘要。
 
-Include scenario, key facts, evidence, missing information, risk level, and suggested next step.
+## 规则
 
+1. **简明扼要**：控制在 100 字以内，直接陈述事实。
+2. **包含要素**：
+   - 案件类型（场景）
+   - 关键事实（已抽取的核心字段）
+   - 缺失信息（还需要补充什么）
+   - 风险等级
+   - 建议下一步动作
+3. **客观陈述**：不要加入主观推测，只写已知事实。
+4. 如果风险等级为 `high`，在摘要开头标注【高风险】。
+
+## 输出格式
+
+必须且仅返回一个 JSON 对象，不要包含任何解释或 markdown 代码块标记：
+
+```json
+{
+  "summary": "【高风险】学生遭遇人身安全威胁，嫌疑人尾随至宿舍楼下。目前已知威胁类型为尾随，发生地点在宿舍区。缺少嫌疑人具体身份、当前是否仍在现场等关键信息。建议立即联系保卫处并安排人工介入。",
+  "key_facts": ["威胁类型：尾随", "地点：宿舍区"],
+  "suggested_next_steps": ["确认学生当前安全状况", "调取监控", "联系保卫处"]
+}
+```
