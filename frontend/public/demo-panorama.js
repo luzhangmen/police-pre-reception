@@ -1,5 +1,5 @@
 /**
- * 360° panorama concept viewer (Pannellum) + Mapillary embed fallback.
+ * 360° panorama viewer (Pannellum) — drag to look around, fullscreen, optional gyro on mobile.
  */
 (function initPanoramaConcept() {
   const container = document.getElementById("panoramaViewer");
@@ -11,9 +11,12 @@
   const noteEl = document.getElementById("panoramaNote");
   const mapillaryFrame = document.getElementById("mapillaryEmbed");
   const externalLinks = document.getElementById("panoramaExternalLinks");
+  const fullscreenBtn = document.getElementById("panoramaFullscreenBtn");
+  const gyroBtn = document.getElementById("panoramaGyroBtn");
 
   let viewer = null;
-  let activePoiKey = window.CAMPUS_COORDS.panorama?.defaultPoiKey || "northTeachingBikeRack";
+  let orientationActive = false;
+  const activePoiKeyDefault = window.CAMPUS_COORDS.panorama?.defaultPoiKey || "northTeachingBikeRack";
 
   function panoramaConfig(poiKey) {
     const pano = window.CAMPUS_COORDS.panorama || {};
@@ -68,8 +71,63 @@
     return { url: fallback, fromLocal: false };
   }
 
+  let interactionsBound = false;
+
+  function bindViewerInteractions() {
+    if (interactionsBound) {
+      return;
+    }
+    interactionsBound = true;
+
+    fullscreenBtn?.addEventListener("click", () => {
+      if (viewer && typeof viewer.toggleFullscreen === "function") {
+        viewer.toggleFullscreen();
+      }
+    });
+
+    container.addEventListener("dblclick", () => {
+      if (viewer && typeof viewer.toggleFullscreen === "function") {
+        viewer.toggleFullscreen();
+      }
+    });
+
+    if (gyroBtn && typeof window.DeviceOrientationEvent !== "undefined") {
+      gyroBtn.hidden = false;
+      gyroBtn.addEventListener("click", async () => {
+        if (!viewer || typeof viewer.startOrientation !== "function") {
+          return;
+        }
+        if (!viewer) {
+          return;
+        }
+        try {
+          if (
+            typeof DeviceOrientationEvent.requestPermission === "function" &&
+            !orientationActive
+          ) {
+            const permission = await DeviceOrientationEvent.requestPermission();
+            if (permission !== "granted") {
+              return;
+            }
+          }
+          if (orientationActive) {
+            viewer.stopOrientation();
+            orientationActive = false;
+            gyroBtn.textContent = "开启陀螺仪环视（手机）";
+          } else {
+            viewer.startOrientation();
+            orientationActive = true;
+            gyroBtn.textContent = "关闭陀螺仪环视";
+          }
+        } catch {
+          // User dismissed permission dialog.
+        }
+      });
+    }
+  }
+
+
   async function loadPanorama(poiKey) {
-    activePoiKey = poiKey;
     const cfg = panoramaConfig(poiKey);
     const { url, fromLocal } = await resolveImageUrl(poiKey);
 
@@ -78,32 +136,45 @@
     }
     if (noteEl) {
       noteEl.textContent = fromLocal
-        ? "当前为本地/仓库内 360° 全景图（可环视拖动）。"
-        : "未检测到本地全景文件，正在使用开源示例图作交互演示；可往 panoramas/ 目录放入华工实拍 JPG 替换。";
+        ? "华工本地 360° 全景：在画面内拖动环视，或点「全屏沉浸浏览」。"
+        : "当前为示例全景图（演示交互）。放入 panoramas/*.jpg 后可换为广州大学城实拍。";
     }
 
     buildExternalLinks(poiKey);
     updateMapillary(poiKey);
 
-    const scene = {
+    if (viewer) {
+      viewer.destroy();
+      viewer = null;
+      orientationActive = false;
+      if (gyroBtn) {
+        gyroBtn.textContent = "开启陀螺仪环视（手机）";
+      }
+    }
+
+    viewer = pannellum.viewer("panoramaViewer", {
       type: "equirectangular",
       panorama: url,
       yaw: cfg?.yaw ?? 0,
       pitch: cfg?.pitch ?? 0,
       hfov: 100,
+      minHfov: 50,
+      maxHfov: 120,
       autoLoad: true,
       showControls: true,
-    };
+      showFullscreenCtrl: true,
+      showZoomCtrl: true,
+      mouseZoom: true,
+      draggable: true,
+      keyboardZoom: true,
+      compass: true,
+      friction: 0.12,
+    });
 
-    if (viewer) {
-      viewer.destroy();
-      viewer = null;
-    }
-
-    viewer = pannellum.viewer("panoramaViewer", scene);
+    bindViewerInteractions();
   }
 
   window.updatePanoramaConcept = loadPanorama;
 
-  loadPanorama(activePoiKey);
+  loadPanorama(activePoiKeyDefault);
 })();

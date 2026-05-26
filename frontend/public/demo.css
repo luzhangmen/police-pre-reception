@@ -107,13 +107,34 @@
   color: var(--primary-dark);
 }
 
+.panorama-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.panorama-hint {
+  flex: 1 1 220px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
 .panorama-viewer {
   width: 100%;
-  height: 340px;
+  height: 360px;
   border-radius: 14px;
   border: 1px solid var(--border);
   overflow: hidden;
   background: #1a2b22;
+  cursor: grab;
+}
+
+.panorama-viewer:active {
+  cursor: grabbing;
 }
 
 .mapillary-embed {
