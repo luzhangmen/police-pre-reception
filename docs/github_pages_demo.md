@@ -29,11 +29,13 @@ https://zhangsan.github.io/police-pre-reception/demo.html
 - `frontend/public/demo.html`
 - `.github/workflows/github-pages.yml`
 
-### 2. 开启 GitHub Pages
+### 2. 开启 GitHub Pages（必须先做，否则会报 `Get Pages site failed`）
 
-1. 打开仓库 **Settings → Pages**
-2. **Build and deployment → Source** 选择 **GitHub Actions**
-3. 推送 `main`（或 `master`）分支，等待 Actions 工作流 **Deploy GitHub Pages Demo** 变绿
+1. 打开 https://github.com/luzhangmen/police-pre-reception/settings/pages  
+2. **Build and deployment → Source** 选择 **GitHub Actions**（不要选 “Deploy from a branch”）  
+3. 保存后，打开 **Actions** 标签，手动运行或重新运行 **Deploy GitHub Pages Demo**，等待绿色 ✓  
+
+推送失败见 [github_push_help.md](./github_push_help.md)。
 
 ### 3.（推荐）配置高德 Key，使用国内底图
 
