@@ -1,12 +1,18 @@
 import os
+import re
+from datetime import datetime, timezone
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from app.core.document_models import DocumentGenerationMetadata, PreAcceptanceDocumentResponse
+from app.modules.document_content import build_document_metadata
 from app.core.pipeline import run_pipeline
 from app.core.state import CaseState, GeocodeRequest, GeocodeResponse, UserMessage
+from app.modules.document_generator import GENERATED_DIR, generate_pre_acceptance_document
 from app.modules.address_extractor import extract_addresses
 from app.modules.geocoder import _amap_web_key, geocode_addresses, resolve_map_provider
 
@@ -39,6 +45,7 @@ def about() -> dict[str, str]:
         "health": "/health",
         "reason_endpoint": "/api/v1/reason",
         "map_geocode_endpoint": "/api/v1/map/geocode",
+        "pre_acceptance_document_endpoint": "/api/v1/documents/pre-acceptance",
     }
 
 
@@ -83,6 +90,39 @@ def geocode_from_text(payload: GeocodeRequest) -> GeocodeResponse:
 @app.post("/api/v1/reason", response_model=CaseState)
 def reason(message: UserMessage) -> CaseState:
     return run_pipeline(message)
+
+
+_DOCUMENT_FILENAME_RE = re.compile(r"^pre_acceptance_[\w\-]+\.docx$", re.ASCII)
+
+
+@app.post("/api/v1/documents/pre-acceptance", response_model=PreAcceptanceDocumentResponse)
+def create_pre_acceptance_document(state: CaseState) -> PreAcceptanceDocumentResponse:
+    _output_path, filename = generate_pre_acceptance_document(state)
+    generated_at = datetime.now(timezone.utc)
+    rel_path = f"generated/documents/{filename}"
+    meta = build_document_metadata(state)
+    return PreAcceptanceDocumentResponse(
+        case_id=state.case_id,
+        filename=filename,
+        file_path=rel_path,
+        download_url=f"/api/v1/documents/download/{filename}",
+        generated_at=generated_at,
+        metadata=DocumentGenerationMetadata(**meta),
+    )
+
+
+@app.get("/api/v1/documents/download/{filename}")
+def download_pre_acceptance_document(filename: str) -> FileResponse:
+    if not _DOCUMENT_FILENAME_RE.fullmatch(filename):
+        raise HTTPException(status_code=400, detail="Invalid document filename.")
+    file_path = GENERATED_DIR / filename
+    if not file_path.is_file():
+        raise HTTPException(status_code=404, detail="Document not found.")
+    return FileResponse(
+        path=str(file_path),
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        filename=filename,
+    )
 
 
 if FRONTEND_DIR.is_dir():

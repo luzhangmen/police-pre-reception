@@ -1,0 +1,70 @@
+[
+  {
+    "id": "colloquial-loss-001",
+    "tier": "L2",
+    "scenario": "property_loss",
+    "tags": ["colloquial", "demo_star", "document_showcase"],
+    "difficulty": "medium",
+    "input": "那个……警官你好，我就是，嗯，昨天下午吧，大概三四点钟的样子，我在图书馆三楼那个自习室自习，然后手机放桌上了，我去接了个水回来就发现没了，反正就是一个黑色的 iPhone，带透明壳的，里面还有支付宝、微信和校园卡绑定的，我现在真的很慌，也不知道是被偷了还是我自己掉了，那个自习室好像有监控，但是我还没去问保卫处……",
+    "expected_risk": "high",
+    "expected_slots": {
+      "lost_item": "手机",
+      "lost_location": "图书馆三楼自习室",
+      "suspected_theft": true,
+      "account_or_id_risk": true
+    },
+    "document_narrative_keywords": ["图书馆", "遗失", "疑似被盗", "监控"],
+    "evaluator_notes": "L2 口语冗长案例：测试去废话 + 结构化叙述 + Word 信息单生成。"
+  },
+  {
+    "id": "colloquial-fraud-001",
+    "tier": "L2",
+    "scenario": "telecom_fraud",
+    "tags": ["colloquial", "high_risk", "handoff"],
+    "difficulty": "hard",
+    "input": "唉警官，我，那个，我这两天在闲鱼上买演唱会票嘛，嗯，对方让我先微信转480，我转了，然后他又说要保证金200，我又转了，现在还在催我继续打钱，我真的怕了，聊天记录和截图我都有……",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_slots": {
+      "fraud_method": "购票诈骗",
+      "platform": "闲鱼",
+      "transfer_channel": "微信",
+      "still_transferring": true,
+      "still_contacting": true
+    },
+    "document_narrative_keywords": ["诈骗", "转账", "催促", "高风险"],
+    "evaluator_notes": "L2 诈骗 + 仍在转账；文档应出现高风险标识与止付类建议。"
+  },
+  {
+    "id": "colloquial-threat-001",
+    "tier": "L2",
+    "scenario": "personal_safety_threat",
+    "tags": ["colloquial", "high_risk", "handoff"],
+    "difficulty": "hard",
+    "input": "警官救命，嗯，就是，我室友在外面堵我，说要打我，我现在在宿舍区北门这边，不敢回去，怎么办啊，之前也骂过我几次了……",
+    "expected_risk": "high",
+    "expected_next_action": "handoff_human",
+    "expected_slots": {
+      "threat_type": "口头人身威胁",
+      "ongoing_threat": true,
+      "current_danger": true
+    },
+    "document_narrative_keywords": ["威胁", "人身", "不敢"],
+    "evaluator_notes": "L2 人身威胁口语；情绪词应被清洗，高风险横幅应出现。"
+  },
+  {
+    "id": "colloquial-dorm-001",
+    "tier": "L2",
+    "scenario": "dorm_conflict",
+    "tags": ["colloquial"],
+    "difficulty": "medium",
+    "input": "那个，警官，我们宿舍吧，反正就是隔壁床那个同学，老是半夜打游戏还外放，我说他他就骂我，昨天晚上还推了我一下，我也没敢还手，就想调解一下……",
+    "expected_risk": "medium",
+    "expected_slots": {
+      "conflict_reason": "作息与噪音矛盾",
+      "physical_conflict": true
+    },
+    "document_narrative_keywords": ["宿舍", "冲突", "推"],
+    "evaluator_notes": "L2 宿舍冲突；测试 dorm_conflict 叙述合成。"
+  }
+]

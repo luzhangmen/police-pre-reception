@@ -144,7 +144,7 @@
     if (noteEl) {
       if (!fromLocal) {
         noteEl.textContent =
-          "未加载到本地全景文件，正在使用备用示例图。请确认 panoramas/scut-north-teaching.jpg 已随仓库部署。";
+          "未加载到本地全景文件，正在使用备用示例图。请确认 panoramas/1.jpg ~ 3.jpg 已随仓库部署。";
       } else if (shared) {
         noteEl.textContent =
           "当前展示已上传的华工北区实拍全景（该案例专属图尚未上传，视角已预置偏移）。拖动环视或点「全屏沉浸浏览」。";

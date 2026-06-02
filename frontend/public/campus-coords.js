@@ -39,31 +39,28 @@ window.CAMPUS_COORDS = {
 
   /**
    * 全景概念（Pannellum 等距柱状图）。
-   * 将 imageUrl 换成本地实拍：panoramas/scut-north-teaching.jpg
+   * 本地全景：panoramas/1.jpg ~ 3.jpg，与三个 Demo 案例一一对应。
    */
   panorama: {
     defaultPoiKey: "northTeachingBikeRack",
-    /** 本地实拍；各 POI 未单独配图时共用此文件 */
-    fallbackImage: "panoramas/scut-north-teaching.jpg",
+    fallbackImage: "panoramas/1.jpg",
     pois: {
       northTeachingBikeRack: {
-        title: "北区教学楼北侧 · 华工大学城实拍全景",
-        imageUrl: "panoramas/scut-north-teaching.jpg",
+        title: "北区教学楼北侧 · 全景",
+        imageUrl: "panoramas/1.jpg",
         yaw: 0,
         pitch: 0,
       },
       dormEbikeParking: {
-        title: "宿舍楼下停放区 · 全景（暂用北区实拍，可替换 scut-dorm-parking.jpg）",
-        imageUrl: "panoramas/scut-dorm-parking.jpg",
-        sharedImageUrl: "panoramas/scut-north-teaching.jpg",
-        yaw: 95,
+        title: "宿舍楼下停放区 · 全景",
+        imageUrl: "panoramas/2.jpg",
+        yaw: 0,
         pitch: 0,
       },
       xiaobeiStreet: {
-        title: "小贝大街 · 全景（暂用北区实拍，可替换 scut-xiaobei-street.jpg）",
-        imageUrl: "panoramas/scut-xiaobei-street.jpg",
-        sharedImageUrl: "panoramas/scut-north-teaching.jpg",
-        yaw: 210,
+        title: "小贝大街 · 全景",
+        imageUrl: "panoramas/3.jpg",
+        yaw: 0,
         pitch: 0,
       },
     },

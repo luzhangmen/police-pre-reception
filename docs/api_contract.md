@@ -174,6 +174,65 @@ Geocode addresses from free text and optional slots without running the full LLM
 
 `map_locations` may be empty when geocoding fails or only online channels are mentioned.
 
+## POST /api/v1/documents/pre-acceptance
+
+Generates a Word (`.docx`) pre-acceptance form from a `CaseState` (same shape as `/api/v1/reason` response).
+
+### Request
+
+Send the full `CaseState` JSON body, typically the output of `/api/v1/reason` or a multi-turn dialogue update.
+
+### Response
+
+```json
+{
+  "case_id": "case-001",
+  "filename": "pre_acceptance_case-001_20260530T120000.docx",
+  "file_path": "generated/documents/pre_acceptance_case-001_20260530T120000.docx",
+  "download_url": "/api/v1/documents/download/pre_acceptance_case-001_20260530T120000.docx",
+  "generated_at": "2026-05-30T12:00:00Z",
+  "format": "docx",
+  "metadata": {
+    "document_version": "2.0",
+    "narrative_preview": "报案人反映，于……",
+    "cleaned_user_text_preview": "警官你好，我……",
+    "high_risk_flags": ["仍在转账"],
+    "missing_field_count": 2,
+    "completeness_percent": 58,
+    "section_count": 13
+  }
+}
+```
+
+Document v2.0 includes 13 sections: cleaned original text, synthesized narrative, key facts, slots table, high-risk flags, missing fields, geocoding, evidence, KB snippets, police summary, next steps, system follow-up question, and officer notes.
+
+### Download
+
+`GET /api/v1/documents/download/{filename}`
+
+Returns the generated file with `Content-Disposition: attachment`. The `filename` must match `pre_acceptance_*.docx`.
+
+### Document fields
+
+- 案件编号、报案人姓名、报案人联系方式
+- 案件类型、风险等级、完整度评分
+- 事件时间、事件地点、事件经过
+- 已抽取结构化字段、缺失字段、证据材料
+- 知识库处置建议（`knowledge_snippets`）
+- 警方摘要、建议下一步
+- 民警备注区
+
+### Local testing
+
+```bash
+cd backend
+pip install -r requirements.txt
+python scripts/create_pre_acceptance_template.py
+python scripts/generate_sample_documents.py
+```
+
+Sample files are written to `backend/generated/documents/samples/`.
+
 ## Voice Input (Browser)
 
 Speech-to-text is handled in `frontend/public/app.js` using the Web Speech API (`zh-CN`). The backend still receives plain text via `POST /api/v1/reason`.

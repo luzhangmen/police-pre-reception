@@ -7,4 +7,6 @@ venv/
 dist/
 build/
 node_modules/
+backend/generated/
+backend/storage/
 
